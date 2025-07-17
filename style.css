@@ -1,7 +1,11 @@
+html,
 body {
-  text-align: center;
-  background-color: hsl(0, 100%, 91%);
   margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: hsl(0, 100%, 91%);
+  text-align: center;
 }
 
 header {
@@ -9,26 +13,31 @@ header {
   padding: 20px;
   text-align: left;
 }
+
 iframe {
+  width: 100vw;
+  height: calc(100vh - 100px); /* subtract header height */
+  border: none;
   border-radius: 10px;
+  display: block;
 }
 
 ul {
-  list-style: none; /* Removes bullet points */
+  list-style: none;
   padding: 0;
   margin: 0;
-  display: flex; /* Makes the links appear side by side */
-  gap: 20px; /* Space between links */
+  display: flex;
+  gap: 20px;
   align-items: center;
 }
 
 li {
-  display: inline; /* Optional with flex, but safe */
+  display: inline;
 }
 
 a {
-  text-decoration: none; /* Removes underline */
-  color: #ff0000; /* Bootstrap blue */
+  text-decoration: none;
+  color: #ff0000;
   font-weight: bold;
   padding: 8px 12px;
   border-radius: 5px;
@@ -37,5 +46,5 @@ a {
 }
 
 a:hover {
-  background-color: #e0eaff; /* Light blue highlight on hover */
+  background-color: #e0eaff;
 }
