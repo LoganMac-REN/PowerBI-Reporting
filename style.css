@@ -1,0 +1,41 @@
+body {
+  text-align: center;
+  background-color: hsl(0, 100%, 91%);
+  margin: 0;
+}
+
+header {
+  background-color: hsl(0, 100%, 80%);
+  padding: 20px;
+  text-align: left;
+}
+iframe {
+  border-radius: 10px;
+}
+
+ul {
+  list-style: none; /* Removes bullet points */
+  padding: 0;
+  margin: 0;
+  display: flex; /* Makes the links appear side by side */
+  gap: 20px; /* Space between links */
+  align-items: center;
+}
+
+li {
+  display: inline; /* Optional with flex, but safe */
+}
+
+a {
+  text-decoration: none; /* Removes underline */
+  color: #ff0000; /* Bootstrap blue */
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-size: 20px;
+}
+
+a:hover {
+  background-color: #e0eaff; /* Light blue highlight on hover */
+}
