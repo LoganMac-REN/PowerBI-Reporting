@@ -14,6 +14,10 @@ header {
   text-align: left;
 }
 
+h1 {
+  color: #ff0000;
+}
+
 iframe {
   width: 100vw;
   height: calc(100vh - 100px); /* subtract header height */
