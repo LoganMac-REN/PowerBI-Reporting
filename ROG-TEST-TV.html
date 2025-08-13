@@ -1,31 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Ren Internal</title>
-      <link rel="stylesheet" href="style.css?v=2" />
-      <meta http-equiv="Cache-Control" content="no-store" />
-   </head>
-   <body>
-      <header>
-         <h1>Rogue Test</h1>
-         <ul>
-            <li><a href="index.html">OTD</a></li>
-            <li><a class="active" href="ROG-TEST-TV.html">Rogue-Test</a></li>
-            <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
-            <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
-            <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
-            <li>
-               <a href="UnrRma.html">UNR and RMA</a>
-            </li>
-         </ul>
-      </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ren Internal - Rogue Test</title>
+  <link rel="stylesheet" href="style.css?v=4" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+</head>
+<body>
+
+  <!-- Top bar (brand + right-aligned dropdowns) -->
+  <header class="topbar">
+    <div class="brand">Ren Internal</div>
+    <div class="bar-inner">
+      <nav class="nav" aria-label="Main">
+        <ul class="menu">
+          <!-- Dallas TV -->
+          <li class="has-sub">
+            <a href="#" class="toplink">Dallas TV</a>
+            <ul class="sub">
+              <li><a href="index.html">OTD</a></li>
+              <li><a href="ROG-TEST-TV.html" class="active">Rogue-Test</a></li>
+              <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
+              <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
+              <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
+            </ul>
+          </li>
+
+          <!-- KPIs -->
+          <li class="has-sub">
+            <a href="#" class="toplink">KPIs</a>
+            <ul class="sub">
+              <li><a href="UnrRma.html">UNR & RMA</a></li>
+            </ul>
+          </li>
+
+          <!-- Tools -->
+          <li class="has-sub">
+            <a href="#" class="toplink">Tools</a>
+            <ul class="sub">
+              <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page -->
+  <main class="content">
+    <h2 class="pagetitle">Rogue Test</h2>
+    <div class="framecard">
       <iframe
-         title="Rog Test Throughput"
-         src="https://app.fabric.microsoft.com/view?r=eyJrIjoiNjFhOWNhODUtNzJhNS00YTRhLWI3NjYtMWE4NDBmNjA3ZDZmIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
-         allowfullscreen="true"
-      ></iframe>
-      <script src="javascript.js?v=2"></script>
-   </body>
+        title="Rog Test Throughput"
+        src="https://app.fabric.microsoft.com/view?r=eyJrIjoiNjFhOWNhODUtNzJhNS00YTRhLWI3NjYtMWE4NDBmNjA3ZDZmIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+        allowfullscreen="true">
+      </iframe>
+    </div>
+  </main>
+
+  <script src="javascript.js?v=4"></script>
+</body>
 </html>
