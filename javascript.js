@@ -1,7 +1,6 @@
-// Refresh the iframe every 5 minutes (300,000 ms)
 setInterval(() => {
-  const iframe = document.querySelector("iframe");
-  if (iframe) iframe.src = iframe.src;
+  const powerBIFrame = document.getElementById("powerbi-frame");
+  if (powerBIFrame) powerBIFrame.src = powerBIFrame.src;
 }, 300000);
 
 // Toggle dropdowns on click (stay open until clicked again or outside click)
