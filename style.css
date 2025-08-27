@@ -73,9 +73,22 @@ body {
 
 /* Dropdown (merged) */
 .has-sub { position: relative; }
+
+/* Create invisible bridge between menu item and dropdown */
+.has-sub::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: transparent;
+  z-index: 19;
+}
+
 .sub {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 2px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -102,7 +115,38 @@ body {
   color: #fff;
   border-radius: 6px;
 }
-.menu > li:hover .sub { display: block; } /* desktop hover */
+
+/* Show dropdown on hover of the parent menu item OR the dropdown itself */
+.menu > li:hover .sub,
+.menu > li .sub:hover { 
+  display: block; 
+}
+
+/* Nested dropdown support */
+.sub .has-sub { position: relative; }
+.sub .has-sub .sub {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transform: translateX(6px);
+  margin-left: 0;
+}
+.sub li:hover > .sub,
+.sub .has-sub .sub:hover { 
+  display: block; 
+}
+.sub .has-sub > a {
+  position: relative;
+}
+.sub .has-sub > a:after {
+  content: "▶";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--link);
+}
 
 /* Page area */
 .content {
@@ -132,7 +176,66 @@ iframe {
   display: block;
 }
 
+/* Top report - full width */
+.top-report {
+  margin-bottom: 24px;
+}
+
+.top-report .report-title {
+  margin: 0 0 12px 0;
+  color: #7a1b1b;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.top-report iframe {
+  height: 600px;
+}
+
+/* Side-by-side reports layout */
+.reports-container {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.report-card {
+  flex: 1;
+  min-width: 300px;
+  margin-bottom: 16px;
+}
+
+.report-title {
+  margin: 0 0 12px 0;
+  color: #7a1b1b;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Adjust iframe height for side-by-side layout */
+.reports-container iframe {
+  height: 450px;
+}
+
 /* Optional: narrow screen adjustments */
 @media (max-width: 900px) {
   .bar-inner { max-width: 100%; }
+}
+
+/* Responsive adjustments for reports */
+@media (max-width: 1200px) {
+  .reports-container {
+    flex-direction: column;
+  }
+  .report-card {
+    flex: none;
+  }
+  .reports-container iframe {
+    height: 400px;
+  }
+  .top-report iframe {
+    height: 500px;
+  }
 }
