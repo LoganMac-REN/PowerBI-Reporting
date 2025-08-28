@@ -154,6 +154,27 @@
       padding-left: 24px !important;
     }
     
+    /* Navigation divider */
+    .nav-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 8px 0;
+    }
+    
+    /* Scroll to top styling */
+    .scroll-to-top {
+      font-weight: 600 !important;
+      color: #1e293b !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+    }
+    
+    .scroll-to-top:hover {
+      color: #0f172a !important;
+      background: rgba(255, 255, 255, 1) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    }
+    
     .menu {
       display: flex !important;
       list-style: none !important;
@@ -822,6 +843,8 @@
           </button>
           <div class="header-nav-menu" id="headerNavMenu">
             <a href="#unr-section" class="header-nav-item" onclick="closeHeaderNav()">UNR Reports</a>
+            <div class="nav-divider"></div>
+            <a href="#top" class="header-nav-item scroll-to-top" onclick="closeHeaderNav(); scrollToTop();">↑ Top of Page</a>
             <!-- Add more KPI sections here as needed -->
           </div>
         </div>
@@ -906,6 +929,13 @@
       
       menu.classList.remove('show');
       button.classList.remove('active');
+    }
+    
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
     
     // Close dropdown when clicking outside
