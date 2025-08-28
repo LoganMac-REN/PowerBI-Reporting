@@ -225,17 +225,6 @@
       overflow: visible;
     }
     
-    .page-header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #b91c1c, #dc2626, #ef4444);
-      border-radius: 16px 16px 0 0;
-    }
-    
     .header-content {
       display: flex;
       justify-content: space-between;
@@ -531,16 +520,7 @@
     }
     
     .section-title::after {
-      content: '';
-      position: absolute;
-      right: 24px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 4px;
-      height: 60%;
-      background: linear-gradient(180deg, var(--accent), #ff4444);
-      border-radius: 2px;
-      opacity: 0.8;
+      display: none;
     }
     
     /* Enhanced report titles */
