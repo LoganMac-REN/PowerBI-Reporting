@@ -213,9 +213,69 @@
       }
     }
     
-    /* Table of Contents Dropdown Styles */
+    /* Professional Header Styling */
+    .page-header {
+      background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 24px rgba(185, 28, 28, 0.08);
+      position: relative;
+      overflow: visible;
+    }
+    
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #b91c1c, #dc2626, #ef4444);
+      border-radius: 16px 16px 0 0;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .title-section {
+      flex: 1;
+    }
+    
+    .page-title {
+      font-size: 38px;
+      font-weight: 700;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: #7a1b1b;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    
+    .page-subtitle {
+      font-size: 17px;
+      color: #9f2121;
+      margin: 0;
+      font-weight: 500;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+    }
+    
+    /* Enhanced Table of Contents Dropdown Styles */
     .toc-container {
-      margin: 16px 0 20px 0;
+      margin: 0;
       position: relative;
       display: inline-block;
     }
@@ -225,33 +285,64 @@
     }
     
     .toc-button {
-      background: var(--card);
+      background: linear-gradient(135deg, #ffffff, #f9fafb);
       color: var(--link);
-      border: 1px solid var(--border);
-      padding: 10px 16px;
-      border-radius: 10px;
+      border: 2px solid var(--border);
+      padding: 14px 24px;
+      border-radius: 12px;
       cursor: pointer;
       font-size: 16px;
       font-weight: 600;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       display: flex;
       align-items: center;
-      gap: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,.08);
-      transition: all 0.2s ease;
-      min-width: 200px;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      transition: all 0.3s ease;
+      min-width: 220px;
       justify-content: space-between;
-      font-family: Arial, Helvetica, sans-serif;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.5px;
+    }
+    
+    .toc-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05), rgba(220, 38, 38, 0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .toc-button:hover::before {
+      opacity: 1;
     }
     
     .toc-button:hover {
-      background: #ffe5e5;
-      box-shadow: 0 4px 12px rgba(0,0,0,.12);
+      border-color: var(--accent);
+      box-shadow: 0 6px 20px rgba(185, 28, 28, 0.15);
+      transform: translateY(-1px);
+    }
+    
+    .toc-icon {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+    
+    .toc-text {
+      flex: 1;
+      text-align: left;
     }
     
     .toc-arrow {
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease;
       font-size: 12px;
       color: var(--link);
+      opacity: 0.7;
     }
     
     .toc-button.active .toc-arrow {
@@ -260,19 +351,34 @@
     
     .toc-menu {
       position: absolute;
-      top: calc(100% + 2px);
-      left: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.12);
-      min-width: 220px;
-      z-index: 1000;
+      top: calc(100% + 8px);
+      right: 0;
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+      min-width: 240px;
+      z-index: 9999;
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-4px);
-      transition: all 0.2s ease;
+      transform: translateY(-8px);
+      transition: all 0.3s ease;
       padding: 8px 0;
+      backdrop-filter: blur(10px);
+    }
+    
+    .toc-menu::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      background: #ffffff;
+      border: 2px solid var(--border);
+      border-bottom: none;
+      border-right: none;
+      transform: rotate(45deg);
     }
     
     .toc-menu.show {
@@ -282,33 +388,135 @@
     }
     
     .toc-item {
-      display: block;
-      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
       color: var(--link);
       text-decoration: none;
-      transition: background 0.2s ease;
-      font-size: 16px;
-      font-weight: 600;
+      transition: all 0.2s ease;
+      font-size: 15px;
+      font-weight: 500;
       font-family: Arial, Helvetica, sans-serif;
+      position: relative;
+    }
+    
+    .toc-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: linear-gradient(135deg, var(--accent), #dc2626);
+      transition: width 0.3s ease;
+    }
+    
+    .toc-item:hover::before {
+      width: 4px;
     }
     
     .toc-item:hover {
-      background: #ffe5e5;
+      background: linear-gradient(135deg, #ffe5e5, #fef2f2);
+      color: #7a1b1b;
+      padding-left: 20px;
     }
     
+    .toc-item-icon {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    
+    /* Professional header responsive adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 20px 16px;
+        margin-bottom: 24px;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        text-align: center;
+      }
+      
+      .page-subtitle {
+        text-align: center;
+        font-size: 14px;
+      }
+      
+      .toc-container {
+        align-self: center;
+      }
+      
+      .toc-button {
+        min-width: 180px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      
+      .toc-menu {
+        min-width: 200px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) translateY(-8px);
+      }
+      
+      .toc-menu.show {
+        transform: translateX(-50%) translateY(0);
+      }
+      
+      .toc-menu::before {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) rotate(45deg);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .page-header {
+        padding: 16px 12px;
+      }
+      
+      .page-title {
+        font-size: 20px;
+      }
+      
+      .page-subtitle {
+        font-size: 13px;
+      }
+      
+      .toc-button {
+        min-width: 160px;
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
+    
+    /* Enhanced Section Headers */
     .section-title {
       color: #7a1b1b;
       border-bottom: 3px solid var(--accent);
-      padding: 16px 20px 12px 20px;
-      margin: 20px 0 24px 0;
-      font-size: 28px;
+      padding: 24px 32px 18px 32px;
+      margin: 24px 0 32px 0;
+      font-size: 36px;
       font-weight: 700;
-      background: linear-gradient(135deg, #fff 0%, #ffe5e5 100%);
-      border-radius: 12px 12px 0 0;
-      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.1);
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 50%, #ffd6d6 100%);
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 6px 20px rgba(185, 28, 28, 0.12);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       position: relative;
+      text-align: center;
+      border: 2px solid #e5e5e5;
+      border-bottom: 4px solid var(--accent);
+      line-height: 1.2;
     }
     
     .section-title::before {
@@ -317,25 +525,137 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--accent), #ff4444, var(--accent));
-      border-radius: 12px 12px 0 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--accent), #ff4444, #ff6666, var(--accent));
+      border-radius: 16px 16px 0 0;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 60%;
+      background: linear-gradient(180deg, var(--accent), #ff4444);
+      border-radius: 2px;
+      opacity: 0.8;
     }
     
     /* Enhanced report titles */
     .report-title {
-      margin: 0 0 16px 0 !important;
+      margin: 0 0 20px 0 !important;
       color: #7a1b1b !important;
-      font-size: 20px !important;
-      font-weight: 700 !important;
+      font-size: 26px !important;
+      font-weight: 600 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
       text-align: center !important;
-      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-      padding: 12px 16px;
-      border-radius: 8px 8px 0 0;
-      border-bottom: 2px solid var(--accent);
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #ffe5e5 100%);
+      padding: 18px 24px;
+      border-radius: 12px 12px 0 0;
+      border: 2px solid #e5e5e5;
+      border-bottom: 3px solid var(--accent);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      letter-spacing: 1.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+      line-height: 1.3;
+    }
+    
+    .report-title::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #ff4444, var(--accent));
+      border-radius: 12px 12px 0 0;
+    }
+    
+    .report-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 3px 3px 0 0;
+    }
+    
+    /* Responsive adjustments for enhanced headers */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 28px;
+        padding: 20px 24px 16px 24px;
+        margin: 20px 0 24px 0;
+        letter-spacing: 1.5px;
+      }
+      
+      .section-title::after {
+        width: 3px;
+        right: 20px;
+      }
+      
+      .report-title {
+        font-size: 20px !important;
+        padding: 14px 18px;
+        letter-spacing: 1px;
+      }
+      
+      .page-title {
+        font-size: 28px;
+        letter-spacing: 1.5px;
+      }
+      
+      .page-subtitle {
+        font-size: 15px;
+      }
+      
+      .toc-button {
+        min-width: 180px;
+        padding: 12px 18px;
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .section-title {
+        font-size: 22px;
+        padding: 16px 20px 12px 20px;
+        margin: 16px 0 20px 0;
+        letter-spacing: 1px;
+      }
+      
+      .section-title::after {
+        width: 2px;
+        right: 16px;
+      }
+      
+      .report-title {
+        font-size: 18px !important;
+        padding: 12px 16px;
+        letter-spacing: 0.8px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+      }
+      
+      .page-subtitle {
+        font-size: 14px;
+      }
+      
+      .toc-button {
+        min-width: 160px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -384,18 +704,28 @@
 
   <!-- Page -->
   <main class="content">
-    <h2 class="pagetitle">Operations KPIs</h2>
-    
-    <!-- Table of Contents Dropdown -->
-    <div class="toc-container">
-      <div class="toc-dropdown">
-        <button class="toc-button" onclick="toggleTOC()">
-          <span>Table of Contents</span>
-          <span class="toc-arrow">▼</span>
-        </button>
-        <div class="toc-menu" id="tocMenu">
-          <a href="#unr-section" class="toc-item" onclick="closeTOC()">UNR Reports</a>
-          <!-- Add more KPI sections here as needed -->
+    <!-- Professional Header Section -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="page-title">Operations KPIs</h1>
+          <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
+        </div>
+        
+        <!-- Enhanced Table of Contents Dropdown -->
+        <div class="toc-container">
+          <div class="toc-dropdown">
+            <button class="toc-button" onclick="toggleTOC()">
+              <span class="toc-text">Navigate Sections</span>
+              <span class="toc-arrow">▼</span>
+            </button>
+            <div class="toc-menu" id="tocMenu">
+              <a href="#unr-section" class="toc-item" onclick="closeTOC()">
+                <span>UNR Reports</span>
+              </a>
+              <!-- Add more KPI sections here as needed -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
