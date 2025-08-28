@@ -324,20 +324,26 @@ iframe {
 }
 
 @media (max-width: 768px) {
-  /* Mobile and small tablets - maintain 16:9 */
+  /* Mobile and small tablets - maintain 16:9 and stack all reports */
   .content {
     max-width: 100% !important;
   }
   
   .reports-container {
-    flex-direction: column;
-    gap: 12px;
+    flex-direction: column !important;
+    gap: 12px !important;
   }
   
   .report-card {
-    flex: none;
-    max-width: 100%;
-    min-width: auto;
+    flex: none !important;
+    max-width: 100% !important;
+    min-width: auto !important;
+    width: 100% !important;
+  }
+  
+  /* Ensure both side-by-side cards stack on mobile */
+  .top-report, .report-card {
+    margin-bottom: 12px !important;
   }
   
   .framecard {
