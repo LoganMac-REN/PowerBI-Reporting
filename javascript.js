@@ -1,6 +1,17 @@
 setInterval(() => {
+  // Refresh main PowerBI frame
   const powerBIFrame = document.getElementById("powerbi-frame");
   if (powerBIFrame) powerBIFrame.src = powerBIFrame.src;
+  
+  // Refresh UNR frames
+  const combinedUNRFrame = document.getElementById("combined-unr-frame");
+  if (combinedUNRFrame) combinedUNRFrame.src = combinedUNRFrame.src;
+  
+  const ottawaUNRFrame = document.getElementById("ottawa-unr-frame");
+  if (ottawaUNRFrame) ottawaUNRFrame.src = ottawaUNRFrame.src;
+  
+  const dallasUNRFrame = document.getElementById("dallas-unr-frame");
+  if (dallasUNRFrame) dallasUNRFrame.src = dallasUNRFrame.src;
 }, 300000);
 
 // Toggle dropdowns on click (stay open until clicked again or outside click)
