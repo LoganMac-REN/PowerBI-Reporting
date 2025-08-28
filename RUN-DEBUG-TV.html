@@ -205,6 +205,55 @@
         font-size: 13px !important;
       }
     }
+    
+    /* Professional Header Styling */
+    .page-header {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
+      border: 2px solid rgba(185, 28, 28, 0.2);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: visible;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .title-section {
+      text-align: center;
+    }
+    
+    .page-title {
+      font-size: 38px;
+      font-weight: 700;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: #7a1b1b;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    
+    .page-subtitle {
+      font-size: 17px;
+      color: #9f2121;
+      margin: 0;
+      font-weight: 500;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
@@ -252,7 +301,16 @@
 
   <!-- Page -->
   <main class="content">
-    <h2 class="pagetitle">Runner/Repeater Debug</h2>
+    <!-- Professional Header Section -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="page-title">Runner/Repeater Debug</h1>
+          <p class="page-subtitle">Debug Environment Analytics & Diagnostics</p>
+        </div>
+      </div>
+    </div>
+    
     <div class="framecard">
       <iframe
         id = "powerbi-frame"
