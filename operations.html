@@ -11,13 +11,41 @@
   
   <!-- Backup CSS for layout -->
   <style>
+    /* Professional Background Styling */
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%, #f8fafc 100%) !important;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(185, 28, 28, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(185, 28, 28, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(122, 27, 27, 0.01) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
     /* Professional Main Header Styling */
     .topbar {
       background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
       border-bottom: 3px solid #5a1616 !important;
       padding: 0 !important;
-      position: relative !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
     }
     
     .topbar::before {
@@ -51,6 +79,94 @@
     
     .nav {
       margin-left: auto !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 20px !important;
+    }
+    
+    /* Navigation Button in Header */
+    .header-nav-button {
+      background: rgba(255, 255, 255, 0.15) !important;
+      color: white !important;
+      border: 2px solid rgba(255, 255, 255, 0.3) !important;
+      padding: 10px 16px !important;
+      border-radius: 8px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      transition: all 0.3s ease !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    .header-nav-button:hover {
+      background: rgba(255, 255, 255, 0.25) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .header-nav-button.active {
+      background: rgba(255, 255, 255, 0.3) !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+    }
+
+    .header-nav-arrow {
+      transition: transform 0.3s ease !important;
+      font-size: 10px !important;
+    }
+
+    .header-nav-button.active .header-nav-arrow {
+      transform: rotate(180deg) !important;
+    }
+
+    .header-nav-menu {
+      position: absolute !important;
+      top: calc(100% + 8px) !important;
+      right: 0 !important;
+      background: white !important;
+      min-width: 220px !important;
+      border-radius: 12px !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+      border: 1px solid rgba(185, 28, 28, 0.1) !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transform: translateY(-10px) !important;
+      transition: all 0.3s ease !important;
+      z-index: 1100 !important;
+      overflow: hidden !important;
+    }
+
+    .header-nav-menu.show {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
+
+    .header-nav-item {
+      display: block !important;
+      padding: 12px 20px !important;
+      color: #7a1b1b !important;
+      text-decoration: none !important;
+      font-size: 15px !important;
+      font-weight: 500 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+      transition: all 0.2s ease !important;
+      border-bottom: 1px solid rgba(185, 28, 28, 0.1) !important;
+    }
+
+    .header-nav-item:last-child {
+      border-bottom: none !important;
+    }
+
+    .header-nav-item:hover {
+      background: linear-gradient(135deg, #ffe5e5, #ffcccc) !important;
+      color: #5a1515 !important;
+      padding-left: 24px !important;
     }
     
     .menu {
@@ -243,8 +359,8 @@
     /* Force container constraints with better responsive scaling */
     .content {
       max-width: 1400px !important;
-      margin: 14px auto !important;
-      padding: 0 16px 24px !important;
+      margin: 0 auto !important;
+      padding: 160px 16px 24px !important;
       overflow-x: hidden !important;
     }
     
@@ -252,7 +368,7 @@
     @media (max-width: 1400px) {
       .content {
         max-width: 1000px !important;
-        padding: 0 10px 18px !important;
+        padding: 160px 10px 18px !important;
       }
       
       .reports-container {
@@ -264,7 +380,7 @@
     @media (max-width: 1200px) {
       .content {
         max-width: 750px !important;
-        padding: 0 8px 16px !important;
+        padding: 160px 8px 16px !important;
       }
       
       .reports-container {
@@ -280,7 +396,7 @@
     @media (max-width: 1024px) {
       .content {
         max-width: 650px !important;
-        padding: 0 6px 14px !important;
+        padding: 160px 6px 14px !important;
       }
       
       .reports-container {
@@ -296,7 +412,7 @@
     @media (max-width: 900px) {
       .content {
         max-width: 600px !important;
-        padding: 0 6px 12px !important;
+        padding: 160px 6px 12px !important;
       }
       
       .reports-container {
@@ -309,7 +425,7 @@
       /* Mobile and tablet portrait - force all reports to stack */
       .content {
         max-width: 100% !important;
-        padding: 0 10px 14px !important;
+        padding: 140px 10px 14px !important;
       }
       
       .reports-container {
@@ -356,7 +472,7 @@
     @media (max-width: 480px) {
       /* Small mobile phones - ensure vertical stacking */
       .content {
-        padding: 0 8px 10px !important;
+        padding: 130px 8px 10px !important;
       }
       
       .reports-container {
@@ -413,25 +529,26 @@
     
     /* Professional Header Styling */
     .page-header {
-      background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
-      border: 2px solid var(--accent);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
+      border: 2px solid rgba(185, 28, 28, 0.2);
       border-radius: 16px;
       padding: 24px 32px;
       margin-bottom: 32px;
       box-shadow: 0 8px 24px rgba(185, 28, 28, 0.08);
+      backdrop-filter: blur(10px);
       position: relative;
       overflow: visible;
     }
     
     .header-content {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       gap: 24px;
     }
     
     .title-section {
-      flex: 1;
+      text-align: center;
     }
     
     .page-title {
@@ -459,96 +576,6 @@
       letter-spacing: 0.5px;
       line-height: 1.4;
     }
-
-    /* Header Navigation Styling */
-    .header-nav {
-      position: relative;
-    }
-
-    .nav-dropdown {
-      position: relative;
-    }
-
-    .nav-button {
-      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(122, 27, 27, 0.2);
-    }
-
-    .nav-button:hover {
-      background: linear-gradient(135deg, #8b2020, #c22424);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(122, 27, 27, 0.3);
-    }
-
-    .nav-button.active {
-      background: linear-gradient(135deg, #8b2020, #c22424);
-    }
-
-    .nav-arrow {
-      transition: transform 0.3s ease;
-      font-size: 12px;
-    }
-
-    .nav-button.active .nav-arrow {
-      transform: rotate(180deg);
-    }
-
-    .nav-menu {
-      position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      background: white;
-      min-width: 220px;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      border: 1px solid rgba(185, 28, 28, 0.1);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      overflow: hidden;
-    }
-
-    .nav-menu.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .nav-item {
-      display: block;
-      padding: 12px 20px;
-      color: #7a1b1b;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      transition: all 0.2s ease;
-      border-bottom: 1px solid rgba(185, 28, 28, 0.1);
-    }
-
-    .nav-item:last-child {
-      border-bottom: none;
-    }
-
-    .nav-item:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffcccc);
-      color: #5a1515;
-      padding-left: 24px;
-    }
     
     /* Professional header responsive adjustments */
     @media (max-width: 768px) {
@@ -558,10 +585,7 @@
       }
       
       .header-content {
-        flex-direction: column;
-        align-items: center;
         gap: 16px;
-        text-align: center;
       }
       
       .page-title {
@@ -571,16 +595,20 @@
       
       .page-subtitle {
         font-size: 15px;
-        margin-bottom: 16px;
+      }
+      
+      .header-nav-button {
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+      }
+      
+      .header-nav-menu {
+        right: 50% !important;
+        transform: translateX(50%) translateY(-10px) !important;
       }
 
-      .nav-menu {
-        right: 50%;
-        transform: translateX(50%) translateY(-10px);
-      }
-
-      .nav-menu.show {
-        transform: translateX(50%) translateY(0);
+      .header-nav-menu.show {
+        transform: translateX(50%) translateY(0) !important;
       }
     }
     
@@ -795,6 +823,18 @@
             </ul>
           </li>
         </ul>
+        
+        <!-- Navigation Button in Header -->
+        <div style="position: relative;">
+          <button class="header-nav-button" onclick="toggleHeaderNav()">
+            <span>Navigation</span>
+            <span class="header-nav-arrow">▼</span>
+          </button>
+          <div class="header-nav-menu" id="headerNavMenu">
+            <a href="#unr-section" class="header-nav-item" onclick="closeHeaderNav()">UNR Reports</a>
+            <!-- Add more KPI sections here as needed -->
+          </div>
+        </div>
       </nav>
     </div>
   </header>
@@ -807,18 +847,6 @@
         <div class="title-section">
           <h1 class="page-title">Operations KPIs</h1>
           <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
-        </div>
-        <div class="header-nav">
-          <div class="nav-dropdown">
-            <button class="nav-button" onclick="toggleHeaderNav()">
-              <span>Navigation</span>
-              <span class="nav-arrow">▼</span>
-            </button>
-            <div class="nav-menu" id="headerNavMenu">
-              <a href="#unr-section" class="nav-item" onclick="closeHeaderNav()">UNR Reports</a>
-              <!-- Add more KPI sections here as needed -->
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -876,7 +904,7 @@
   <script>
     function toggleHeaderNav() {
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
       menu.classList.toggle('show');
       button.classList.toggle('active');
@@ -884,7 +912,7 @@
     
     function closeHeaderNav() {
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
       menu.classList.remove('show');
       button.classList.remove('active');
@@ -892,11 +920,11 @@
     
     // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
-      const navDropdown = document.querySelector('.nav-dropdown');
+      const navButton = document.querySelector('.header-nav-button');
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
-      if (navDropdown && !navDropdown.contains(event.target)) {
+      if (navButton && !navButton.parentElement.contains(event.target)) {
         menu.classList.remove('show');
         button.classList.remove('active');
       }
