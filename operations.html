@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ren Internal - Operations</title>
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=6" />
   <meta http-equiv="Cache-Control" content="no-store" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -13,18 +13,57 @@
   <style>
     .reports-container {
       display: flex !important;
-      gap: 16px !important;
-      margin-top: 24px !important;
+      gap: 24px !important;
+      margin-top: 32px !important;
     }
     
     .report-card {
       flex: 1 !important;
-      min-width: 250px !important;
+      min-width: 300px !important;
+      max-width: calc(50% - 12px) !important;
+      margin-bottom: 24px !important;
+    }
+    
+    /* Prevent iframe overflow */
+    .framecard {
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Force proper iframe sizing */
+    iframe {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    
+    /* Ensure reports don't extend past their containers */
+    .top-report, .report-card {
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+    }
+    
+    /* Debug border to see container bounds */
+    .report-card {
+      border: 2px solid red !important;
+      margin: 10px !important;
+    }
+    
+    /* Force container constraints */
+    .content {
+      max-width: 1400px !important;
+      margin: 14px auto !important;
+      padding: 0 16px 24px !important;
+      overflow-x: hidden !important;
     }
     
     @media (max-width: 768px) {
       .reports-container {
         flex-direction: column !important;
+        gap: 20px !important;
+      }
+      .report-card {
+        max-width: 100% !important;
+        min-width: auto !important;
       }
     }
     
@@ -113,11 +152,44 @@
     
     .section-title {
       color: #7a1b1b;
+      border-bottom: 3px solid var(--accent);
+      padding: 16px 20px 12px 20px;
+      margin: 20px 0 24px 0;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff 0%, #ffe5e5 100%);
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.1);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+    }
+    
+    .section-title::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #ff4444, var(--accent));
+      border-radius: 12px 12px 0 0;
+    }
+    
+    /* Enhanced report titles */
+    .report-title {
+      margin: 0 0 16px 0 !important;
+      color: #7a1b1b !important;
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      text-align: center !important;
+      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+      padding: 12px 16px;
+      border-radius: 8px 8px 0 0;
       border-bottom: 2px solid var(--accent);
-      padding-bottom: 8px;
-      margin: 12px 0 20px 0;
-      font-size: 18px;
-      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
   </style>
 </head>
@@ -226,7 +298,7 @@
     </div> <!-- End of UNR Section -->
   </main>
 
-  <script src="javascript.js?v=4"></script>
+  <script src="javascript.js?v=5"></script>
   
   <!-- Table of Contents JavaScript -->
   <script>
@@ -258,15 +330,20 @@
       }
     });
     
-    // Smooth scrolling for anchor links
+    // Enhanced smooth scrolling with offset for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+          // Calculate offset to account for header and provide padding
+          const headerHeight = document.querySelector('.topbar').offsetHeight;
+          const additionalOffset = 30; // Extra padding so title is clearly visible
+          const targetPosition = target.offsetTop - headerHeight - additionalOffset;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
           });
         }
       });
