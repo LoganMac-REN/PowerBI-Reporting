@@ -1,6 +1,6 @@
 /* Brand colors (keep your vibe) */
 :root {
-  --bg: hsl(0, 100%, 91%);   /* page background */
+  --bg: #f1f5f9;   /* page background - light blue-gray to match operations */
   --bar: hsl(0, 100%, 80%);  /* top bar background */
   --accent: #b91c1c;         /* hover/active */
   --link: #ff0000;           /* nav link color */
