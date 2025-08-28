@@ -370,6 +370,94 @@
         font-size: 16px;
       }
     }
+
+    /* Professional Header Card Styling */
+    .page-header {
+      background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 24px rgba(185, 28, 28, 0.08);
+      position: relative;
+      overflow: visible;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .title-section {
+      flex: 1;
+    }
+    
+    .page-title {
+      font-size: 38px;
+      font-weight: 700;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: #7a1b1b;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    
+    .page-subtitle {
+      font-size: 17px;
+      color: #9f2121;
+      margin: 0;
+      font-weight: 500;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+    }
+    
+    /* Professional header responsive adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 20px 16px;
+        margin-bottom: 24px;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        text-align: center;
+      }
+      
+      .page-title {
+        font-size: 28px;
+        letter-spacing: 1.5px;
+      }
+      
+      .page-subtitle {
+        font-size: 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .page-header {
+        padding: 16px 12px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+      }
+      
+      .page-subtitle {
+        font-size: 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -417,26 +505,34 @@
 
   <!-- Page -->
   <main class="content">
-    <h2 class="pagetitle">Engineering KPIs</h2>
-    
-    <!-- Table of Contents Dropdown -->
-    <div class="toc-container">
-      <div class="toc-dropdown">
-        <button class="toc-button" onclick="toggleTOC()">
-          <span>Table of Contents</span>
-          <span class="toc-arrow">▼</span>
-        </button>
-        <div class="toc-menu" id="tocMenu">
-          <a href="#coming-soon-section" class="toc-item" onclick="closeTOC()">Coming Soon</a>
-          <!-- Add more KPI sections here as needed -->
+    <!-- Professional Header Card with Navigation -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="page-title">ENGINEERING KPIS</h1>
+          <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
+        </div>
+        <div class="header-nav">
+          <div class="nav-dropdown">
+            <button class="nav-button" onclick="toggleHeaderNav()">
+              <span>Navigation</span>
+              <span class="nav-arrow">▼</span>
+            </button>
+            <div class="nav-menu" id="headerNavMenu">
+              <a href="#coming-soon-section" class="nav-item" onclick="closeHeaderNav()">Coming Soon</a>
+              <!-- Add more KPI sections here as needed -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
     
     <div id="coming-soon-section">
-      <div class="framecard coming-soon">
-        <h3>Engineering KPIs Coming Soon</h3>
-        <p>This page will contain Engineering-related Key Performance Indicators and dashboards.</p>
+      <div class="coming-soon-card">
+        <div class="coming-soon-content">
+          <h3>Engineering KPIs Coming Soon</h3>
+          <p>This page will contain Engineering-related Key Performance Indicators and dashboards.</p>
+        </div>
       </div>
     </div>
   </main>

@@ -209,6 +209,263 @@
       }
     }
 
+    /* Professional Header Card Styling */
+    .page-header {
+      background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 24px rgba(185, 28, 28, 0.08);
+      position: relative;
+      overflow: visible;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .title-section {
+      flex: 1;
+    }
+    
+    .page-title {
+      font-size: 38px;
+      font-weight: 700;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: #7a1b1b;
+      margin: 0 0 8px 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    
+    .page-subtitle {
+      font-size: 17px;
+      color: #9f2121;
+      margin: 0;
+      font-weight: 500;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+    }
+
+    /* Header Navigation Styling */
+    .header-nav {
+      position: relative;
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-button {
+      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(122, 27, 27, 0.2);
+    }
+
+    .nav-button:hover {
+      background: linear-gradient(135deg, #8b2020, #c22424);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(122, 27, 27, 0.3);
+    }
+
+    .nav-button.active {
+      background: linear-gradient(135deg, #8b2020, #c22424);
+    }
+
+    .nav-arrow {
+      transition: transform 0.3s ease;
+      font-size: 12px;
+    }
+
+    .nav-button.active .nav-arrow {
+      transform: rotate(180deg);
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: white;
+      min-width: 220px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(185, 28, 28, 0.1);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .nav-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-item {
+      display: block;
+      padding: 12px 20px;
+      color: #7a1b1b;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(185, 28, 28, 0.1);
+    }
+
+    .nav-item:last-child {
+      border-bottom: none;
+    }
+
+    .nav-item:hover {
+      background: linear-gradient(135deg, #ffe5e5, #ffcccc);
+      color: #5a1515;
+      padding-left: 24px;
+    }
+
+    /* Coming Soon Card Styling */
+    .coming-soon-card {
+      background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 40px 32px;
+      margin: 32px 0;
+      box-shadow: 0 8px 24px rgba(185, 28, 28, 0.08);
+      text-align: center;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .coming-soon-content h3 {
+      font-size: 32px;
+      font-weight: 700;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: #7a1b1b;
+      margin: 0 0 16px 0;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .coming-soon-content p {
+      font-size: 18px;
+      color: #9f2121;
+      margin: 0;
+      font-weight: 500;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    
+    /* Professional header responsive adjustments */
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 20px 16px;
+        margin-bottom: 24px;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        text-align: center;
+      }
+      
+      .page-title {
+        font-size: 28px;
+        letter-spacing: 1.5px;
+      }
+      
+      .page-subtitle {
+        font-size: 15px;
+        margin-bottom: 16px;
+      }
+
+      .nav-menu {
+        right: 50%;
+        transform: translateX(50%) translateY(-10px);
+      }
+
+      .nav-menu.show {
+        transform: translateX(50%) translateY(0);
+      }
+
+      .coming-soon-card {
+        padding: 32px 20px;
+        margin: 24px 0;
+      }
+
+      .coming-soon-content h3 {
+        font-size: 24px;
+      }
+
+      .coming-soon-content p {
+        font-size: 16px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .page-header {
+        padding: 16px 12px;
+      }
+      
+      .page-title {
+        font-size: 24px;
+        letter-spacing: 1px;
+      }
+      
+      .page-subtitle {
+        font-size: 14px;
+      }
+
+      .nav-button {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+
+      .coming-soon-card {
+        padding: 24px 16px;
+      }
+
+      .coming-soon-content h3 {
+        font-size: 20px;
+      }
+
+      .coming-soon-content p {
+        font-size: 14px;
+      }
+    }
+
     /* Override any iframe-related styling for coming soon pages */
     .content {
       max-width: 1400px !important;
@@ -417,45 +674,53 @@
 
   <!-- Page -->
   <main class="content">
-    <h2 class="pagetitle">Supply Chain KPIs</h2>
-    
-    <!-- Table of Contents Dropdown -->
-    <div class="toc-container">
-      <div class="toc-dropdown">
-        <button class="toc-button" onclick="toggleTOC()">
-          <span>Table of Contents</span>
-          <span class="toc-arrow">▼</span>
-        </button>
-        <div class="toc-menu" id="tocMenu">
-          <a href="#coming-soon-section" class="toc-item" onclick="closeTOC()">Coming Soon</a>
-          <!-- Add more KPI sections here as needed -->
+    <!-- Professional Header Card with Navigation -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="title-section">
+          <h1 class="page-title">SUPPLY CHAIN KPIS</h1>
+          <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
+        </div>
+        <div class="header-nav">
+          <div class="nav-dropdown">
+            <button class="nav-button" onclick="toggleHeaderNav()">
+              <span>Navigation</span>
+              <span class="nav-arrow">▼</span>
+            </button>
+            <div class="nav-menu" id="headerNavMenu">
+              <a href="#coming-soon-section" class="nav-item" onclick="closeHeaderNav()">Coming Soon</a>
+              <!-- Add more KPI sections here as needed -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
     
     <div id="coming-soon-section">
-      <div class="framecard coming-soon">
-        <h3>Supply Chain KPIs Coming Soon</h3>
-        <p>This page will contain Supply Chain-related Key Performance Indicators and dashboards.</p>
+      <div class="coming-soon-card">
+        <div class="coming-soon-content">
+          <h3>Supply Chain KPIs Coming Soon</h3>
+          <p>This page will contain Supply Chain-related Key Performance Indicators and dashboards.</p>
+        </div>
       </div>
     </div>
   </main>
 
   <script src="javascript.js?v=5"></script>
   
-  <!-- Table of Contents JavaScript -->
+  <!-- Header Navigation JavaScript -->
   <script>
-    function toggleTOC() {
-      const menu = document.getElementById('tocMenu');
-      const button = document.querySelector('.toc-button');
+    function toggleHeaderNav() {
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.nav-button');
       
       menu.classList.toggle('show');
       button.classList.toggle('active');
     }
     
-    function closeTOC() {
-      const menu = document.getElementById('tocMenu');
-      const button = document.querySelector('.toc-button');
+    function closeHeaderNav() {
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.nav-button');
       
       menu.classList.remove('show');
       button.classList.remove('active');
@@ -463,11 +728,11 @@
     
     // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
-      const tocContainer = document.querySelector('.toc-container');
-      const menu = document.getElementById('tocMenu');
-      const button = document.querySelector('.toc-button');
+      const navDropdown = document.querySelector('.nav-dropdown');
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.nav-button');
       
-      if (!tocContainer.contains(event.target)) {
+      if (navDropdown && !navDropdown.contains(event.target)) {
         menu.classList.remove('show');
         button.classList.remove('active');
       }
