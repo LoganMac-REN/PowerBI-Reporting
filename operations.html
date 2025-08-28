@@ -459,159 +459,95 @@
       letter-spacing: 0.5px;
       line-height: 1.4;
     }
-    
-    /* Enhanced Table of Contents Dropdown Styles */
-    .toc-container {
-      margin: 0;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .toc-dropdown {
+
+    /* Header Navigation Styling */
+    .header-nav {
       position: relative;
     }
-    
-    .toc-button {
-      background: linear-gradient(135deg, #ffffff, #f9fafb);
-      color: var(--link);
-      border: 2px solid var(--border);
-      padding: 14px 24px;
-      border-radius: 12px;
-      cursor: pointer;
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-button {
+      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
       font-size: 16px;
       font-weight: 600;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.08);
+      gap: 8px;
       transition: all 0.3s ease;
-      min-width: 220px;
-      justify-content: space-between;
-      position: relative;
-      overflow: hidden;
-      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(122, 27, 27, 0.2);
     }
-    
-    .toc-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05), rgba(220, 38, 38, 0.05));
-      opacity: 0;
-      transition: opacity 0.3s ease;
+
+    .nav-button:hover {
+      background: linear-gradient(135deg, #8b2020, #c22424);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(122, 27, 27, 0.3);
     }
-    
-    .toc-button:hover::before {
-      opacity: 1;
+
+    .nav-button.active {
+      background: linear-gradient(135deg, #8b2020, #c22424);
     }
-    
-    .toc-button:hover {
-      border-color: var(--accent);
-      box-shadow: 0 6px 20px rgba(185, 28, 28, 0.15);
-      transform: translateY(-1px);
-    }
-    
-    .toc-icon {
-      font-size: 16px;
-      opacity: 0.8;
-    }
-    
-    .toc-text {
-      flex: 1;
-      text-align: left;
-    }
-    
-    .toc-arrow {
+
+    .nav-arrow {
       transition: transform 0.3s ease;
       font-size: 12px;
-      color: var(--link);
-      opacity: 0.7;
     }
-    
-    .toc-button.active .toc-arrow {
+
+    .nav-button.active .nav-arrow {
       transform: rotate(180deg);
     }
-    
-    .toc-menu {
+
+    .nav-menu {
       position: absolute;
       top: calc(100% + 8px);
       right: 0;
-      background: #ffffff;
-      border: 2px solid var(--border);
+      background: white;
+      min-width: 220px;
       border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.12);
-      min-width: 240px;
-      z-index: 9999;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(185, 28, 28, 0.1);
       opacity: 0;
       visibility: hidden;
-      transform: translateY(-8px);
+      transform: translateY(-10px);
       transition: all 0.3s ease;
-      padding: 8px 0;
-      backdrop-filter: blur(10px);
+      z-index: 1000;
+      overflow: hidden;
     }
-    
-    .toc-menu::before {
-      content: '';
-      position: absolute;
-      top: -6px;
-      right: 20px;
-      width: 12px;
-      height: 12px;
-      background: #ffffff;
-      border: 2px solid var(--border);
-      border-bottom: none;
-      border-right: none;
-      transform: rotate(45deg);
-    }
-    
-    .toc-menu.show {
+
+    .nav-menu.show {
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
     }
-    
-    .toc-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      color: var(--link);
+
+    .nav-item {
+      display: block;
+      padding: 12px 20px;
+      color: #7a1b1b;
       text-decoration: none;
-      transition: all 0.2s ease;
       font-size: 15px;
       font-weight: 500;
-      font-family: Arial, Helvetica, sans-serif;
-      position: relative;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(185, 28, 28, 0.1);
     }
-    
-    .toc-item::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 0;
-      background: linear-gradient(135deg, var(--accent), #dc2626);
-      transition: width 0.3s ease;
+
+    .nav-item:last-child {
+      border-bottom: none;
     }
-    
-    .toc-item:hover::before {
-      width: 4px;
-    }
-    
-    .toc-item:hover {
-      background: linear-gradient(135deg, #ffe5e5, #fef2f2);
-      color: #7a1b1b;
-      padding-left: 20px;
-    }
-    
-    .toc-item-icon {
-      font-size: 14px;
-      opacity: 0.8;
+
+    .nav-item:hover {
+      background: linear-gradient(135deg, #ffe5e5, #ffcccc);
+      color: #5a1515;
+      padding-left: 24px;
     }
     
     /* Professional header responsive adjustments */
@@ -623,31 +559,29 @@
       
       .header-content {
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
         gap: 16px;
+        text-align: center;
       }
       
       .page-title {
-        font-size: 24px;
-        text-align: center;
+        font-size: 28px;
+        letter-spacing: 1.5px;
       }
       
       .page-subtitle {
-        text-align: center;
-        font-size: 14px;
+        font-size: 15px;
+        margin-bottom: 16px;
       }
-      
-      .toc-container {
-        align-self: center;
+
+      .nav-menu {
+        right: 50%;
+        transform: translateX(50%) translateY(-10px);
       }
-      
-      .toc-button {
-        min-width: 180px;
-        padding: 10px 16px;
-        font-size: 14px;
+
+      .nav-menu.show {
+        transform: translateX(50%) translateY(0);
       }
-      
-      .toc-menu {
         min-width: 200px;
         left: 50%;
         right: auto;
@@ -889,18 +823,14 @@
           <h1 class="page-title">Operations KPIs</h1>
           <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
         </div>
-        
-        <!-- Enhanced Table of Contents Dropdown -->
-        <div class="toc-container">
-          <div class="toc-dropdown">
-            <button class="toc-button" onclick="toggleTOC()">
-              <span class="toc-text">Navigate Sections</span>
-              <span class="toc-arrow">▼</span>
+        <div class="header-nav">
+          <div class="nav-dropdown">
+            <button class="nav-button" onclick="toggleHeaderNav()">
+              <span>Navigation</span>
+              <span class="nav-arrow">▼</span>
             </button>
-            <div class="toc-menu" id="tocMenu">
-              <a href="#unr-section" class="toc-item" onclick="closeTOC()">
-                <span>UNR Reports</span>
-              </a>
+            <div class="nav-menu" id="headerNavMenu">
+              <a href="#unr-section" class="nav-item" onclick="closeHeaderNav()">UNR Reports</a>
               <!-- Add more KPI sections here as needed -->
             </div>
           </div>
@@ -957,19 +887,19 @@
 
   <script src="javascript.js?v=5"></script>
   
-  <!-- Table of Contents JavaScript -->
+  <!-- Header Navigation JavaScript -->
   <script>
-    function toggleTOC() {
-      const menu = document.getElementById('tocMenu');
-      const button = document.querySelector('.toc-button');
+    function toggleHeaderNav() {
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.nav-button');
       
       menu.classList.toggle('show');
       button.classList.toggle('active');
     }
     
-    function closeTOC() {
-      const menu = document.getElementById('tocMenu');
-      const button = document.querySelector('.toc-button');
+    function closeHeaderNav() {
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.nav-button');
       
       menu.classList.remove('show');
       button.classList.remove('active');
@@ -977,11 +907,11 @@
     
     // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
-      const tocContainer = document.querySelector('.toc-container');
-      const menu = document.getElementById('tocMenu');
-      const button = document.querySelector('.toc-button');
+      const navDropdown = document.querySelector('.nav-dropdown');
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.nav-button');
       
-      if (!tocContainer.contains(event.target)) {
+      if (navDropdown && !navDropdown.contains(event.target)) {
         menu.classList.remove('show');
         button.classList.remove('active');
       }

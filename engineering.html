@@ -505,34 +505,36 @@
 
   <!-- Page -->
   <main class="content">
-    <!-- Professional Header Card with Navigation -->
+    <!-- Professional Header Card -->
     <div class="page-header">
       <div class="header-content">
         <div class="title-section">
           <h1 class="page-title">ENGINEERING KPIS</h1>
           <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
         </div>
-        <div class="header-nav">
-          <div class="nav-dropdown">
-            <button class="nav-button" onclick="toggleHeaderNav()">
-              <span>Navigation</span>
-              <span class="nav-arrow">▼</span>
-            </button>
-            <div class="nav-menu" id="headerNavMenu">
-              <a href="#coming-soon-section" class="nav-item" onclick="closeHeaderNav()">Coming Soon</a>
-              <!-- Add more KPI sections here as needed -->
-            </div>
-          </div>
+      </div>
+    </div>
+
+    <h2 class="pagetitle">Engineering KPIs</h2>
+    
+    <!-- Table of Contents Dropdown -->
+    <div class="toc-container">
+      <div class="toc-dropdown">
+        <button class="toc-button" onclick="toggleTOC()">
+          <span>Table of Contents</span>
+          <span class="toc-arrow">▼</span>
+        </button>
+        <div class="toc-menu" id="tocMenu">
+          <a href="#coming-soon-section" class="toc-item" onclick="closeTOC()">Coming Soon</a>
+          <!-- Add more KPI sections here as needed -->
         </div>
       </div>
     </div>
     
     <div id="coming-soon-section">
-      <div class="coming-soon-card">
-        <div class="coming-soon-content">
-          <h3>Engineering KPIs Coming Soon</h3>
-          <p>This page will contain Engineering-related Key Performance Indicators and dashboards.</p>
-        </div>
+      <div class="framecard coming-soon">
+        <h3>Engineering KPIs Coming Soon</h3>
+        <p>This page will contain Engineering-related Key Performance Indicators and dashboards.</p>
       </div>
     </div>
   </main>
