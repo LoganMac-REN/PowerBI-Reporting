@@ -229,8 +229,157 @@ iframe {
 }
 
 /* Optional: narrow screen adjustments */
+@media (max-width: 1400px) {
+  .bar-inner { max-width: 100%; }
+  
+  /* More aggressive scaling for large laptops - maintain 16:9 ratio */
+  .content {
+    max-width: 1000px !important;
+  }
+  
+  .framecard {
+    padding: 6px;
+  }
+  
+  .framecard::before {
+    padding-top: 56.25%; /* Keep 16:9 aspect ratio */
+  }
+  
+  iframe {
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    width: calc(100% - 12px);
+    height: calc(100% - 12px);
+  }
+}
+
+@media (max-width: 1200px) {
+  /* Very aggressive width scaling for typical laptop screens - maintain 16:9 */
+  .content {
+    max-width: 750px !important;
+  }
+  
+  .framecard {
+    padding: 4px;
+  }
+  
+  .framecard::before {
+    padding-top: 56.25%; /* Keep 16:9 aspect ratio */
+  }
+  
+  iframe {
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .content {
+    max-width: 650px !important;
+  }
+  
+  .reports-container {
+    gap: 10px;
+  }
+  
+  .report-card {
+    min-width: 180px;
+  }
+  
+  .framecard {
+    padding: 3px;
+  }
+  
+  .framecard::before {
+    padding-top: 56.25%; /* Keep 16:9 aspect ratio */
+  }
+  
+  iframe {
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+  }
+}
+
 @media (max-width: 900px) {
   .bar-inner { max-width: 100%; }
+  
+  .content {
+    max-width: 600px !important;
+  }
+  
+  /* Tablet portrait and larger phones - maintain 16:9 */
+  .framecard::before {
+    padding-top: 56.25%; /* Keep 16:9 aspect ratio */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile and small tablets - maintain 16:9 */
+  .content {
+    max-width: 100% !important;
+  }
+  
+  .reports-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .report-card {
+    flex: none;
+    max-width: 100%;
+    min-width: auto;
+  }
+  
+  .framecard {
+    padding: 4px;
+  }
+  
+  .framecard::before {
+    padding-top: 56.25%; /* Keep 16:9 aspect ratio for mobile too */
+  }
+  
+  iframe {
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Small mobile phones - maintain 16:9 */
+  .framecard {
+    padding: 3px;
+  }
+  
+  .framecard::before {
+    padding-top: 56.25%; /* Keep 16:9 aspect ratio even on small screens */
+  }
+  
+  iframe {
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+  }
+  
+  .reports-container {
+    gap: 10px;
+  }
 }
 
 /* Responsive adjustments for reports */
