@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ren Internal - Runner/Repeater Debug</title>
+  <title>Ren Internal - Customer Hold Tool</title>
   <link rel="stylesheet" href="style.css?v=13" />
   <meta http-equiv="Cache-Control" content="no-store" />
   
@@ -211,11 +211,13 @@
       background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
       border: 2px solid rgba(185, 28, 28, 0.2);
       border-radius: 16px;
-      padding: 24px 32px;
+      padding: 24px 60px;
       margin-bottom: 32px;
       backdrop-filter: blur(10px);
       position: relative;
       overflow: visible;
+      width: calc(100% - 120px);
+      max-width: 1366px;
     }
     
     .header-content {
@@ -280,6 +282,11 @@
       
       .content {
         padding: 140px 12px 20px !important;
+        max-width: 100% !important;
+      }
+      
+      .iframe-container {
+        margin-top: 20px !important;
       }
     }
     
@@ -304,6 +311,10 @@
       .content {
         padding: 130px 8px 16px !important;
       }
+      
+      .iframe-container {
+        margin-top: 16px !important;
+      }
     }
     
     @media (max-width: 360px) {
@@ -324,11 +335,41 @@
       .content {
         padding: 120px 6px 14px !important;
       }
+      
+      .iframe-container {
+        margin-top: 12px !important;
+      }
+    }
+    
+    /* Content container alignment */
+    .content {
+      max-width: 1366px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Reset page-header to match iframe exactly */
+    .page-header {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
+      border: 2px solid rgba(185, 28, 28, 0.2);
+      border-radius: 16px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: visible;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    /* Frame container - match header width */
+    .framecard {
+      width: 100%;
+      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
-
   <!-- Top bar (brand + right-aligned dropdowns) -->
   <header class="topbar">
     <div class="brand">Ren Internal</div>
@@ -343,7 +384,7 @@
               <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
               <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
               <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
-              <li><a href="RUN-DEBUG-TV.html" class="active">Run-Debug</a></li>
+              <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
             </ul>
           </li>
 
@@ -363,7 +404,7 @@
             <ul class="sub">
               <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
               <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
-              <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
+              <li><a href="customerHoldApp.html" class="active">Customer Hold Tool</a></li>
             </ul>
           </li>
         </ul>
@@ -377,18 +418,20 @@
     <div class="page-header">
       <div class="header-content">
         <div class="title-section">
-          <h1 class="page-title">Runner/Repeater Debug</h1>
-          <p class="page-subtitle">Debug Environment Analytics & Diagnostics</p>
+          <h1 class="page-title">Customer Hold Tool</h1>
+          <p class="page-subtitle">Customer Order Management & Hold Processing</p>
         </div>
       </div>
     </div>
     
     <div class="framecard">
       <iframe
-        id = "powerbi-frame"
-        title="Runner/Repeater Debug"
-        src="https://app.powerbi.com/view?r=eyJrIjoiYmQ1ZmY5OWMtOGRiMC00MjAwLTkyZDYtZWJkNDg5N2Q4ZDY4IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
-        allowfullscreen="true">
+        id = "powerapp-frame"
+        src="https://apps.powerapps.com/play/b080bdf3-9804-457d-b278-8698dda652ee?source=iframe"
+        width="1366"
+        height="768"
+        frameborder="0"
+        allowfullscreen>
       </iframe>
     </div>
   </main>
@@ -396,4 +439,3 @@
   <script src="javascript.js?v=4"></script>
 </body>
 </html>
-
