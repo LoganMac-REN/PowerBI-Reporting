@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ren Internal - Supply Chain</title>
-  <link rel="stylesheet" href="style.css?v=13" />
+  <link rel="stylesheet" href="style.css?v=14" />
   <meta http-equiv="Cache-Control" content="no-store" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   
-  <!-- CSS for coming soon pages -->
+  <!-- Backup CSS for layout -->
   <style>
     /* Professional Main Header Styling */
     .topbar {
@@ -17,7 +17,12 @@
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
       border-bottom: 3px solid #5a1616 !important;
       padding: 0 !important;
-      position: relative !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
     }
     
     .topbar::before {
@@ -148,6 +153,61 @@
       margin: 8px 0;
     }
     
+    .reports-container {
+      display: flex !important;
+      gap: 24px !important;
+      margin-top: 32px !important;
+    }
+    
+    .report-card {
+      flex: 1 !important;
+      min-width: 300px !important;
+      max-width: calc(50% - 12px) !important;
+      margin-bottom: 24px !important;
+    }
+    
+    /* Prevent iframe overflow */
+    .framecard {
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+    
+    /* Force proper iframe sizing - fill entire container */
+    iframe {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      border: none !important;
+      border-radius: 0 !important;
+    }
+    
+    /* Ensure reports don't extend past their containers */
+    .top-report, .report-card {
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      background: transparent !important;
+    }
+    
+    /* Force container constraints with better responsive scaling */
+    .content {
+      max-width: 1400px !important;
+      margin: 0 auto !important;
+      padding: 160px 16px 24px !important;
+      overflow-x: hidden !important;
+      background: transparent !important;
+    }
+    
     /* Scroll to top styling */
     .scroll-to-top {
       font-weight: 600 !important;
@@ -160,6 +220,161 @@
       background: rgba(255, 255, 255, 1) !important;
       transform: translateY(-1px) !important;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    }
+    
+    .menu {
+      display: flex !important;
+      list-style: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      gap: 0 !important;
+    }
+    
+    .menu li {
+      position: relative !important;
+    }
+    
+    .toplink {
+      display: block !important;
+      padding: 18px 28px !important;
+      color: #ffffff !important;
+      text-decoration: none !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+      transition: all 0.3s ease !important;
+      border-right: 1px solid rgba(255,255,255,0.1) !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    
+    .toplink::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .toplink:hover::before {
+      opacity: 1;
+    }
+    
+    .toplink:hover {
+      background: rgba(255,255,255,0.1) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: inset 0 -3px 0 rgba(255,255,255,0.3) !important;
+    }
+    
+    .toplink.active {
+      background: rgba(255,255,255,0.15) !important;
+      box-shadow: inset 0 -3px 0 #ffffff !important;
+      font-weight: 700 !important;
+    }
+    
+    /* Enhanced Dropdown Styling */
+    .sub {
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+      background: #ffffff !important;
+      min-width: 200px !important;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+      border-radius: 0 0 8px 8px !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transform: translateY(-10px) !important;
+      transition: all 0.3s ease !important;
+      z-index: 1000 !important;
+      border: 1px solid rgba(0,0,0,0.1) !important;
+      border-top: none !important;
+      list-style: none !important;
+      padding: 8px 0 !important;
+      margin: 0 !important;
+    }
+    
+    .has-sub:hover .sub {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
+    
+    .sub li {
+      margin: 0 !important;
+    }
+    
+    .sub a {
+      display: block !important;
+      padding: 12px 20px !important;
+      color: #7a1b1b !important;
+      text-decoration: none !important;
+      font-size: 15px !important;
+      font-weight: 500 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+      text-transform: none !important;
+      letter-spacing: 0.5px !important;
+      transition: all 0.2s ease !important;
+      border-left: 3px solid transparent !important;
+    }
+    
+    .sub a:hover {
+      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+      color: #5a1616 !important;
+      border-left-color: var(--accent) !important;
+      padding-left: 24px !important;
+    }
+    
+    .sub a.active {
+      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+      color: #5a1616 !important;
+      border-left-color: var(--accent) !important;
+      font-weight: 600 !important;
+    }
+    
+    /* Responsive adjustments for main header */
+    @media (max-width: 768px) {
+      .brand {
+        font-size: 18px !important;
+        padding: 12px 16px !important;
+      }
+      
+      .toplink {
+        padding: 14px 20px !important;
+        font-size: 14px !important;
+      }
+      
+      .sub {
+        min-width: 180px !important;
+        border-radius: 0 0 6px 6px !important;
+      }
+      
+      .sub a {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .brand {
+        font-size: 16px !important;
+        padding: 10px 12px !important;
+      }
+      
+      .toplink {
+        padding: 12px 16px !important;
+        font-size: 13px !important;
+      }
+      
+      .sub a {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+      }
     }
     
     /* Force container constraints with better responsive scaling */
@@ -177,12 +392,24 @@
         max-width: 1000px !important;
         padding: 160px 10px 18px !important;
       }
+      
+      .reports-container {
+        gap: 20px !important;
+      }
     }
     
     @media (max-width: 1200px) {
       .content {
         max-width: 750px !important;
         padding: 160px 8px 16px !important;
+      }
+      
+      .reports-container {
+        gap: 18px !important;
+      }
+      
+      .report-card {
+        min-width: 250px !important;
       }
     }
     
@@ -191,6 +418,14 @@
         max-width: 650px !important;
         padding: 160px 6px 14px !important;
       }
+      
+      .reports-container {
+        gap: 16px !important;
+      }
+      
+      .report-card {
+        min-width: 200px !important;
+      }
     }
     
     @media (max-width: 900px) {
@@ -198,12 +433,34 @@
         max-width: 600px !important;
         padding: 160px 6px 12px !important;
       }
+      
+      .reports-container {
+        flex-direction: column !important;
+        gap: 14px !important;
+      }
     }
     
     @media (max-width: 768px) {
       .content {
         max-width: 100% !important;
         padding: 160px 4px 10px !important;
+      }
+      
+      /* Mobile and tablet portrait - force all reports to stack */
+      .reports-container {
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+      
+      .report-card {
+        max-width: 100% !important;
+        min-width: auto !important;
+        width: 100% !important;
+      }
+      
+      /* Ensure top report also stacks properly */
+      .top-report {
+        margin-bottom: 16px !important;
       }
     }
     
@@ -592,6 +849,57 @@
       padding-left: 24px;
     }
 
+    /* Enhanced Section Headers */
+    .section-title {
+      color: #7a1b1b;
+      padding: 20px 0 16px 0;
+      margin: 0 0 20px 0;
+      font-size: 32px;
+      font-weight: 700;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: transparent;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+      text-align: center;
+      line-height: 1.2;
+    }
+    
+    .section-title::before {
+      display: none;
+    }
+    
+    .section-title::after {
+      display: none;
+    }
+    
+    /* Enhanced report titles */
+    .report-title {
+      margin: 0 0 16px 0 !important;
+      color: #7a1b1b !important;
+      font-size: 22px !important;
+      font-weight: 600 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+      text-align: left !important;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
+      padding: 16px 20px;
+      border-radius: 8px 8px 0 0;
+      border: 2px solid rgba(185, 28, 28, 0.2);
+      text-transform: none;
+      letter-spacing: 0.5px;
+      position: relative;
+      line-height: 1.3;
+      backdrop-filter: blur(10px);
+    }
+    
+    .report-title::before {
+      display: none;
+    }
+    
+    .report-title::after {
+      display: none;
+    }
+
     /* Coming Soon Card Styling */
     .coming-soon-card {
       background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
@@ -710,36 +1018,13 @@
       }
     }
 
-    /* Override any iframe-related styling for coming soon pages */
+    /* Force container constraints with better responsive scaling */
     .content {
       max-width: 1400px !important;
-      margin: 20px auto !important;
-      padding: 0 20px !important;
+      margin: 0 auto !important;
+      padding: 160px 16px 24px !important;
       overflow-x: hidden !important;
-      min-height: auto !important;
-    }
-    
-    /* Ensure coming soon section is immediately visible */
-    #coming-soon-section {
-      margin-top: 20px !important;
-      margin-bottom: 20px !important;
-    }
-    
-    /* Reset any potential height issues */
-    .framecard.coming-soon {
-      min-height: auto !important;
-      height: auto !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-      position: static !important;
-    }
-    
-    /* Remove the 16:9 aspect ratio for coming soon cards */
-    .framecard.coming-soon::before {
-      display: none !important;
-      padding-top: 0 !important;
+      background: transparent !important;
     }
     
     /* Table of Contents Dropdown Styles */
@@ -825,53 +1110,6 @@
       background: #ffe5e5;
     }
     
-    /* Enhanced placeholder styling */
-    .coming-soon {
-      background: linear-gradient(135deg, #fff 0%, #ffe5e5 100%);
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 60px 40px;
-      text-align: center;
-      margin: 20px 0;
-      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.1);
-    }
-    
-    .coming-soon h3 {
-      color: #7a1b1b;
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .coming-soon p {
-      color: #7a1b1b;
-      font-size: 18px;
-      line-height: 1.6;
-      margin: 0;
-    }
-    
-    @media (max-width: 768px) {
-      .reports-container {
-        flex-direction: column !important;
-        gap: 20px !important;
-      }
-      .report-card {
-        max-width: 100% !important;
-        min-width: auto !important;
-      }
-      .coming-soon {
-        padding: 40px 20px;
-      }
-      .coming-soon h3 {
-        font-size: 24px;
-      }
-      .coming-soon p {
-        font-size: 16px;
-      }
-    }
-    
     /* Top of Page Button */
     .top-of-page-btn {
       position: fixed;
@@ -947,10 +1185,8 @@
             <span class="header-nav-arrow">▼</span>
           </button>
           <div class="header-nav-menu" id="headerNavMenu">
-            <a href="#coming-soon-section" class="header-nav-item" onclick="closeHeaderNav()">Coming Soon</a>
-            <div class="nav-divider"></div>
-            <a href="#top" class="header-nav-item scroll-to-top" onclick="closeHeaderNav(); scrollToTop();">↑ Top of Page</a>
-            <!-- Add more navigation items here as needed -->
+            <a href="#supply-chain-section" class="header-nav-item" onclick="closeHeaderNav()">UNR Reports</a>
+            <!-- Add more KPI sections here as needed -->
           </div>
         </div>
       </nav>
@@ -959,24 +1195,61 @@
 
   <!-- Page -->
   <main class="content">
-    <!-- Professional Header Card -->
+    <!-- Professional Header Section -->
     <div class="page-header">
       <div class="header-content">
         <div class="title-section">
-          <h1 class="page-title">SUPPLY CHAIN KPIS</h1>
+          <h1 class="page-title">Supply Chain KPIs</h1>
           <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
         </div>
       </div>
     </div>
     
-    <div id="coming-soon-section">
-      <div class="coming-soon-card">
-        <div class="coming-soon-content">
-          <h3>Supply Chain KPIs Coming Soon</h3>
-          <p>This page will contain Supply Chain-related Key Performance Indicators and dashboards.</p>
+    <!-- Supply Chain Section -->
+    <div id="supply-chain-section">
+      <h3 class="section-title">UNR Reports</h3>
+    
+    <!-- Combined Supply Chain Report - Full width on top -->
+    <div class="top-report">
+      <h3 class="report-title">UNR Both Plants</h3>
+      <div class="framecard">
+        <iframe
+          id="powerbi-frame"
+          title="Combined Supply Chain Report"
+          src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZWQ3YjAyYTAtMDIxYy00NWQzLTgyZDAtODQxMGRkOGM0NDBiIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+          allowfullscreen="true">
+        </iframe>
+      </div>
+    </div>
+    
+    <!-- Two side-by-side reports below -->
+    <div class="reports-container">
+      <div class="report-card">
+        <h3 class="report-title">UNR Ottawa</h3>
+        <div class="framecard">
+          <iframe
+            id="powerbi-frame"
+            title="UNR Ottawa Report"
+            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZDQxNTExODUtNTJmMC00YjcxLTlhZjEtNDJmZDc1YzIwODczIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+            allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+      
+      <div class="report-card">
+        <h3 class="report-title">UNR Dallas</h3>
+        <div class="framecard">
+          <iframe
+            id="powerbi-frame"
+            title="UNR Dallas Report"
+            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZDU3ZmY2YTctNTVjYy00Yzc5LTg2YmItODc5OWJkN2I3OWI0IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+            allowfullscreen="true">
+          </iframe>
         </div>
       </div>
     </div>
+    
+    </div> <!-- End of Supply Chain Section -->
   </main>
   
   <!-- Top of Page Button -->
@@ -990,7 +1263,7 @@
   <script>
     function toggleHeaderNav() {
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
       menu.classList.toggle('show');
       button.classList.toggle('active');
@@ -998,7 +1271,7 @@
     
     function closeHeaderNav() {
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
       menu.classList.remove('show');
       button.classList.remove('active');
@@ -1013,11 +1286,11 @@
     
     // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
-      const navDropdown = document.querySelector('.nav-dropdown');
+      const navButton = document.querySelector('.header-nav-button');
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
-      if (navDropdown && !navDropdown.contains(event.target)) {
+      if (navButton && !navButton.parentElement.contains(event.target)) {
         menu.classList.remove('show');
         button.classList.remove('active');
       }

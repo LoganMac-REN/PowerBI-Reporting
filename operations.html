@@ -857,32 +857,6 @@
         padding: 10px 12px;
       }
     }
-    
-    /* Top of Page Button */
-    .top-of-page-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(122, 27, 27, 0.3);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .top-of-page-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(122, 27, 27, 0.4);
-    }
   </style>
 </head>
 <body>
@@ -933,9 +907,7 @@
             <span class="header-nav-arrow">▼</span>
           </button>
           <div class="header-nav-menu" id="headerNavMenu">
-            <a href="#unr-section" class="header-nav-item" onclick="closeHeaderNav()">UNR Reports</a>
-            <div class="nav-divider"></div>
-            <a href="#top" class="header-nav-item scroll-to-top" onclick="closeHeaderNav(); scrollToTop();">↑ Top of Page</a>
+            <a href="#operations-section" class="header-nav-item" onclick="closeHeaderNav()">Receiving</a>
             <!-- Add more KPI sections here as needed -->
           </div>
         </div>
@@ -955,57 +927,25 @@
       </div>
     </div>
     
-    <!-- UNR Section -->
-    <div id="unr-section">
-      <h3 class="section-title">UNR Reports</h3>
+    <!-- Operations Section -->
+    <div id="operations-section">
+      <h3 class="section-title">Receiving</h3>
     
-    <!-- Combined UNR Report - Full width on top -->
+    <!-- Receiving KPIs Report - Full width -->
     <div class="top-report">
-      <h3 class="report-title">Combined UNR</h3>
+      <h3 class="report-title">Receiving KPIs</h3>
       <div class="framecard">
         <iframe
-          id="combined-unr-frame"
-          title="Combined UNR Report"
-          src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZWQ3YjAyYTAtMDIxYy00NWQzLTgyZDAtODQxMGRkOGM0NDBiIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+          id="powerbi-frame"
+          title="Receiving KPIs Report"
+          src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYjliZGE5NDYtZmVhNS00MGMxLWE5MjYtOWQ2ZmMzNTFmNmE0IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
           allowfullscreen="true">
         </iframe>
       </div>
     </div>
     
-    <!-- Two side-by-side reports below -->
-    <div class="reports-container">
-      <div class="report-card">
-        <h3 class="report-title">Ottawa UNR</h3>
-        <div class="framecard">
-          <iframe
-            id="ottawa-unr-frame"
-            title="Ottawa UNR Report"
-            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZDQxNTExODUtNTJmMC00YjcxLTlhZjEtNDJmZDc1YzIwODczIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
-            allowfullscreen="true">
-          </iframe>
-        </div>
-      </div>
-      
-      <div class="report-card">
-        <h3 class="report-title">Dallas UNR</h3>
-        <div class="framecard">
-          <iframe
-            id="dallas-unr-frame"
-            title="Dallas UNR Report"
-            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiZDU3ZmY2YTctNTVjYy00Yzc5LTg2YmItODc5OWJkN2I3OWI0IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
-            allowfullscreen="true">
-          </iframe>
-        </div>
-      </div>
-    </div>
-    
-    </div> <!-- End of UNR Section -->
+    </div> <!-- End of Operations Section -->
   </main>
-  
-  <!-- Top of Page Button -->
-  <button class="top-of-page-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
-    ↑
-  </button>
 
   <script src="javascript.js?v=5"></script>
   
