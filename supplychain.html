@@ -11,6 +11,14 @@
   
   <!-- Backup CSS for layout -->
   <style>
+    /* Professional Background Styling */
+    html, body {
+      background: #f1f5f9 !important;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
     /* Professional Main Header Styling */
     .topbar {
       background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
@@ -394,10 +402,11 @@
       }
       
       .reports-container {
-        gap: 20px !important;
+        gap: 15px !important;
+        margin-top: 20px !important;
       }
     }
-    
+
     @media (max-width: 1200px) {
       .content {
         max-width: 750px !important;
@@ -405,14 +414,15 @@
       }
       
       .reports-container {
-        gap: 18px !important;
+        gap: 12px !important;
+        margin-top: 16px !important;
       }
       
       .report-card {
-        min-width: 250px !important;
+        min-width: 200px !important;
       }
     }
-    
+
     @media (max-width: 1024px) {
       .content {
         max-width: 650px !important;
@@ -420,14 +430,15 @@
       }
       
       .reports-container {
-        gap: 16px !important;
+        gap: 10px !important;
+        margin-top: 14px !important;
       }
       
       .report-card {
-        min-width: 200px !important;
+        min-width: 180px !important;
       }
     }
-    
+
     @media (max-width: 900px) {
       .content {
         max-width: 600px !important;
@@ -435,32 +446,84 @@
       }
       
       .reports-container {
-        flex-direction: column !important;
-        gap: 14px !important;
+        gap: 10px !important;
+        margin-top: 12px !important;
       }
     }
-    
+
     @media (max-width: 768px) {
+      /* Mobile and tablet portrait - force all reports to stack */
       .content {
         max-width: 100% !important;
-        padding: 160px 4px 10px !important;
+        padding: 140px 10px 14px !important;
       }
       
-      /* Mobile and tablet portrait - force all reports to stack */
       .reports-container {
         flex-direction: column !important;
         gap: 12px !important;
+        margin-top: 14px !important;
+        width: 100% !important;
       }
       
       .report-card {
         max-width: 100% !important;
         min-width: auto !important;
         width: 100% !important;
+        flex: none !important;
+        margin-bottom: 12px !important;
       }
       
       /* Ensure top report also stacks properly */
       .top-report {
-        margin-bottom: 16px !important;
+        width: 100% !important;
+        margin-bottom: 12px !important;
+      }
+      
+      .toc-container {
+        margin: 10px 0 14px 0;
+      }
+      
+      .toc-button {
+        min-width: 180px;
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+      
+      .toc-menu {
+        min-width: 200px;
+      }
+      
+      .toc-item {
+        font-size: 14px;
+        padding: 6px 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Small mobile phones - ensure vertical stacking */
+      .content {
+        padding: 130px 8px 10px !important;
+      }
+      
+      .reports-container {
+        gap: 10px !important;
+        margin-top: 10px !important;
+        flex-direction: column !important;
+        display: flex !important;
+      }
+      
+      .report-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: auto !important;
+        flex: none !important;
+        display: block !important;
+      }
+      
+      .top-report {
+        width: 100% !important;
+        display: block !important;
+        margin-bottom: 10px !important;
       }
     }
     
