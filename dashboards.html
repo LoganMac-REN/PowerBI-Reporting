@@ -421,8 +421,9 @@
     }
 
     /* Responsive adjustments for main header */
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       .topbar {
+        position: static !important;
         height: 50px !important;
         padding: 0 10px !important;
       }
@@ -453,7 +454,7 @@
       /* Mobile and tablet portrait - force all dashboards to stack */
       main.content {
         max-width: 100% !important;
-        padding: 55px 16px 20px !important;
+        padding: 20px 16px 20px !important;
       }
       
       .dashboard-grid {
