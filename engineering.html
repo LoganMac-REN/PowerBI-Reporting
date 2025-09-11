@@ -24,13 +24,18 @@
       background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
       border-bottom: 3px solid #5a1616 !important;
-      padding: 0 !important;
+      padding: 0 20px !important;
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       right: 0 !important;
       z-index: 1000 !important;
       width: 100% !important;
+      height: 70px !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      box-sizing: border-box !important;
     }
     
     .topbar::before {
@@ -44,22 +49,224 @@
     }
     
     .brand {
-      font-size: 24px !important;
+      font-size: 20px !important;
       font-weight: 700 !important;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
       color: #ffffff !important;
-      padding: 16px 24px !important;
+      padding: 16px 0 !important;
       text-transform: uppercase !important;
-      letter-spacing: 1.5px !important;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)) !important;
-      border-right: 1px solid rgba(255,255,255,0.1) !important;
+      letter-spacing: 1.2px !important;
       text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+      flex-shrink: 0 !important;
+      position: absolute !important;
+      left: 20px !important;
     }
     
+    /* Mobile Hamburger Menu */
+    .mobile-menu-toggle {
+      display: none !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 40px !important;
+      height: 40px !important;
+      background: rgba(255, 255, 255, 0.15) !important;
+      border: 2px solid rgba(255, 255, 255, 0.3) !important;
+      border-radius: 8px !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      padding: 0 !important;
+      justify-self: end !important;
+    }
+    
+    .mobile-menu-toggle:hover {
+      background: rgba(255, 255, 255, 0.25) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+    }
+    
+    .hamburger-line {
+      width: 20px !important;
+      height: 2px !important;
+      background: white !important;
+      margin: 2px 0 !important;
+      transition: 0.3s !important;
+      border-radius: 1px !important;
+    }
+    
+    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+      transform: rotate(-45deg) translate(-4px, 4px) !important;
+    }
+    
+    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+      opacity: 0 !important;
+    }
+    
+    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+      transform: rotate(45deg) translate(-4px, -4px) !important;
+    }
+    
+    /* Side Menu Overlay */
+    .mobile-menu-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background: rgba(0, 0, 0, 0.5) !important;
+      z-index: 1500 !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .mobile-menu-overlay.active {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    
+    /* Side Menu Panel */
+    .mobile-menu-panel {
+      position: fixed !important;
+      top: 0 !important;
+      left: -320px !important;
+      width: 320px !important;
+      height: 100% !important;
+      background: linear-gradient(180deg, #7a1b1b 0%, #b91c1c 100%) !important;
+      z-index: 1600 !important;
+      transition: left 0.3s ease !important;
+      overflow-y: auto !important;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+    }
+    
+    .mobile-menu-panel.active {
+      left: 0 !important;
+    }
+    
+    /* Mobile menu activation via body class */
+    body.mobile-menu-open .mobile-menu-overlay {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    
+    body.mobile-menu-open .mobile-menu-panel {
+      left: 0 !important;
+    }
+    
+    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px) !important;
+    }
+    
+    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(2) {
+      opacity: 0 !important;
+    }
+    
+    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px) !important;
+    }
+    
+    .mobile-menu-header {
+      padding: 20px !important;
+      background: rgba(0, 0, 0, 0.2) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    
+    .mobile-menu-title {
+      color: white !important;
+      font-size: 18px !important;
+      font-weight: 700 !important;
+      margin: 0 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+    }
+    
+    .mobile-menu-close {
+      background: none !important;
+      border: none !important;
+      color: white !important;
+      font-size: 24px !important;
+      cursor: pointer !important;
+      padding: 5px !important;
+      line-height: 1 !important;
+    }
+    
+    .mobile-menu-content {
+      padding: 0 !important;
+    }
+    
+    .mobile-menu-section {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    .mobile-menu-section-title {
+      padding: 15px 20px !important;
+      color: white !important;
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      margin: 0 !important;
+      background: rgba(0, 0, 0, 0.1) !important;
+      cursor: pointer !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      transition: all 0.3s ease !important;
+      position: relative !important;
+    }
+    
+    .mobile-menu-section-title:hover {
+      background: rgba(0, 0, 0, 0.2) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .mobile-menu-section-title::after {
+      content: '▼' !important;
+      font-size: 12px !important;
+      transition: transform 0.3s ease !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .mobile-menu-section.collapsed .mobile-menu-section-title::after {
+      transform: rotate(-90deg) !important;
+    }
+    
+    .mobile-menu-items {
+      max-height: 500px !important;
+      overflow: hidden !important;
+      transition: max-height 0.3s ease !important;
+    }
+    
+    .mobile-menu-section.collapsed .mobile-menu-items {
+      max-height: 0 !important;
+    }
+    
+    .mobile-menu-item {
+      display: block !important;
+      padding: 12px 20px 12px 40px !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      text-decoration: none !important;
+      font-size: 15px !important;
+      font-weight: 400 !important;
+      transition: all 0.2s ease !important;
+      border-left: 3px solid transparent !important;
+    }
+    
+    .mobile-menu-item:hover, .mobile-menu-item.active {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: white !important;
+      border-left-color: white !important;
+      padding-left: 44px !important;
+    }
+    
+    /* Desktop Navigation - Hidden on Mobile */
     .bar-inner {
       display: flex !important;
       align-items: center !important;
       height: 100% !important;
+      justify-content: center !important;
     }
     
     .nav {
@@ -67,6 +274,14 @@
       display: flex !important;
       align-items: center !important;
       gap: 20px !important;
+    }
+    
+    /* Right side container */
+    .header-right {
+      display: flex !important;
+      align-items: center !important;
+      position: absolute !important;
+      right: 20px !important;
     }
     
     /* Navigation Button in Header */
@@ -111,22 +326,22 @@
 
     .header-nav-menu {
       position: absolute !important;
-      top: calc(100% + 8px) !important;
-      right: 0 !important;
-      background: white !important;
-      min-width: 220px !important;
-      border-radius: 12px !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-      border: 1px solid rgba(185, 28, 28, 0.1) !important;
+      top: 100% !important;
+      left: 0 !important;
+      background: linear-gradient(145deg, #7a1b1b, #b91c1c) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      border-radius: 8px !important;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+      min-width: 200px !important;
       opacity: 0 !important;
       visibility: hidden !important;
       transform: translateY(-10px) !important;
       transition: all 0.3s ease !important;
       z-index: 1100 !important;
-      overflow: hidden !important;
+      margin-top: 8px !important;
     }
 
-    .header-nav-menu.show {
+    .header-nav-menu.active {
       opacity: 1 !important;
       visibility: visible !important;
       transform: translateY(0) !important;
@@ -134,14 +349,13 @@
 
     .header-nav-item {
       display: block !important;
-      padding: 12px 20px !important;
-      color: #7a1b1b !important;
+      padding: 12px 16px !important;
+      color: rgba(255, 255, 255, 0.9) !important;
       text-decoration: none !important;
-      font-size: 15px !important;
+      font-size: 14px !important;
       font-weight: 500 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
       transition: all 0.2s ease !important;
-      border-bottom: 1px solid rgba(185, 28, 28, 0.1) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
     }
 
     .header-nav-item:last-child {
@@ -149,9 +363,9 @@
     }
 
     .header-nav-item:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffcccc) !important;
-      color: #5a1515 !important;
-      padding-left: 24px !important;
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: white !important;
+      padding-left: 20px !important;
     }
     
     /* Navigation divider */
@@ -581,6 +795,16 @@
         font-size: 18px !important;
         padding: 12px 16px !important;
         letter-spacing: 1px !important;
+      }
+      
+      /* Show mobile menu toggle on mobile */
+      .mobile-menu-toggle {
+        display: flex !important;
+      }
+      
+      /* Hide desktop navigation on mobile */
+      .nav {
+        display: none !important;
       }
       
       .toplink {
@@ -1102,8 +1326,20 @@
       </nav>
     </div>
     
-    <!-- Right side with Mobile Menu -->
+    <!-- Right side with Navigation button and Mobile Menu -->
     <div class="header-right">
+      <!-- Navigation Button in Header -->
+      <div style="position: relative;">
+        <button class="header-nav-button" onclick="toggleHeaderNav()">
+          <span>Navigation</span>
+          <span class="header-nav-arrow">▼</span>
+        </button>
+        <div class="header-nav-menu" id="headerNavMenu">
+          <a href="#engineering-overview" class="header-nav-item" onclick="closeHeaderNav()">Overview</a>
+          <a href="#engineering-kpis" class="header-nav-item" onclick="closeHeaderNav()">Engineering KPIs</a>
+        </div>
+      </div>
+      
       <!-- Mobile Menu Toggle -->
       <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <span class="hamburger-line"></span>
@@ -1191,18 +1427,33 @@
   <script>
     function toggleHeaderNav() {
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
-      menu.classList.toggle('show');
+      menu.classList.toggle('active');
       button.classList.toggle('active');
     }
     
     function closeHeaderNav() {
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
-      menu.classList.remove('show');
+      menu.classList.remove('active');
       button.classList.remove('active');
+    }
+    
+    // Mobile Menu Functions
+    function toggleMobileMenu() {
+      document.body.classList.toggle('mobile-menu-open');
+    }
+    
+    function closeMobileMenu() {
+      document.body.classList.remove('mobile-menu-open');
+    }
+    
+    // Mobile Menu Section Toggle Function
+    function toggleMobileSection(titleElement) {
+      const section = titleElement.parentElement;
+      section.classList.toggle('collapsed');
     }
     
     function scrollToTop() {
@@ -1214,13 +1465,20 @@
     
     // Close dropdown when clicking outside
     document.addEventListener('click', function(event) {
-      const navDropdown = document.querySelector('.nav-dropdown');
+      const navDropdown = document.querySelector('.header-right');
       const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.nav-button');
+      const button = document.querySelector('.header-nav-button');
       
       if (navDropdown && !navDropdown.contains(event.target)) {
-        menu.classList.remove('show');
+        menu.classList.remove('active');
         button.classList.remove('active');
+      }
+    });
+    
+    // Close mobile menu on window resize if screen becomes large
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 1024) {
+        closeMobileMenu();
       }
     });
     
@@ -1239,6 +1497,19 @@
             top: targetPosition,
             behavior: 'smooth'
           });
+        }
+      });
+    });
+    
+    // Initialize mobile menu sections - start with all collapsed except current page section
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('.mobile-menu-section');
+      sections.forEach(section => {
+        // Find if this section contains the active menu item (current page)
+        const activeItem = section.querySelector('.mobile-menu-item.active');
+        if (!activeItem) {
+          // Collapse sections that don't contain the active item
+          section.classList.add('collapsed');
         }
       });
     });

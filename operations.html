@@ -273,13 +273,21 @@
       display: flex !important;
       align-items: center !important;
       height: 100% !important;
+      justify-content: center !important;
     }
     
     .nav {
-      margin-left: auto !important;
       display: flex !important;
       align-items: center !important;
       gap: 20px !important;
+    }
+    
+    /* Right side container for navigation button */
+    .header-right {
+      display: flex !important;
+      align-items: center !important;
+      position: absolute !important;
+      right: 20px !important;
     }
     
     /* Navigation Button in Header */
@@ -1122,16 +1130,9 @@
 </head>
 <body>
 
-  <!-- Top bar (brand + right-aligned dropdowns) -->
+  <!-- Top Navigation Bar -->
   <header class="topbar">
     <div class="brand">Ren Internal</div>
-    
-    <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-      <div class="hamburger-line"></div>
-    </button>
     
     <!-- Desktop Navigation -->
     <div class="bar-inner">
@@ -1170,19 +1171,29 @@
             </ul>
           </li>
         </ul>
-        
-        <!-- Navigation Button in Header -->
-        <div style="position: relative;">
-          <button class="header-nav-button" onclick="toggleHeaderNav()">
-            <span>Navigation</span>
-            <span class="header-nav-arrow">▼</span>
-          </button>
-          <div class="header-nav-menu" id="headerNavMenu">
-            <a href="#operations-section" class="header-nav-item" onclick="closeHeaderNav()">Receiving</a>
-            <!-- Add more KPI sections here as needed -->
-          </div>
-        </div>
       </nav>
+    </div>
+    
+    <!-- Right side with Navigation button and Mobile Menu -->
+    <div class="header-right">
+      <!-- Navigation Button in Header -->
+      <div style="position: relative;">
+        <button class="header-nav-button" onclick="toggleHeaderNav()">
+          <span>Navigation</span>
+          <span class="header-nav-arrow">▼</span>
+        </button>
+        <div class="header-nav-menu" id="headerNavMenu">
+          <a href="#operations-section" class="header-nav-item" onclick="closeHeaderNav()">Receiving</a>
+          <!-- Add more KPI sections here as needed -->
+        </div>
+      </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
   </header>
 
@@ -1192,11 +1203,32 @@
   <!-- Mobile Menu Panel -->
   <div class="mobile-menu-panel">
     <div class="mobile-menu-header">
-      <h3 class="mobile-menu-title">Ren Internal</h3>
+      <h3 class="mobile-menu-title">Navigation</h3>
       <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
     </div>
     <div class="mobile-menu-content">
-      <!-- TV Reports Section -->
+      <!-- Operations KPIs Section -->
+      <div class="mobile-menu-section">
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Operations KPIs</h4>
+        <div class="mobile-menu-items">
+          <a href="#operations-section" class="mobile-menu-item active" onclick="closeMobileMenu()">Operations Dashboard</a>
+          <a href="#receiving-section" class="mobile-menu-item" onclick="closeMobileMenu()">Receiving KPIs</a>
+          <!-- Add more operations-specific sections as needed -->
+        </div>
+      </div>
+      
+      <!-- Other Dashboards -->
+      <div class="mobile-menu-section">
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
+        <div class="mobile-menu-items">
+          <a href="operations.html" class="mobile-menu-item active">Operations KPIs</a>
+          <a href="engineering.html" class="mobile-menu-item">Engineering KPIs</a>
+          <a href="supplychain.html" class="mobile-menu-item">Supply Chain KPIs</a>
+          <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
+        </div>
+      </div>
+      
+      <!-- TV Reports -->
       <div class="mobile-menu-section">
         <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
         <div class="mobile-menu-items">
@@ -1207,35 +1239,14 @@
           <a href="RUN-DEBUG-TV.html" class="mobile-menu-item">Run-Debug</a>
         </div>
       </div>
-      
-      <!-- KPIs Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
-        <div class="mobile-menu-items">
-          <a href="leah-dashboard.html" class="mobile-menu-item">Leah Dashboard</a>
-          <a href="#operations-section" class="mobile-menu-item active" onclick="closeMobileMenu()">Operations</a>
-          <a href="supplychain.html" class="mobile-menu-item">Supply Chain</a>
-          <a href="engineering.html" class="mobile-menu-item">Engineering</a>
-        </div>
-      </div>
-      
-      <!-- Applications Section -->
+
+      <!-- Applications -->
       <div class="mobile-menu-section">
         <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
         <div class="mobile-menu-items">
-          <a href="customerHoldApp.html" class="mobile-menu-item">Customer Hold</a>
-          <a href="palletsApp.html" class="mobile-menu-item">Pallets</a>
-          <a href="skuDetailsApp.html" class="mobile-menu-item">SKU Details</a>
-        </div>
-      </div>
-      
-      <!-- Navigation Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Navigation</h4>
-        <div class="mobile-menu-items">
-          <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
-          <a href="#operations-section" class="mobile-menu-item" onclick="closeMobileMenu()">Operations KPIs</a>
-          <a href="#" class="mobile-menu-item scroll-to-top" onclick="closeMobileMenu(); scrollToTop();">Back to Top</a>
+          <a href="palletsApp.html" class="mobile-menu-item">Pallet Receiving Tool</a>
+          <a href="skuDetailsApp.html" class="mobile-menu-item">SKU Update Tool</a>
+          <a href="customerHoldApp.html" class="mobile-menu-item">Customer Hold Tool</a>
         </div>
       </div>
     </div>
