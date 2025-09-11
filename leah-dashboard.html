@@ -742,7 +742,7 @@
     /* Expanded Power BI Container for Backlog Pareto */
     .power-bi-container-expanded {
       width: 100%;
-      height: 450px; /* Larger fixed height for better visibility */
+      height: 480px; /* Increased desktop height for better visibility */
       border: 2px dashed rgba(185, 28, 28, 0.3);
       border-radius: 10px;
       position: relative;
@@ -1524,6 +1524,33 @@
       // powerbi.embed(container, embedConfig);
     }
 
+    // Function to refresh Power BI iframe by reloading its src
+    function refreshPowerBIReport(iframeSelector) {
+      const iframe = document.querySelector(iframeSelector);
+      if (iframe) {
+        const originalSrc = iframe.src;
+        iframe.src = '';
+        setTimeout(() => {
+          iframe.src = originalSrc;
+          console.log(`Power BI report refreshed: ${iframeSelector}`);
+        }, 100);
+      }
+    }
+
+    // Refresh Backlog Pareto report every 30 minutes
+    function startBacklogParetoRefresh() {
+      // Initial refresh after 30 minutes
+      setTimeout(() => {
+        refreshPowerBIReport('.power-bi-container-expanded iframe');
+        
+        // Set up recurring refresh every 30 minutes
+        setInterval(() => {
+          refreshPowerBIReport('.power-bi-container-expanded iframe');
+        }, 30 * 60 * 1000); // 30 minutes in milliseconds
+        
+      }, 30 * 60 * 1000); // 30 minutes initial delay
+    }
+
     // Example usage (uncomment and modify when Power BI reports are available):
     // embedPowerBIReport('kpi-1-container', 'https://your-power-bi-embed-url-backlog-pareto', 'your-access-token');
     // embedPowerBIReport('kpi-2-container', 'https://your-power-bi-embed-url-otd', 'your-access-token');
@@ -1545,6 +1572,10 @@
           section.classList.remove('collapsed');
         }
       });
+      
+      // Start the Backlog Pareto auto-refresh (30-minute intervals)
+      startBacklogParetoRefresh();
+      console.log('Backlog Pareto auto-refresh started (30-minute intervals)');
       
       // Add any additional initialization here
       console.log('Leah Dashboard loaded successfully - Ready for Power BI integration');
