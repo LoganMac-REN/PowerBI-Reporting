@@ -201,6 +201,38 @@
       margin: 0 !important;
       background: rgba(0, 0, 0, 0.2) !important;
       text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+      cursor: pointer !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      transition: all 0.3s ease !important;
+      position: relative !important;
+    }
+    
+    .mobile-menu-section-title:hover {
+      background: rgba(0, 0, 0, 0.3) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .mobile-menu-section-title::after {
+      content: '▼' !important;
+      font-size: 12px !important;
+      transition: transform 0.3s ease !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .mobile-menu-section.collapsed .mobile-menu-section-title::after {
+      transform: rotate(-90deg) !important;
+    }
+    
+    .mobile-menu-items {
+      max-height: 500px !important;
+      overflow: hidden !important;
+      transition: max-height 0.3s ease !important;
+    }
+    
+    .mobile-menu-section.collapsed .mobile-menu-items {
+      max-height: 0 !important;
     }
     
     .mobile-menu-item {
@@ -1162,37 +1194,45 @@
     <div class="mobile-menu-content">
       <!-- TV Reports Section -->
       <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">TV Reports</h4>
-        <a href="index.html" class="mobile-menu-item">OTD</a>
-        <a href="ROG-TEST-TV.html" class="mobile-menu-item">Rogue-Test</a>
-        <a href="ROG-DEBUG-TV.html" class="mobile-menu-item">Rogue-Debug</a>
-        <a href="RUN-TEST-TV.html" class="mobile-menu-item">Run-Test</a>
-        <a href="RUN-DEBUG-TV.html" class="mobile-menu-item">Run-Debug</a>
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
+        <div class="mobile-menu-items">
+          <a href="index.html" class="mobile-menu-item">OTD</a>
+          <a href="ROG-TEST-TV.html" class="mobile-menu-item">Rogue-Test</a>
+          <a href="ROG-DEBUG-TV.html" class="mobile-menu-item">Rogue-Debug</a>
+          <a href="RUN-TEST-TV.html" class="mobile-menu-item">Run-Test</a>
+          <a href="RUN-DEBUG-TV.html" class="mobile-menu-item">Run-Debug</a>
+        </div>
       </div>
       
       <!-- KPIs Section -->
       <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">KPIs</h4>
-        <a href="leah-dashboard.html" class="mobile-menu-item">Leah Dashboard</a>
-        <a href="#operations-section" class="mobile-menu-item active" onclick="closeMobileMenu()">Operations</a>
-        <a href="supplychain.html" class="mobile-menu-item">Supply Chain</a>
-        <a href="engineering.html" class="mobile-menu-item">Engineering</a>
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
+        <div class="mobile-menu-items">
+          <a href="leah-dashboard.html" class="mobile-menu-item">Leah Dashboard</a>
+          <a href="#operations-section" class="mobile-menu-item active" onclick="closeMobileMenu()">Operations</a>
+          <a href="supplychain.html" class="mobile-menu-item">Supply Chain</a>
+          <a href="engineering.html" class="mobile-menu-item">Engineering</a>
+        </div>
       </div>
       
       <!-- Applications Section -->
       <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">Applications</h4>
-        <a href="customerHoldApp.html" class="mobile-menu-item">Customer Hold</a>
-        <a href="palletsApp.html" class="mobile-menu-item">Pallets</a>
-        <a href="skuDetailsApp.html" class="mobile-menu-item">SKU Details</a>
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
+        <div class="mobile-menu-items">
+          <a href="customerHoldApp.html" class="mobile-menu-item">Customer Hold</a>
+          <a href="palletsApp.html" class="mobile-menu-item">Pallets</a>
+          <a href="skuDetailsApp.html" class="mobile-menu-item">SKU Details</a>
+        </div>
       </div>
       
       <!-- Navigation Section -->
       <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">Navigation</h4>
-        <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
-        <a href="#operations-section" class="mobile-menu-item" onclick="closeMobileMenu()">Operations KPIs</a>
-        <a href="#" class="mobile-menu-item scroll-to-top" onclick="closeMobileMenu(); scrollToTop();">Back to Top</a>
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Navigation</h4>
+        <div class="mobile-menu-items">
+          <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
+          <a href="#operations-section" class="mobile-menu-item" onclick="closeMobileMenu()">Operations KPIs</a>
+          <a href="#" class="mobile-menu-item scroll-to-top" onclick="closeMobileMenu(); scrollToTop();">Back to Top</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1256,6 +1296,12 @@
       document.body.classList.remove('mobile-menu-open');
       // Restore body scroll
       document.body.style.overflow = '';
+    }
+    
+    // Mobile Menu Section Toggle Function
+    function toggleMobileSection(titleElement) {
+      const section = titleElement.parentElement;
+      section.classList.toggle('collapsed');
     }
     
     // Close mobile menu when clicking on overlay
@@ -1349,6 +1395,21 @@
             top: targetPosition,
             behavior: 'smooth'
           });
+        }
+      });
+    });
+    
+    // Initialize mobile menu sections - start with all collapsed except current page section
+    document.addEventListener('DOMContentLoaded', function() {
+      const sections = document.querySelectorAll('.mobile-menu-section');
+      sections.forEach(section => {
+        // Collapse all sections initially
+        section.classList.add('collapsed');
+        
+        // Keep the section open if it contains the active page
+        const activeItem = section.querySelector('.mobile-menu-item.active');
+        if (activeItem) {
+          section.classList.remove('collapsed');
         }
       });
     });

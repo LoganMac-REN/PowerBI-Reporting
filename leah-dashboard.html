@@ -24,17 +24,18 @@
       background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
       border-bottom: 3px solid #5a1616 !important;
-      padding: 0 !important;
+      padding: 0 20px !important;
       position: fixed !important;
       top: 0 !important;
       left: 0 !important;
       right: 0 !important;
       z-index: 1000 !important;
       width: 100% !important;
-      height: 60px !important;
+      height: 70px !important;
       display: flex !important;
+      justify-content: center !important;
       align-items: center !important;
-      justify-content: space-between !important;
+      box-sizing: border-box !important;
     }
     
     .topbar::before {
@@ -52,11 +53,13 @@
       font-weight: 700 !important;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
       color: #ffffff !important;
-      padding: 16px 20px !important;
+      padding: 16px 0 !important;
       text-transform: uppercase !important;
       letter-spacing: 1.2px !important;
       text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
       flex-shrink: 0 !important;
+      position: absolute !important;
+      left: 20px !important;
     }
     
     /* Mobile Hamburger Menu */
@@ -71,9 +74,9 @@
       border: 2px solid rgba(255, 255, 255, 0.3) !important;
       border-radius: 8px !important;
       cursor: pointer !important;
-      margin-right: 20px !important;
       transition: all 0.3s ease !important;
       padding: 0 !important;
+      justify-self: end !important;
     }
     
     .mobile-menu-toggle:hover {
@@ -184,6 +187,38 @@
       letter-spacing: 0.5px !important;
       margin: 0 !important;
       background: rgba(0, 0, 0, 0.1) !important;
+      cursor: pointer !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      transition: all 0.3s ease !important;
+      position: relative !important;
+    }
+    
+    .mobile-menu-section-title:hover {
+      background: rgba(0, 0, 0, 0.2) !important;
+      color: rgba(255, 255, 255, 0.95) !important;
+    }
+    
+    .mobile-menu-section-title::after {
+      content: '▼' !important;
+      font-size: 12px !important;
+      transition: transform 0.3s ease !important;
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+    
+    .mobile-menu-section.collapsed .mobile-menu-section-title::after {
+      transform: rotate(-90deg) !important;
+    }
+    
+    .mobile-menu-items {
+      max-height: 500px !important;
+      overflow: hidden !important;
+      transition: max-height 0.3s ease !important;
+    }
+    
+    .mobile-menu-section.collapsed .mobile-menu-items {
+      max-height: 0 !important;
     }
     
     .mobile-menu-item {
@@ -209,13 +244,21 @@
       display: flex !important;
       align-items: center !important;
       height: 100% !important;
+      justify-content: center !important;
     }
     
     .nav {
-      margin-left: auto !important;
       display: flex !important;
       align-items: center !important;
       gap: 20px !important;
+    }
+    
+    /* Right side container for navigation button */
+    .header-right {
+      display: flex !important;
+      align-items: center !important;
+      position: absolute !important;
+      right: 20px !important;
     }
     
     /* Navigation Button in Header */
@@ -263,7 +306,8 @@
       top: calc(100% + 8px) !important;
       right: 0 !important;
       background: white !important;
-      min-width: 220px !important;
+      min-width: 240px !important;
+      width: max-content !important;
       border-radius: 12px !important;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
       border: 1px solid rgba(185, 28, 28, 0.1) !important;
@@ -283,14 +327,19 @@
 
     .header-nav-item {
       display: block !important;
-      padding: 12px 20px !important;
+      padding: 14px 24px !important;
       color: #7a1b1b !important;
       text-decoration: none !important;
       font-size: 15px !important;
       font-weight: 500 !important;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
       transition: all 0.2s ease !important;
-      border-bottom: 1px solid rgba(185, 28, 28, 0.1) !important;
+      border-bottom: 1px solid rgba(185, 28, 28, 0.08) !important;
+      border-left: 4px solid transparent !important;
+      position: relative !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
     }
 
     .header-nav-item:last-child {
@@ -300,7 +349,9 @@
     .header-nav-item:hover {
       background: linear-gradient(135deg, #ffe5e5, #ffcccc) !important;
       color: #5a1515 !important;
-      padding-left: 24px !important;
+      border-left-color: #b91c1c !important;
+      padding-left: 28px !important;
+      width: 100% !important;
     }
     
     /* Navigation divider */
@@ -330,26 +381,34 @@
       margin: 0 !important;
       padding: 0 !important;
       gap: 0 !important;
+      align-items: center !important;
+      height: 100% !important;
     }
     
     .menu li {
       position: relative !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
     }
     
     .toplink {
-      display: block !important;
-      padding: 18px 28px !important;
+      display: flex !important;
+      align-items: center !important;
+      padding: 12px 24px !important;
       color: #ffffff !important;
       text-decoration: none !important;
-      font-size: 16px !important;
+      font-size: 15px !important;
       font-weight: 600 !important;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
       text-transform: uppercase !important;
-      letter-spacing: 1px !important;
+      letter-spacing: 0.8px !important;
       transition: all 0.3s ease !important;
       border-right: 1px solid rgba(255,255,255,0.1) !important;
       position: relative !important;
       overflow: hidden !important;
+      height: 100% !important;
+      box-sizing: border-box !important;
     }
     
     .toplink::before {
@@ -384,14 +443,15 @@
     .sub {
       position: absolute !important;
       top: 100% !important;
-      left: 0 !important;
+      left: 50% !important;
+      transform: translateX(-50%) translateY(-10px) !important;
       background: #ffffff !important;
-      min-width: 200px !important;
+      min-width: 220px !important;
+      width: max-content !important;
       box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
       border-radius: 0 0 8px 8px !important;
       opacity: 0 !important;
       visibility: hidden !important;
-      transform: translateY(-10px) !important;
       transition: all 0.3s ease !important;
       z-index: 1000 !important;
       border: 1px solid rgba(0,0,0,0.1) !important;
@@ -399,21 +459,23 @@
       list-style: none !important;
       padding: 8px 0 !important;
       margin: 0 !important;
+      overflow: hidden !important;
     }
     
     .has-sub:hover .sub {
       opacity: 1 !important;
       visibility: visible !important;
-      transform: translateY(0) !important;
+      transform: translateX(-50%) translateY(0) !important;
     }
     
     .sub li {
       margin: 0 !important;
+      width: 100% !important;
     }
     
     .sub a {
       display: block !important;
-      padding: 12px 20px !important;
+      padding: 14px 24px !important;
       color: #7a1b1b !important;
       text-decoration: none !important;
       font-size: 15px !important;
@@ -422,21 +484,28 @@
       text-transform: none !important;
       letter-spacing: 0.5px !important;
       transition: all 0.2s ease !important;
-      border-left: 3px solid transparent !important;
+      border-left: 4px solid transparent !important;
+      position: relative !important;
+      margin: 0 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
     }
-    
+
     .sub a:hover {
       background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
       color: #5a1616 !important;
-      border-left-color: var(--accent) !important;
-      padding-left: 24px !important;
+      border-left-color: #b91c1c !important;
+      padding-left: 28px !important;
+      width: 100% !important;
     }
     
     .sub a.active {
       background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
       color: #5a1616 !important;
-      border-left-color: var(--accent) !important;
+      border-left-color: #b91c1c !important;
       font-weight: 600 !important;
+      width: 100% !important;
     }
     
     /* Responsive adjustments for main header */
@@ -500,7 +569,7 @@
 
     /* Main Content Styling - Mobile Optimized */
     main.content {
-      padding-top: 70px !important;
+      padding-top: 90px !important;
       padding-left: 20px !important;
       padding-right: 20px !important;
       padding-bottom: 20px !important;
@@ -511,18 +580,18 @@
     
     @media (max-width: 768px) {
       main.content {
-        padding-top: 55px !important;
-        padding-left: 16px !important;
-        padding-right: 16px !important;
+        padding-top: 85px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
         padding-bottom: 20px !important;
       }
     }
     
     @media (max-width: 480px) {
       main.content {
-        padding-top: 50px !important;
-        padding-left: 12px !important;
-        padding-right: 12px !important;
+        padding-top: 80px !important;
+        padding-left: 8px !important;
+        padding-right: 8px !important;
         padding-bottom: 16px !important;
       }
     }
@@ -558,14 +627,14 @@
     
     @media (max-width: 768px) {
       .dashboard-header {
-        margin-bottom: 5px !important;
-        padding: 8px !important;
+        margin-bottom: 10px !important;
+        padding: 12px !important;
         border-radius: 10px !important;
       }
       
       .dashboard-header h1 {
         font-size: 1.6rem !important;
-        margin: 0 !important;
+        margin: 0 0 4px 0 !important;
       }
       
       .dashboard-subtitle {
@@ -575,14 +644,14 @@
     
     @media (max-width: 480px) {
       .dashboard-header {
-        margin-bottom: 3px !important;
-        padding: 6px !important;
+        margin-bottom: 8px !important;
+        padding: 10px !important;
         border-radius: 8px !important;
       }
       
       .dashboard-header h1 {
         font-size: 1.4rem !important;
-        margin: 0 !important;
+        margin: 0 0 2px 0 !important;
       }
       
       .dashboard-subtitle {
@@ -661,15 +730,166 @@
     /* Power BI Container - Mobile Optimized */
     .power-bi-container {
       width: 100%;
-      height: 250px;
+      height: 0;
+      padding-bottom: 90%; /* Taller aspect ratio for more iframe height */
       border: 2px dashed rgba(185, 28, 28, 0.3);
       border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
       position: relative;
+      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
+      overflow: hidden;
+    }
+
+    /* Expanded Power BI Container for Backlog Pareto */
+    .power-bi-container-expanded {
+      width: 100%;
+      height: 450px; /* Larger fixed height for better visibility */
+      border: 2px dashed rgba(185, 28, 28, 0.3);
+      border-radius: 10px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    
+    .power-bi-container iframe,
+    .power-bi-container-expanded iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      border: none;
+    }
+
+    /* Drill Down Button Styling */
+    .drill-down-button-container {
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    .drill-down-button {
+      background: linear-gradient(135deg, #b91c1c, #dc2626);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(185, 28, 28, 0.3);
+    }
+
+    .drill-down-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.4);
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+    }
+
+    .drill-down-button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.3);
+    }
+    
+    /* Responsive scaling for iframe content */
+    @media (max-width: 1200px) {
+      .power-bi-container-expanded {
+        height: 420px; /* Slightly taller for medium screens */
+      }
+    }
+    
+    @media (max-width: 900px) {
+      .power-bi-container-expanded {
+        height: 400px; /* Taller for smaller tablets */
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .power-bi-container-expanded {
+        height: 480px; /* Much taller to eliminate internal scrolling */
+      }
+      
+      .kpi-card {
+        min-height: 620px !important; /* Accommodate much taller report */
+        padding: 15px !important;
+      }
+      
+      .kpi-title {
+        font-size: 1.2rem !important;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .power-bi-container-expanded {
+        height: 460px; /* Tall enough to show full report without scrolling */
+      }
+      
+      .kpi-card {
+        min-height: 580px !important; /* Very tall card for mobile */
+        padding: 12px !important;
+      }
+      
+      .kpi-title {
+        font-size: 1.1rem !important;
+      }
+      
+      .drill-down-button {
+        padding: 8px 16px !important;
+        font-size: 0.8rem !important;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .power-bi-container-expanded {
+        height: 440px; /* Extra tall to prevent internal scrolling */
+      }
+      
+      .kpi-card {
+        min-height: 560px !important; /* Extra tall for small mobile */
+        padding: 10px !important;
+        margin-bottom: 15px !important;
+      }
+      
+      .kpi-title {
+        font-size: 1rem !important;
+        margin-bottom: 8px !important;
+      }
+      
+      .drill-down-button {
+        padding: 6px 14px !important;
+        font-size: 0.75rem !important;
+      }
+    }
+    
+    @media (max-width: 400px) {
+      .power-bi-container-expanded {
+        height: 420px; /* Taller to show complete report */
+      }
+      
+      .kpi-card {
+        min-height: 540px !important; /* Ensure full content visibility */
+        padding: 8px !important;
+      }
+      
+      .kpi-title {
+        font-size: 0.95rem !important;
+      }
+    }
+    
+    @media (max-width: 320px) {
+      .power-bi-container-expanded {
+        height: 400px; /* Tall enough to prevent scrolling */
+      }
+      
+      .kpi-card {
+        min-height: 520px !important; /* Very tall for all content */
+        padding: 6px !important;
+      }
+      
+      .kpi-title {
+        font-size: 0.9rem !important;
+      }
     }
     
     @media (max-width: 768px) {
@@ -695,7 +915,8 @@
       }
       
       .power-bi-container {
-        height: 200px !important;
+        padding-bottom: 90% !important; /* Maintain taller ratio on tablet */
+        height: 0 !important;
         border-radius: 8px !important;
       }
     }
@@ -719,7 +940,8 @@
       }
       
       .power-bi-container {
-        height: 180px !important;
+        padding-bottom: 90% !important; /* Maintain taller ratio on mobile */
+        height: 0 !important;
         border-radius: 6px !important;
       }
     }
@@ -895,7 +1117,8 @@
       }
       
       .power-bi-container {
-        height: 250px;
+        padding-bottom: 90%; /* Maintain taller ratio */
+        height: 0;
       }
     }
   </style>
@@ -904,13 +1127,6 @@
   <!-- Top Navigation Bar -->
   <header class="topbar">
     <div class="brand">Ren Internal</div>
-    
-    <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
     
     <!-- Desktop Navigation -->
     <div class="bar-inner">
@@ -949,23 +1165,33 @@
             </ul>
           </li>
         </ul>
-        
-        <!-- Navigation Button in Header -->
-        <div style="position: relative;">
-          <button class="header-nav-button" onclick="toggleHeaderNav()">
-            <span>Navigation</span>
-            <span class="header-nav-arrow">▼</span>
-          </button>
-          <div class="header-nav-menu" id="headerNavMenu">
-            <a href="#dashboard-overview" class="header-nav-item" onclick="closeHeaderNav()">Overview</a>
-            <a href="#backlog-pareto" class="header-nav-item" onclick="closeHeaderNav()">Backlog Pareto</a>
-            <a href="#otd" class="header-nav-item" onclick="closeHeaderNav()">OTD</a>
-            <a href="#throughput" class="header-nav-item" onclick="closeHeaderNav()">Throughput</a>
-            <a href="#recommits" class="header-nav-item" onclick="closeHeaderNav()">Recommits</a>
-            <a href="#wip-in-transit" class="header-nav-item" onclick="closeHeaderNav()">WIP + In Transit</a>
-          </div>
-        </div>
       </nav>
+    </div>
+    
+    <!-- Right side with Navigation button and Mobile Menu -->
+    <div class="header-right">
+      <!-- Navigation Button in Header -->
+      <div style="position: relative;">
+        <button class="header-nav-button" onclick="toggleHeaderNav()">
+          <span>Navigation</span>
+          <span class="header-nav-arrow">▼</span>
+        </button>
+        <div class="header-nav-menu" id="headerNavMenu">
+          <a href="#dashboard-overview" class="header-nav-item" onclick="closeHeaderNav()">Overview</a>
+          <a href="#backlog-pareto" class="header-nav-item" onclick="closeHeaderNav()">Backlog Pareto</a>
+          <a href="#otd" class="header-nav-item" onclick="closeHeaderNav()">OTD</a>
+          <a href="#throughput" class="header-nav-item" onclick="closeHeaderNav()">Throughput</a>
+          <a href="#recommits" class="header-nav-item" onclick="closeHeaderNav()">Recommits</a>
+          <a href="#wip-in-transit" class="header-nav-item" onclick="closeHeaderNav()">WIP + In Transit</a>
+        </div>
+      </div>
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
   </header>
 
@@ -979,42 +1205,50 @@
       <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
     </div>
     <div class="mobile-menu-content">
-      <!-- Dashboard Navigation -->
+      <!-- Leah Dashboard KPIs Section -->
       <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">Dashboard</h4>
-        <a href="#dashboard-overview" class="mobile-menu-item" onclick="closeMobileMenu()">Overview</a>
-        <a href="#backlog-pareto" class="mobile-menu-item" onclick="closeMobileMenu()">Backlog Pareto</a>
-        <a href="#otd" class="mobile-menu-item" onclick="closeMobileMenu()">OTD</a>
-        <a href="#throughput" class="mobile-menu-item" onclick="closeMobileMenu()">Throughput</a>
-        <a href="#recommits" class="mobile-menu-item" onclick="closeMobileMenu()">Recommits</a>
-        <a href="#wip-in-transit" class="mobile-menu-item" onclick="closeMobileMenu()">WIP + In Transit</a>
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Leah Dashboard</h4>
+        <div class="mobile-menu-items">
+          <a href="#dashboard-overview" class="mobile-menu-item active" onclick="closeMobileMenu()">Dashboard Overview</a>
+          <a href="#backlog-pareto" class="mobile-menu-item" onclick="closeMobileMenu()">Backlog Pareto</a>
+          <a href="#otd" class="mobile-menu-item" onclick="closeMobileMenu()">OTD (On-Time Delivery)</a>
+          <a href="#throughput" class="mobile-menu-item" onclick="closeMobileMenu()">Throughput</a>
+          <a href="#recommits" class="mobile-menu-item" onclick="closeMobileMenu()">Recommits</a>
+          <a href="#wip-in-transit" class="mobile-menu-item" onclick="closeMobileMenu()">WIP + In Transit</a>
+        </div>
+      </div>
+      
+      <!-- Other Dashboards -->
+      <div class="mobile-menu-section">
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
+        <div class="mobile-menu-items">
+          <a href="operations.html" class="mobile-menu-item">Operations KPIs</a>
+          <a href="engineering.html" class="mobile-menu-item">Engineering KPIs</a>
+          <a href="supplychain.html" class="mobile-menu-item">Supply Chain KPIs</a>
+          <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
+        </div>
       </div>
       
       <!-- TV Reports -->
       <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">TV Reports</h4>
-        <a href="index.html" class="mobile-menu-item">OTD</a>
-        <a href="ROG-TEST-TV.html" class="mobile-menu-item">Rogue-Test</a>
-        <a href="ROG-DEBUG-TV.html" class="mobile-menu-item">Rogue-Debug</a>
-        <a href="RUN-TEST-TV.html" class="mobile-menu-item">Run-Test</a>
-        <a href="RUN-DEBUG-TV.html" class="mobile-menu-item">Run-Debug</a>
-      </div>
-
-      <!-- KPIs -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">KPIs</h4>
-        <a href="operations.html" class="mobile-menu-item">Operations</a>
-        <a href="engineering.html" class="mobile-menu-item">Engineering</a>
-        <a href="supplychain.html" class="mobile-menu-item">Supply Chain</a>
-        <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
+        <div class="mobile-menu-items">
+          <a href="index.html" class="mobile-menu-item">OTD</a>
+          <a href="ROG-TEST-TV.html" class="mobile-menu-item">Rogue-Test</a>
+          <a href="ROG-DEBUG-TV.html" class="mobile-menu-item">Rogue-Debug</a>
+          <a href="RUN-TEST-TV.html" class="mobile-menu-item">Run-Test</a>
+          <a href="RUN-DEBUG-TV.html" class="mobile-menu-item">Run-Debug</a>
+        </div>
       </div>
 
       <!-- Applications -->
       <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title">Applications</h4>
-        <a href="palletsApp.html" class="mobile-menu-item">Pallet Receiving Tool</a>
-        <a href="skuDetailsApp.html" class="mobile-menu-item">SKU Update Tool</a>
-        <a href="customerHoldApp.html" class="mobile-menu-item">Customer Hold Tool</a>
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
+        <div class="mobile-menu-items">
+          <a href="palletsApp.html" class="mobile-menu-item">Pallet Receiving Tool</a>
+          <a href="skuDetailsApp.html" class="mobile-menu-item">SKU Update Tool</a>
+          <a href="customerHoldApp.html" class="mobile-menu-item">Customer Hold Tool</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1032,18 +1266,20 @@
       <!-- KPI 1: Backlog Pareto -->
       <div class="kpi-card" id="backlog-pareto">
         <h2 class="kpi-title">Backlog Pareto</h2>
-        <p class="kpi-description">
-          Analyze backlog distribution using Pareto analysis to identify the most critical items and prioritize work effectively.
-        </p>
-        <div class="power-bi-container">
-          <div class="power-bi-placeholder">
-            <div class="power-bi-icon">📊</div>
-            <div class="power-bi-text">Power BI Report #1</div>
-            <div class="power-bi-subtext">Backlog Pareto Analysis</div>
-          </div>
+        <div class="power-bi-container-expanded">
+          <iframe 
+            title="Backlog Pareto Analysis" 
+            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYWM5OWE3YjItMjZmYy00MzBhLWEwYjUtOGI2MmYxNjMyMzViIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
+            frameborder="0" 
+            allowFullScreen="true"
+            scrolling="no"
+            style="width: 100%; height: 100%; border: none;">
+          </iframe>
         </div>
-        <div class="integration-note">
-          <strong>Integration Ready:</strong> This section is prepared for your Power BI backlog pareto report. Simply embed your Power BI report here using the embed code from Power BI Service.
+        <div class="drill-down-button-container">
+          <button class="drill-down-button" onclick="window.location.href='backlog-pareto-drilldown.html'">
+            Drill Down
+          </button>
         </div>
       </div>
 
@@ -1163,6 +1399,12 @@
       
       // Restore body scroll
       document.body.style.overflow = '';
+    }
+    
+    // Mobile Menu Section Toggle Function
+    function toggleMobileSection(titleElement) {
+      const section = titleElement.parentElement;
+      section.classList.toggle('collapsed');
     }
     
     // Desktop Header Navigation Functions
@@ -1291,6 +1533,19 @@
 
     // Add smooth scrolling for better UX
     document.addEventListener('DOMContentLoaded', function() {
+      // Initialize mobile menu sections - start with all collapsed except current page section
+      const sections = document.querySelectorAll('.mobile-menu-section');
+      sections.forEach(section => {
+        // Collapse all sections initially
+        section.classList.add('collapsed');
+        
+        // Keep the section open if it contains the active page
+        const activeItem = section.querySelector('.mobile-menu-item.active');
+        if (activeItem) {
+          section.classList.remove('collapsed');
+        }
+      });
+      
       // Add any additional initialization here
       console.log('Leah Dashboard loaded successfully - Ready for Power BI integration');
     });

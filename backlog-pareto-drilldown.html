@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Backlog Pareto Drilldown - Ren Internal</title>
+  <link rel="stylesheet" href="style.css?v=14" />
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  
+  <style>
+    /* Professional Background Styling */
+    html, body {
+      background: #f1f5f9 !important;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+
+    /* Professional Main Header Styling */
+    .topbar {
+      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+      border-bottom: 3px solid #5a1616 !important;
+      padding: 0 20px !important;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      z-index: 1000 !important;
+      width: 100% !important;
+      height: 70px !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      box-sizing: border-box !important;
+    }
+
+    .brand {
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+      color: #ffffff !important;
+      padding: 16px 0 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1.2px !important;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+      flex-shrink: 0 !important;
+      position: absolute !important;
+      left: 20px !important;
+    }
+
+    /* Main Content */
+    .content {
+      margin-top: 90px;
+      padding: 30px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 0 0 10px 0;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin: 0;
+    }
+
+    /* Location Grid */
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .location-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    .location-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(185, 28, 28, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .location-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #b91c1c, #dc2626);
+    }
+
+    .location-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
+      border-color: rgba(185, 28, 28, 0.2);
+    }
+
+    .location-title {
+      color: #1f2937;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0 0 20px 0;
+      text-align: center;
+    }
+
+    /* Power BI Container for drill-down */
+    .power-bi-container {
+      width: 100%;
+      height: 500px;
+      border: 2px dashed rgba(185, 28, 28, 0.3);
+      border-radius: 10px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
+      overflow: hidden;
+    }
+    
+    .power-bi-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+    }
+
+    .power-bi-placeholder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .power-bi-icon {
+      font-size: 4rem;
+      color: #b91c1c;
+      margin-bottom: 20px;
+    }
+
+    .power-bi-text {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .power-bi-subtext {
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+
+    /* Back Button */
+    .back-button {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      background: linear-gradient(135deg, #b91c1c, #dc2626);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.3);
+      transition: all 0.3s ease;
+      z-index: 100;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(185, 28, 28, 0.4);
+    }
+
+    /* Integration note for placeholder */
+    .integration-note {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 1px solid #f59e0b;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: #92400e;
+    }
+
+    .integration-note strong {
+      color: #78350f;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <div class="topbar">
+    <div class="brand">Renaissance Internal</div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1 class="page-title">Backlog Pareto Drilldown</h1>
+      <p class="page-subtitle">Detailed analysis by location</p>
+    </div>
+
+    <!-- Location Grid -->
+    <div class="location-grid">
+      <!-- Ottawa Location -->
+      <div class="location-card">
+        <h2 class="location-title">Ottawa</h2>
+        <div class="power-bi-container">
+          <div class="power-bi-placeholder">
+            <div class="power-bi-icon">📊</div>
+            <div class="power-bi-text">Ottawa Backlog Analysis</div>
+            <div class="power-bi-subtext">Power BI Report Placeholder</div>
+          </div>
+        </div>
+        <div class="integration-note">
+          <strong>Integration Ready:</strong> This section is prepared for your Power BI Ottawa report. Simply embed your Power BI report here using the embed code from Power BI Service.
+        </div>
+      </div>
+
+      <!-- Dallas Location -->
+      <div class="location-card">
+        <h2 class="location-title">Dallas</h2>
+        <div class="power-bi-container">
+          <div class="power-bi-placeholder">
+            <div class="power-bi-icon">📈</div>
+            <div class="power-bi-text">Dallas Backlog Analysis</div>
+            <div class="power-bi-subtext">Power BI Report Placeholder</div>
+          </div>
+        </div>
+        <div class="integration-note">
+          <strong>Integration Ready:</strong> This section is prepared for your Power BI Dallas report. Simply embed your Power BI report here using the embed code from Power BI Service.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Back Button -->
+  <a href="leah-dashboard.html" class="back-button">← Back to Dashboard</a>
+</body>
+</html>
