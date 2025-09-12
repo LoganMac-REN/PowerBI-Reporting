@@ -270,13 +270,13 @@
     }
     
     .nav {
-      margin-left: auto !important;
       display: flex !important;
       align-items: center !important;
       gap: 20px !important;
+      margin: 0 auto !important;
     }
     
-    /* Right side container */
+    /* Right side container for navigation button */
     .header-right {
       display: flex !important;
       align-items: center !important;
@@ -393,7 +393,7 @@
     main.content {
       max-width: 1400px !important;
       margin: 0 auto !important;
-      padding: 160px 16px 24px !important;
+      padding: 90px 20px 24px !important;
       overflow-x: hidden !important;
       background: transparent !important;
     }
@@ -448,7 +448,7 @@
     @media (max-width: 1400px) {
       main.content {
         max-width: 1000px !important;
-        padding: 160px 10px 18px !important;
+        padding: 90px 10px 18px !important;
       }
       
       .reports-container {
@@ -460,7 +460,7 @@
     @media (max-width: 1200px) {
       main.content {
         max-width: 750px !important;
-        padding: 160px 8px 16px !important;
+        padding: 90px 8px 16px !important;
       }
       
       .reports-container {
@@ -499,7 +499,7 @@
     @media (max-width: 900px) {
       main.content {
         max-width: 600px !important;
-        padding: 160px 6px 12px !important;
+        padding: 90px 6px 12px !important;
       }
       
       .reports-container {
@@ -559,7 +559,7 @@
     @media (max-width: 480px) {
       /* Small mobile phones - ensure vertical stacking */
       main.content {
-        padding: 130px 8px 10px !important;
+        padding: 50px 8px 10px !important;
       }
       
       .reports-container {
@@ -623,7 +623,7 @@
       }
       
       .content {
-        padding: 140px 12px 20px !important;
+        padding: 50px 12px 20px !important;
       }
     }
     
@@ -646,7 +646,7 @@
       }
       
       .content {
-        padding: 130px 8px 16px !important;
+        padding: 50px 8px 16px !important;
       }
       
       .header-nav-menu {
@@ -670,7 +670,7 @@
       }
       
       .content {
-        padding: 120px 6px 14px !important;
+        padding: 50px 6px 14px !important;
       }
     }
     
@@ -680,10 +680,15 @@
       margin: 0 !important;
       padding: 0 !important;
       gap: 0 !important;
+      align-items: center !important;
+      height: 100% !important;
     }
     
     .menu li {
       position: relative !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
     }
     
     .toplink {
@@ -735,13 +740,13 @@
       position: absolute !important;
       top: 100% !important;
       left: 0 !important;
+      transform: translateY(-10px) !important;
       background: #ffffff !important;
       min-width: 200px !important;
       box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
       border-radius: 0 0 8px 8px !important;
       opacity: 0 !important;
       visibility: hidden !important;
-      transform: translateY(-10px) !important;
       transition: all 0.3s ease !important;
       z-index: 1000 !important;
       border: 1px solid rgba(0,0,0,0.1) !important;
@@ -749,6 +754,11 @@
       list-style: none !important;
       padding: 8px 0 !important;
       margin: 0 !important;
+      overflow: hidden !important;
+    }
+    
+    .has-sub {
+      position: relative !important;
     }
     
     .has-sub:hover .sub {
@@ -759,11 +769,12 @@
     
     .sub li {
       margin: 0 !important;
+      width: 100% !important;
     }
     
     .sub a {
       display: block !important;
-      padding: 12px 20px !important;
+      padding: 14px 24px !important;
       color: #7a1b1b !important;
       text-decoration: none !important;
       font-size: 15px !important;
@@ -772,28 +783,41 @@
       text-transform: none !important;
       letter-spacing: 0.5px !important;
       transition: all 0.2s ease !important;
-      border-left: 3px solid transparent !important;
+      border-left: 4px solid transparent !important;
+      position: relative !important;
+      margin: 0 !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      white-space: nowrap !important;
     }
     
     .sub a:hover {
       background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
       color: #5a1616 !important;
-      border-left-color: var(--accent) !important;
-      padding-left: 24px !important;
+      border-left-color: #b91c1c !important;
+      padding-left: 28px !important;
+      width: 100% !important;
     }
     
     .sub a.active {
       background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
       color: #5a1616 !important;
-      border-left-color: var(--accent) !important;
+      border-left-color: #b91c1c !important;
       font-weight: 600 !important;
+      width: 100% !important;
     }
     
     /* Responsive adjustments for main header */
     @media (max-width: 1024px) {
+      .topbar {
+        position: static !important;
+        height: 50px !important;
+        padding: 0 10px !important;
+      }
+      
       .brand {
-        font-size: 18px !important;
-        padding: 12px 16px !important;
+        font-size: 16px !important;
+        padding: 12px 10px !important;
         letter-spacing: 1px !important;
       }
       
@@ -1326,20 +1350,8 @@
       </nav>
     </div>
     
-    <!-- Right side with Navigation button and Mobile Menu -->
+    <!-- Right side with Mobile Menu -->
     <div class="header-right">
-      <!-- Navigation Button in Header -->
-      <div style="position: relative;">
-        <button class="header-nav-button" onclick="toggleHeaderNav()">
-          <span>Navigation</span>
-          <span class="header-nav-arrow">▼</span>
-        </button>
-        <div class="header-nav-menu" id="headerNavMenu">
-          <a href="#engineering-overview" class="header-nav-item" onclick="closeHeaderNav()">Overview</a>
-          <a href="#engineering-kpis" class="header-nav-item" onclick="closeHeaderNav()">Engineering KPIs</a>
-        </div>
-      </div>
-      
       <!-- Mobile Menu Toggle -->
       <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <span class="hamburger-line"></span>

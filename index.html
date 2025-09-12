@@ -44,14 +44,15 @@
     }
     
     .brand {
-      font-size: 24px !important;
+      font-size: 20px !important;
       font-weight: 700 !important;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
       color: #ffffff !important;
-      padding: 16px 24px !important;
+      padding: 16px 0 !important;
       text-transform: uppercase !important;
-      letter-spacing: 1.5px !important;
+      letter-spacing: 1.2px !important;
       text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+      flex-shrink: 0 !important;
       position: absolute !important;
       left: 20px !important;
     }
@@ -238,6 +239,91 @@
       right: 20px !important;
     }
     
+    /* Navigation Button in Header */
+    .header-nav-button {
+      background: rgba(255, 255, 255, 0.15) !important;
+      color: white !important;
+      border: 2px solid rgba(255, 255, 255, 0.3) !important;
+      padding: 10px 16px !important;
+      border-radius: 8px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+      cursor: pointer !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 8px !important;
+      transition: all 0.3s ease !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.5px !important;
+      margin-right: 12px !important;
+    }
+
+    .header-nav-button:hover {
+      background: rgba(255, 255, 255, 0.25) !important;
+      border-color: rgba(255, 255, 255, 0.5) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .header-nav-button.active {
+      background: rgba(255, 255, 255, 0.3) !important;
+      border-color: rgba(255, 255, 255, 0.6) !important;
+    }
+
+    .header-nav-arrow {
+      transition: transform 0.3s ease !important;
+      font-size: 10px !important;
+    }
+
+    .header-nav-button.active .header-nav-arrow {
+      transform: rotate(180deg) !important;
+    }
+
+    .header-nav-menu {
+      position: absolute !important;
+      top: 100% !important;
+      left: 0 !important;
+      background: linear-gradient(145deg, #7a1b1b, #b91c1c) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
+      border-radius: 8px !important;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+      min-width: 200px !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transform: translateY(-10px) !important;
+      transition: all 0.3s ease !important;
+      z-index: 1100 !important;
+      margin-top: 8px !important;
+    }
+
+    .header-nav-menu.active {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
+
+    .header-nav-item {
+      display: block !important;
+      padding: 12px 16px !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      text-decoration: none !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      transition: all 0.2s ease !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .header-nav-item:last-child {
+      border-bottom: none !important;
+    }
+
+    .header-nav-item:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: white !important;
+      padding-left: 20px !important;
+    }
+    
     .bar-inner {
       display: flex !important;
       align-items: center !important;
@@ -372,8 +458,8 @@
       }
       
       .brand {
-        font-size: 18px !important;
-        padding: 12px 16px !important;
+        font-size: 16px !important;
+        padding: 12px 10px !important;
         letter-spacing: 1px !important;
       }
       
@@ -527,7 +613,7 @@
     .content {
       max-width: 1400px !important;
       margin: 0 auto !important;
-      padding: 160px 16px 24px !important;
+      padding: 90px 16px 24px !important;
       overflow-x: hidden !important;
       background: transparent !important;
     }
@@ -582,7 +668,7 @@
     @media (max-width: 1400px) {
       .content {
         max-width: 1000px !important;
-        padding: 160px 10px 18px !important;
+        padding: 90px 10px 18px !important;
       }
       
       .reports-container {
@@ -594,7 +680,7 @@
     @media (max-width: 1200px) {
       .content {
         max-width: 750px !important;
-        padding: 160px 8px 16px !important;
+        padding: 90px 8px 16px !important;
       }
       
       .reports-container {
@@ -610,7 +696,7 @@
     @media (max-width: 1024px) {
       .content {
         max-width: 650px !important;
-        padding: 160px 6px 14px !important;
+        padding: 90px 6px 14px !important;
       }
       
       .reports-container {
@@ -626,7 +712,7 @@
     @media (max-width: 900px) {
       .content {
         max-width: 600px !important;
-        padding: 160px 6px 12px !important;
+        padding: 90px 6px 12px !important;
       }
       
       .reports-container {
@@ -886,8 +972,20 @@
       </nav>
     </div>
     
-    <!-- Right side with Mobile Menu -->
+    <!-- Right side with Navigation button and Mobile Menu -->
     <div class="header-right">
+      <!-- Navigation Button in Header -->
+      <div style="position: relative;">
+        <button class="header-nav-button" onclick="toggleHeaderNav()">
+          <span>Navigation</span>
+          <span class="header-nav-arrow">▼</span>
+        </button>
+        <div class="header-nav-menu" id="headerNavMenu">
+          <a href="#otd-overview" class="header-nav-item" onclick="closeHeaderNav()">Overview</a>
+          <a href="#reports-section" class="header-nav-item" onclick="closeHeaderNav()">Reports</a>
+        </div>
+      </div>
+      
       <!-- Mobile Menu Toggle -->
       <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <span class="hamburger-line"></span>
@@ -979,6 +1077,21 @@
   
   <!-- Mobile Menu JavaScript -->
   <script>
+    // Header Navigation Functions
+    function toggleHeaderNav() {
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.header-nav-button');
+      menu.classList.toggle('active');
+      button.classList.toggle('active');
+    }
+
+    function closeHeaderNav() {
+      const menu = document.getElementById('headerNavMenu');
+      const button = document.querySelector('.header-nav-button');
+      menu.classList.remove('active');
+      button.classList.remove('active');
+    }
+    
     // Mobile Menu Functions
     function toggleMobileMenu() {
       const overlay = document.querySelector('.mobile-menu-overlay');
