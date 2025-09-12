@@ -1652,6 +1652,20 @@
           </li>
         </ul>
       </nav>
+      
+      <!-- Header Navigation Dropdown -->
+      <div class="nav-dropdown">
+        <button class="header-nav-button" onclick="toggleHeaderNav()">
+          TABLE OF CONTENTS
+          <span class="header-nav-arrow">▼</span>
+        </button>
+        <div class="header-nav-menu" id="headerNavMenu">
+          <a href="#supply-chain-section" class="header-nav-item">Supply Chain KPIs</a>
+          <a href="#unr-both-plants" class="header-nav-item">UNR Both Plants</a>
+          <a href="#unr-ottawa" class="header-nav-item">UNR Ottawa</a>
+          <a href="#unr-dallas" class="header-nav-item">UNR Dallas</a>
+        </div>
+      </div>
     </div>
     
     <!-- Right side with Mobile Menu -->
@@ -1675,6 +1689,17 @@
       <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
     </div>
     <div class="mobile-menu-content">
+      <!-- Supply Chain KPIs Section -->
+      <div class="mobile-menu-section">
+        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Supply Chain KPIs</h4>
+        <div class="mobile-menu-items">
+          <a href="#supply-chain-section" class="mobile-menu-item active" onclick="closeMobileMenu()">Supply Chain KPIs</a>
+          <a href="#unr-both-plants" class="mobile-menu-item" onclick="closeMobileMenu()">UNR Both Plants</a>
+          <a href="#unr-ottawa" class="mobile-menu-item" onclick="closeMobileMenu()">UNR Ottawa</a>
+          <a href="#unr-dallas" class="mobile-menu-item" onclick="closeMobileMenu()">UNR Dallas</a>
+        </div>
+      </div>
+      
       <!-- TV Reports Section -->
       <div class="mobile-menu-section">
         <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
@@ -1727,7 +1752,7 @@
       <h3 class="section-title">UNR Reports</h3>
     
     <!-- Combined Supply Chain Report - Full width on top -->
-    <div class="top-report">
+    <div class="top-report" id="unr-both-plants">
       <h3 class="report-title">UNR Both Plants</h3>
       <div class="framecard">
         <iframe
@@ -1741,7 +1766,7 @@
     
     <!-- Two side-by-side reports below -->
     <div class="reports-container">
-      <div class="report-card">
+      <div class="report-card" id="unr-ottawa">
         <h3 class="report-title">UNR Ottawa</h3>
         <div class="framecard">
           <iframe
@@ -1753,7 +1778,7 @@
         </div>
       </div>
       
-      <div class="report-card">
+      <div class="report-card" id="unr-dallas">
         <h3 class="report-title">UNR Dallas</h3>
         <div class="framecard">
           <iframe

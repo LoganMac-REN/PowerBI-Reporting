@@ -831,6 +831,11 @@
         display: none !important;
       }
       
+      /* Hide table of contents dropdown on mobile */
+      .nav-dropdown {
+        display: none !important;
+      }
+      
       .toplink {
         padding: 14px 16px !important;
         font-size: 14px !important;
@@ -1348,6 +1353,18 @@
           </li>
         </ul>
       </nav>
+      
+      <!-- Header Navigation Dropdown -->
+      <div class="nav-dropdown">
+        <button class="header-nav-button" onclick="toggleHeaderNav()">
+          TABLE OF CONTENTS
+          <span class="header-nav-arrow">▼</span>
+        </button>
+        <div class="header-nav-menu" id="headerNavMenu">
+          <a href="#engineering-section" class="header-nav-item">Engineering KPIs</a>
+          <a href="#coming-soon-section" class="header-nav-item">Coming Soon</a>
+        </div>
+      </div>
     </div>
     
     <!-- Right side with Mobile Menu -->

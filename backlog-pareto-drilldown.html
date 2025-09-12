@@ -179,7 +179,7 @@
       padding-left: 30px !important;
       padding-right: 30px !important;
       padding-bottom: 30px !important;
-      max-width: 1400px;
+      max-width: 1200px; /* Reduced from 1800px for more reasonable width */
       margin: 0 auto;
       background: transparent;
     }
@@ -223,15 +223,15 @@
     /* Location Grid */
     .location-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
+      grid-template-columns: 1fr; /* Changed from 1fr 1fr to single column for wider reports */
+      gap: 40px; /* Increased gap between reports */
       margin-bottom: 30px;
     }
 
     @media (max-width: 1024px) {
       .location-grid {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 30px; /* Slightly increased gap for tablets */
       }
     }
 
@@ -268,17 +268,58 @@
       font-weight: 600;
       margin: 0 0 20px 0;
       text-align: center;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      user-select: none;
     }
 
-    /* Power BI Container for drill-down */
+    .location-title:hover {
+      color: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .expand-icon {
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+      color: #b91c1c;
+    }
+
+    .location-content {
+      transition: all 0.4s ease;
+      overflow: hidden;
+    }
+
+    .location-content.collapsed {
+      max-height: 0;
+      opacity: 0;
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .location-content.expanded {
+      max-height: 2000px;
+      opacity: 1;
+    }
+
+    .collapsed .expand-icon {
+      transform: rotate(-90deg);
+    }
+
+    /* Power BI Container for drill-down - Optimized for 4:3 Aspect Ratio */
     .power-bi-container {
-      width: 100%;
-      height: 500px;
+      width: 85%; /* Reduced from 100% to make it less wide */
+      aspect-ratio: 4/3; /* Ensures proper 16:9 aspect ratio */
+    /* Reduced from 400px */
       border: 2px dashed rgba(185, 28, 28, 0.3);
       border-radius: 10px;
       position: relative;
       background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
       overflow: hidden;
+      margin: 0 auto; /* Centers the container */
     }
     
     .power-bi-container iframe {
@@ -288,6 +329,29 @@
       width: 100%;
       height: 100%;
       border-radius: 8px;
+      border: none; /* Removes default iframe border */
+    }
+
+    /* Responsive adjustments for Power BI containers */
+    @media (max-width: 1024px) {
+      .power-bi-container {
+        width: 90%; /* Slightly wider on tablets */
+        max-height: 500px; /* Reduced from 650px */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .power-bi-container {
+        width: 95%; /* Wider on mobile for better use of space */
+        max-height: 400px; /* Reduced from 500px */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .power-bi-container {
+        width: 100%; /* Full width on very small screens */
+        max-height: 350px; /* Reduced from 400px */
+      }
     }
 
     .power-bi-placeholder {
@@ -321,25 +385,28 @@
     /* Back Button */
     .back-button {
       position: fixed;
-      bottom: 30px;
-      left: 30px;
+      bottom: 20px;
+      left: 20px;
       background: linear-gradient(135deg, #b91c1c, #dc2626);
       color: white;
       border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 12px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.3);
+      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
       transition: all 0.3s ease;
       z-index: 100;
       text-decoration: none;
       display: inline-block;
+      opacity: 0.8;
     }
 
     .back-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(185, 28, 28, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
+      opacity: 1;
     }
 
     /* Integration note for placeholder */
@@ -384,37 +451,67 @@
     <div class="location-grid">
       <!-- Ottawa Location -->
       <div class="location-card">
-        <h2 class="location-title">Ottawa</h2>
-        <div class="power-bi-container">
-          <div class="power-bi-placeholder">
-            <div class="power-bi-icon">📊</div>
-            <div class="power-bi-text">Ottawa Backlog Analysis</div>
-            <div class="power-bi-subtext">Power BI Report Placeholder</div>
+        <h2 class="location-title" onclick="toggleSection('ottawa-content')">
+          <span>Ottawa</span>
+          <span class="expand-icon">▼</span>
+        </h2>
+        <div id="ottawa-content" class="location-content">
+          <div class="power-bi-container">
+            <iframe 
+              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYzQxYWFlZDAtZWJjYS00MTU0LWI5NDctMDJhNmVkNjBlMzQyIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
+              frameborder="0" 
+              allowFullScreen="true">
+            </iframe>
           </div>
-        </div>
-        <div class="integration-note">
-          <strong>Integration Ready:</strong> This section is prepared for your Power BI Ottawa report. Simply embed your Power BI report here using the embed code from Power BI Service.
         </div>
       </div>
 
       <!-- Dallas Location -->
       <div class="location-card">
-        <h2 class="location-title">Dallas</h2>
-        <div class="power-bi-container">
-          <div class="power-bi-placeholder">
-            <div class="power-bi-icon">📈</div>
-            <div class="power-bi-text">Dallas Backlog Analysis</div>
-            <div class="power-bi-subtext">Power BI Report Placeholder</div>
+        <h2 class="location-title" onclick="toggleSection('dallas-content')">
+          <span>Dallas</span>
+          <span class="expand-icon">▼</span>
+        </h2>
+        <div id="dallas-content" class="location-content">
+          <div class="power-bi-container">
+            <iframe 
+              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiOTI2YzM5NzctZjlhOS00MzU4LWIxYWQtMTk1ZmQ1ODgyOWI5IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
+              frameborder="0" 
+              allowFullScreen="true">
+            </iframe>
           </div>
-        </div>
-        <div class="integration-note">
-          <strong>Integration Ready:</strong> This section is prepared for your Power BI Dallas report. Simply embed your Power BI report here using the embed code from Power BI Service.
         </div>
       </div>
     </div>
   </main>
 
   <!-- Back Button -->
-  <a href="leah-dashboard.html" class="back-button">← Back to Dashboard</a>
+  <a href="leah-dashboard.html" class="back-button">Back</a>
+
+  <script>
+    // Collapsible functionality for location sections
+    function toggleSection(sectionId) {
+      const content = document.getElementById(sectionId);
+      const icon = content.previousElementSibling.querySelector('.expand-icon');
+      
+      if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        content.classList.add('expanded');
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        content.classList.remove('expanded');
+        content.classList.add('collapsed');
+        icon.style.transform = 'rotate(-90deg)';
+      }
+    }
+
+    // Initialize sections as expanded by default
+    document.addEventListener('DOMContentLoaded', function() {
+      const contents = document.querySelectorAll('.location-content');
+      contents.forEach(content => {
+        content.classList.add('expanded');
+      });
+    });
+  </script>
 </body>
 </html>

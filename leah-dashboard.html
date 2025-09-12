@@ -261,6 +261,11 @@
       right: 20px !important;
     }
     
+    /* Nav dropdown container positioning */
+    .nav-dropdown {
+      position: relative !important;
+    }
+    
     /* Navigation Button in Header */
     .header-nav-button {
       background: rgba(255, 255, 255, 0.15) !important;
@@ -987,23 +992,28 @@
     /* Back to Dashboards Button */
     .back-button {
       position: fixed;
-      bottom: 30px;
-      left: 30px;
+      bottom: 20px;
+      left: 20px;
       background: linear-gradient(135deg, #b91c1c, #dc2626);
       color: white;
       border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 12px;
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.3);
+      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
       transition: all 0.3s ease;
       z-index: 100;
+      text-decoration: none;
+      display: inline-block;
+      opacity: 0.8;
     }
 
     .back-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(185, 28, 28, 0.4);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
+      opacity: 1;
     }
 
     /* Responsive Design */
@@ -1167,14 +1177,11 @@
           </li>
         </ul>
       </nav>
-    </div>
-    
-    <!-- Right side with Navigation button and Mobile Menu -->
-    <div class="header-right">
-      <!-- Navigation Button in Header -->
-      <div style="position: relative;">
+      
+      <!-- Header Navigation Dropdown -->
+      <div class="nav-dropdown">
         <button class="header-nav-button" onclick="toggleHeaderNav()">
-          <span>Navigation</span>
+          TABLE OF CONTENTS
           <span class="header-nav-arrow">▼</span>
         </button>
         <div class="header-nav-menu" id="headerNavMenu">
@@ -1186,7 +1193,10 @@
           <a href="#wip-in-transit" class="header-nav-item" onclick="closeHeaderNav()">WIP + In Transit</a>
         </div>
       </div>
-      
+    </div>
+    
+    <!-- Right side with Navigation button and Mobile Menu -->
+    <div class="header-right">
       <!-- Mobile Menu Toggle -->
       <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
         <span class="hamburger-line"></span>

@@ -295,6 +295,11 @@
       right: 20px !important;
     }
     
+    /* Nav dropdown container positioning */
+    .nav-dropdown {
+      position: relative !important;
+    }
+    
     /* Navigation Button in Header */
     .header-nav-button {
       background: rgba(255, 255, 255, 0.15) !important;
@@ -881,12 +886,12 @@
       }
       
       .header-nav-menu {
-        right: 50% !important;
-        transform: translateX(50%) translateY(-10px) !important;
+        right: 0 !important;
+        transform: translateY(-10px) !important;
       }
 
       .header-nav-menu.show {
-        transform: translateX(50%) translateY(0) !important;
+        transform: translateY(0) !important;
       }
     }
     
@@ -1011,13 +1016,13 @@
       }
       
       .header-nav-menu {
-        right: 50% !important;
-        transform: translateX(50%) translateY(-10px) !important;
+        right: 0 !important;
+        transform: translateY(-10px) !important;
         min-width: 200px !important;
       }
 
       .header-nav-menu.show {
-        transform: translateX(50%) translateY(0) !important;
+        transform: translateY(0) !important;
       }
       
       .content {
@@ -1186,6 +1191,17 @@
           </li>
         </ul>
       </nav>
+      
+      <!-- Header Navigation Dropdown -->
+      <div class="nav-dropdown">
+        <button class="header-nav-button" onclick="toggleHeaderNav()">
+          TABLE OF CONTENTS
+          <span class="header-nav-arrow">▼</span>
+        </button>
+        <div class="header-nav-menu" id="headerNavMenu">
+          <a href="#receiving-section" class="header-nav-item">Receiving KPIs</a>
+        </div>
+      </div>
     </div>
     
     <!-- Right side with Mobile Menu -->
@@ -1213,8 +1229,7 @@
       <div class="mobile-menu-section">
         <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Operations KPIs</h4>
         <div class="mobile-menu-items">
-          <a href="#operations-section" class="mobile-menu-item active" onclick="closeMobileMenu()">Operations Dashboard</a>
-          <a href="#receiving-section" class="mobile-menu-item" onclick="closeMobileMenu()">Receiving KPIs</a>
+          <a href="#receiving-section" class="mobile-menu-item active" onclick="closeMobileMenu()">Receiving KPIs</a>
           <!-- Add more operations-specific sections as needed -->
         </div>
       </div>
@@ -1266,8 +1281,8 @@
       </div>
     </div>
     
-    <!-- Operations Section -->
-    <div id="operations-section">
+    <!-- Receiving Section -->
+    <div id="receiving-section">
       <h3 class="section-title">Receiving</h3>
     
     <!-- Receiving KPIs Report - Full width -->
@@ -1283,7 +1298,7 @@
       </div>
     </div>
     
-    </div> <!-- End of Operations Section -->
+    </div> <!-- End of Receiving Section -->
   </main>
   
   <!-- Top of Page Button -->
