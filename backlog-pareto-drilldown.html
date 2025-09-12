@@ -311,9 +311,8 @@
 
     /* Power BI Container for drill-down - Optimized for 4:3 Aspect Ratio */
     .power-bi-container {
-      width: 85%; /* Reduced from 100% to make it less wide */
-      aspect-ratio: 4/3; /* Ensures proper 16:9 aspect ratio */
-    /* Reduced from 400px */
+      width: 100%; /* Reduced from 100% to make it less wide */
+      aspect-ratio: 2/1.11; /* Ensures proper 16:9 aspect ratio */
       border: 2px dashed rgba(185, 28, 28, 0.3);
       border-radius: 10px;
       position: relative;
@@ -335,22 +334,22 @@
     /* Responsive adjustments for Power BI containers */
     @media (max-width: 1024px) {
       .power-bi-container {
-        width: 90%; /* Slightly wider on tablets */
-        max-height: 500px; /* Reduced from 650px */
+        width: 100%; /* Slightly wider on tablets */
+        aspect-ratio: 2/1.11;
       }
     }
 
     @media (max-width: 768px) {
       .power-bi-container {
-        width: 95%; /* Wider on mobile for better use of space */
-        max-height: 400px; /* Reduced from 500px */
+        width: 100%; /* Wider on mobile for better use of space */
+        aspect-ratio: 2/1.11;
       }
     }
 
     @media (max-width: 480px) {
       .power-bi-container {
         width: 100%; /* Full width on very small screens */
-        max-height: 350px; /* Reduced from 400px */
+        aspect-ratio: 2/1.11;
       }
     }
 
@@ -390,10 +389,10 @@
       background: linear-gradient(135deg, #b91c1c, #dc2626);
       color: white;
       border: none;
-      padding: 8px 12px;
+      padding: 12px 18px;
       border-radius: 20px;
       font-weight: 500;
-      font-size: 12px;
+      font-size: 18px;
       cursor: pointer;
       box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
       transition: all 0.3s ease;
@@ -458,7 +457,7 @@
         <div id="ottawa-content" class="location-content">
           <div class="power-bi-container">
             <iframe 
-              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYzQxYWFlZDAtZWJjYS00MTU0LWI5NDctMDJhNmVkNjBlMzQyIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
+              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiNzBiMDZkYjUtMmIxYi00Y2I5LWFjYmEtNTdlZmViZDBkNDU4IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
               frameborder="0" 
               allowFullScreen="true">
             </iframe>
