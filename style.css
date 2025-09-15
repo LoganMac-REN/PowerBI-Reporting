@@ -1,18 +1,22 @@
 /* Brand colors (keep your vibe) */
 :root {
-  --bg: #f1f5f9;   /* page background - light blue-gray to match operations */
-  --bar: hsl(0, 100%, 80%);  /* top bar background */
-  --accent: #b91c1c;         /* hover/active */
-  --link: #ff0000;           /* nav link color */
+  --bg: #f1f5f9; /* page background - light blue-gray to match operations */
+  --bar: hsl(0, 100%, 80%); /* top bar background */
+  --accent: #b91c1c; /* hover/active */
+  --link: #ff0000; /* nav link color */
   --text: #1b1b1f;
   --card: #ffffff;
   --border: #e5e7eb;
 }
 
 /* Base */
-html, body { height: 100%; }
+html,
 body {
-  margin: 0; padding: 0;
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -20,9 +24,11 @@ body {
 
 /* Top bar (merged) */
 .topbar {
-  position: sticky; top: 0; z-index: 5;
+  position: sticky;
+  top: 0;
+  z-index: 5;
   background: var(--bar);
-  border-bottom: 1px solid rgba(0,0,0,.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 .bar-inner {
   max-width: 1400px;
@@ -54,11 +60,14 @@ body {
 /* Menu */
 .menu {
   list-style: none;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
   display: flex;
   gap: 24px;
 }
-.menu > li { position: relative; }
+.menu > li {
+  position: relative;
+}
 
 /* Top-level links */
 .toplink {
@@ -69,14 +78,18 @@ body {
   padding: 6px 10px;
   border-radius: 6px;
 }
-.toplink:hover { background: #ffe5e5; }
+.toplink:hover {
+  background: #ffe5e5;
+}
 
 /* Dropdown (merged) */
-.has-sub { position: relative; }
+.has-sub {
+  position: relative;
+}
 
 /* Create invisible bridge between menu item and dropdown */
 .has-sub::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 100%;
   left: 0;
@@ -97,7 +110,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 8px 0;
-  box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   display: none;
   max-height: 70vh;
   overflow: auto;
@@ -109,7 +122,9 @@ body {
   text-decoration: none;
   font-weight: 600;
 }
-.sub a:hover { background: #ffe5e5; }
+.sub a:hover {
+  background: #ffe5e5;
+}
 .sub a.active {
   background: var(--accent);
   color: #fff;
@@ -118,12 +133,14 @@ body {
 
 /* Show dropdown on hover of the parent menu item OR the dropdown itself */
 .menu > li:hover .sub,
-.menu > li .sub:hover { 
-  display: block; 
+.menu > li .sub:hover {
+  display: block;
 }
 
 /* Nested dropdown support */
-.sub .has-sub { position: relative; }
+.sub .has-sub {
+  position: relative;
+}
 .sub .has-sub .sub {
   position: absolute;
   top: 0;
@@ -132,8 +149,8 @@ body {
   margin-left: 0;
 }
 .sub li:hover > .sub,
-.sub .has-sub .sub:hover { 
-  display: block; 
+.sub .has-sub .sub:hover {
+  display: block;
 }
 .sub .has-sub > a {
   position: relative;
@@ -165,7 +182,7 @@ body {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   padding: 10px;
   position: relative;
   width: 100%;
@@ -174,7 +191,7 @@ body {
 
 /* 16:9 Aspect Ratio Container */
 .framecard::before {
-  content: '';
+  content: "";
   display: block;
   padding-top: 56.25%; /* 16:9 aspect ratio (9/16 = 0.5625) */
 }
@@ -216,8 +233,7 @@ iframe {
 .report-card {
   flex: 1;
   min-width: 300px;
-  margin-bottom: 24px;
-  max-width: calc(50% - 12px); /* Ensure cards don't exceed half width minus gap */
+  margin-bottom: 24px; /* Ensure cards don't exceed half width minus gap */
 }
 
 .report-title {
@@ -230,45 +246,22 @@ iframe {
 
 /* Optional: narrow screen adjustments */
 @media (max-width: 1400px) {
-  .bar-inner { max-width: 100%; }
-  
-  /* More aggressive scaling for large laptops - maintain 16:9 ratio */
-  .content {
-    max-width: 1000px !important;
-  }
-  
-  .framecard {
-    padding: 6px;
-  }
-  
-  .framecard::before {
-    padding-top: 56.25%; /* Keep 16:9 aspect ratio */
-  }
-  
-  iframe {
-    top: 6px;
-    left: 6px;
-    right: 6px;
-    bottom: 6px;
-    width: calc(100% - 12px);
-    height: calc(100% - 12px);
+  .bar-inner {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 1200px) {
   /* Very aggressive width scaling for typical laptop screens - maintain 16:9 */
-  .content {
-    max-width: 750px !important;
-  }
-  
+
   .framecard {
     padding: 4px;
   }
-  
+
   .framecard::before {
     padding-top: 56.25%; /* Keep 16:9 aspect ratio */
   }
-  
+
   iframe {
     top: 4px;
     left: 4px;
@@ -280,26 +273,22 @@ iframe {
 }
 
 @media (max-width: 1024px) {
-  .content {
-    max-width: 650px !important;
-  }
-  
   .reports-container {
     gap: 10px;
   }
-  
+
   .report-card {
     min-width: 180px;
   }
-  
+
   .framecard {
     padding: 3px;
   }
-  
+
   .framecard::before {
     padding-top: 56.25%; /* Keep 16:9 aspect ratio */
   }
-  
+
   iframe {
     top: 3px;
     left: 3px;
@@ -311,15 +300,8 @@ iframe {
 }
 
 @media (max-width: 900px) {
-  .bar-inner { max-width: 100%; }
-  
-  .content {
-    max-width: 600px !important;
-  }
-  
-  /* Tablet portrait and larger phones - maintain 16:9 */
-  .framecard::before {
-    padding-top: 56.25%; /* Keep 16:9 aspect ratio */
+  .bar-inner {
+    max-width: 100%;
   }
 }
 
@@ -328,32 +310,28 @@ iframe {
   .content {
     max-width: 100% !important;
   }
-  
-  .reports-container {
-    flex-direction: column !important;
-    gap: 12px !important;
-  }
-  
+
   .report-card {
     flex: none !important;
     max-width: 100% !important;
     min-width: auto !important;
     width: 100% !important;
   }
-  
+
   /* Ensure both side-by-side cards stack on mobile */
-  .top-report, .report-card {
+  .top-report,
+  .report-card {
     margin-bottom: 12px !important;
   }
-  
+
   .framecard {
     padding: 4px;
   }
-  
+
   .framecard::before {
     padding-top: 56.25%; /* Keep 16:9 aspect ratio for mobile too */
   }
-  
+
   iframe {
     top: 4px;
     left: 4px;
@@ -369,11 +347,11 @@ iframe {
   .framecard {
     padding: 3px;
   }
-  
+
   .framecard::before {
     padding-top: 56.25%; /* Keep 16:9 aspect ratio even on small screens */
   }
-  
+
   iframe {
     top: 3px;
     left: 3px;
@@ -382,7 +360,7 @@ iframe {
     width: calc(100% - 6px);
     height: calc(100% - 6px);
   }
-  
+
   .reports-container {
     gap: 10px;
   }
