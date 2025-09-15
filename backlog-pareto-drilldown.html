@@ -1,516 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Backlog Pareto Drilldown - Ren Internal</title>
-  <link rel="stylesheet" href="style.css?v=14" />
-  <meta http-equiv="Cache-Control" content="no-store" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  
-  <style>
-    /* Professional Background Styling */
-    html, body {
-      background: #f1f5f9 !important;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-    /* Professional Main Header Styling */
-    .topbar {
-      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-      border-bottom: 3px solid #5a1616 !important;
-      padding: 0 20px !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-      width: 100% !important;
-      height: 70px !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      box-sizing: border-box !important;
-    }
-    
-    .topbar::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    }
-    
-    .brand {
-      font-size: 20px !important;
-      font-weight: 700 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      color: #ffffff !important;
-      padding: 16px 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1.2px !important;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
-      flex-shrink: 0 !important;
-      position: absolute !important;
-      left: 20px !important;
-    }
-    
-    /* Mobile Hamburger Menu */
-    .mobile-menu-toggle {
-      display: none !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-      width: 40px !important;
-      height: 40px !important;
-      background: rgba(255, 255, 255, 0.15) !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      border-radius: 8px !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      padding: 0 !important;
-      justify-self: end !important;
-    }
-    
-    .mobile-menu-toggle:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-    }
-    
-    .hamburger-line {
-      width: 20px !important;
-      height: 2px !important;
-      background: white !important;
-      margin: 2px 0 !important;
-      transition: 0.3s !important;
-      border-radius: 1px !important;
-    }
-    
-    /* Right side container for navigation button */
-    .header-right {
-      display: flex !important;
-      align-items: center !important;
-      position: absolute !important;
-      right: 20px !important;
-    }
-    
-    /* Navigation Button in Header */
-    .header-nav-button {
-      background: rgba(255, 255, 255, 0.15) !important;
-      color: white !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      padding: 10px 16px !important;
-      border-radius: 8px !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      transition: all 0.3s ease !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Backlog Pareto Drilldown - Ren Internal</title>
+    <link rel="stylesheet" href="style.css?v=14" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
-    .header-nav-button:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-    }
-    
-    /* Responsive adjustments for main header */
-    @media (max-width: 1024px) {
+    <style>
+      /* Professional Background Styling */
+      html,
+      body {
+        background: #f1f5f9 !important;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+      }
+      /* Professional Main Header Styling */
       .topbar {
-        position: static !important;
-        height: 50px !important;
-        padding: 0 10px !important;
-      }
-      
-      .brand {
-        font-size: 16px !important;
-        padding: 12px 10px !important;
-        letter-spacing: 1px !important;
-      }
-      
-      /* Show mobile menu toggle, hide desktop navigation */
-      .mobile-menu-toggle {
+        background: linear-gradient(
+          135deg,
+          #7a1b1b 0%,
+          #b91c1c 50%,
+          #dc2626 100%
+        ) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+        border-bottom: 3px solid #5a1616 !important;
+        padding: 0 20px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
+        width: 100% !important;
+        height: 70px !important;
         display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
       }
-      
-      .header-nav-button {
-        display: none !important;
+
+      .topbar::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
       }
-    }
-    
-    @media (max-width: 480px) {
-      .topbar {
-        height: 45px !important;
-        padding: 0 8px !important;
-      }
-      
+
       .brand {
-        font-size: 14px !important;
-        padding: 10px 8px !important;
-        letter-spacing: 0.8px !important;
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        color: #ffffff !important;
+        padding: 16px 0 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.2px !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+        flex-shrink: 0 !important;
+        position: absolute !important;
+        left: 20px !important;
       }
-      
+
+      /* Mobile Hamburger Menu */
       .mobile-menu-toggle {
-        width: 35px !important;
-        height: 35px !important;
-        margin-right: 8px !important;
+        display: none !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        padding: 0 !important;
+        justify-self: end !important;
       }
-      
+
+      .mobile-menu-toggle:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+      }
+
       .hamburger-line {
-        width: 18px !important;
+        width: 20px !important;
+        height: 2px !important;
+        background: white !important;
+        margin: 2px 0 !important;
+        transition: 0.3s !important;
+        border-radius: 1px !important;
       }
-    }
 
-    /* Main Content Styling - Mobile Optimized */
-    .content {
-      padding-top: 90px !important;
-      padding-left: 30px !important;
-      padding-right: 30px !important;
-      padding-bottom: 30px !important;
-      max-width: 1200px; /* Reduced from 1800px for more reasonable width */
-      margin: 0 auto;
-      background: transparent;
-    }
-    
-    @media (max-width: 1024px) {
+      /* Right side container for navigation button */
+      .header-right {
+        display: flex !important;
+        align-items: center !important;
+        position: absolute !important;
+        right: 20px !important;
+      }
+
+      /* Navigation Button in Header */
+      .header-nav-button {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        padding: 10px 16px !important;
+        border-radius: 8px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+      }
+
+      .header-nav-button:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+      }
+
+      /* Responsive adjustments for main header */
+      @media (max-width: 1024px) {
+        .topbar {
+          position: static !important;
+          height: 50px !important;
+          padding: 0 10px !important;
+        }
+
+        .brand {
+          font-size: 16px !important;
+          padding: 12px 10px !important;
+          letter-spacing: 1px !important;
+        }
+
+        /* Show mobile menu toggle, hide desktop navigation */
+        .mobile-menu-toggle {
+          display: flex !important;
+        }
+
+        .header-nav-button {
+          display: none !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .topbar {
+          height: 45px !important;
+          padding: 0 8px !important;
+        }
+
+        .brand {
+          font-size: 14px !important;
+          padding: 10px 8px !important;
+          letter-spacing: 0.8px !important;
+        }
+
+        .mobile-menu-toggle {
+          width: 35px !important;
+          height: 35px !important;
+          margin-right: 8px !important;
+        }
+
+        .hamburger-line {
+          width: 18px !important;
+        }
+      }
+
+      /* Main Content Styling - Mobile Optimized */
       .content {
-        padding-top: 20px !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        padding-bottom: 20px !important;
+        padding-top: 90px !important;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+        padding-bottom: 30px !important;
+        max-width: 1200px; /* Reduced from 1800px for more reasonable width */
+        margin: 0 auto;
+        background: transparent;
       }
-    }
-    
-    @media (max-width: 480px) {
-      .content {
-        padding-top: 16px !important;
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-        padding-bottom: 16px !important;
+
+      @media (max-width: 1024px) {
+        .content {
+          padding-top: 20px !important;
+          padding-left: 10px !important;
+          padding-right: 10px !important;
+          padding-bottom: 20px !important;
+        }
       }
-    }
 
-    .page-header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+      @media (max-width: 480px) {
+        .content {
+          padding-top: 16px !important;
+          padding-left: 8px !important;
+          padding-right: 8px !important;
+          padding-bottom: 16px !important;
+        }
+      }
 
-    .page-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin: 0 0 10px 0;
-    }
+      .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
 
-    .page-subtitle {
-      font-size: 1.1rem;
-      color: #64748b;
-      margin: 0;
-    }
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 10px 0;
+      }
 
-    /* Location Grid */
-    .location-grid {
-      display: grid;
-      grid-template-columns: 1fr; /* Changed from 1fr 1fr to single column for wider reports */
-      gap: 40px; /* Increased gap between reports */
-      margin-bottom: 30px;
-    }
+      .page-subtitle {
+        font-size: 1.1rem;
+        color: #64748b;
+        margin: 0;
+      }
 
-    @media (max-width: 1024px) {
+      /* Location Grid */
       .location-grid {
-        grid-template-columns: 1fr;
-        gap: 30px; /* Slightly increased gap for tablets */
+        display: grid;
+        grid-template-columns: 1fr; /* Changed from 1fr 1fr to single column for wider reports */
+        gap: 40px; /* Increased gap between reports */
+        margin-bottom: 30px;
       }
-    }
 
-    .location-card {
-      background: white;
-      border-radius: 16px;
-      padding: 25px;
-      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(185, 28, 28, 0.1);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
+      @media (max-width: 1024px) {
+        .location-grid {
+          grid-template-columns: 1fr;
+          gap: 30px; /* Slightly increased gap for tablets */
+        }
+      }
 
-    .location-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #b91c1c, #dc2626);
-    }
+      .location-card {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(185, 28, 28, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
 
-    .location-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
-      border-color: rgba(185, 28, 28, 0.2);
-    }
+      .location-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #b91c1c, #dc2626);
+      }
 
-    .location-title {
-      color: #1f2937;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin: 0 0 20px 0;
-      text-align: center;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-      user-select: none;
-    }
+      .location-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
+        border-color: rgba(185, 28, 28, 0.2);
+      }
 
-    .location-title:hover {
-      color: #b91c1c;
-      transform: translateY(-1px);
-    }
+      .location-title {
+        color: #1f2937;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 20px 0;
+        text-align: center;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        user-select: none;
+      }
 
-    .expand-icon {
-      font-size: 1.2rem;
-      transition: transform 0.3s ease;
-      color: #b91c1c;
-    }
+      .location-title:hover {
+        color: #b91c1c;
+        transform: translateY(-1px);
+      }
 
-    .location-content {
-      transition: all 0.4s ease;
-      overflow: hidden;
-    }
+      .expand-icon {
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+        color: #b91c1c;
+      }
 
-    .location-content.collapsed {
-      max-height: 0;
-      opacity: 0;
-      margin-top: 0;
-      padding-top: 0;
-    }
+      .location-content {
+        transition: all 0.4s ease;
+        overflow: hidden;
+      }
 
-    .location-content.expanded {
-      max-height: 2000px;
-      opacity: 1;
-    }
+      .location-content.collapsed {
+        max-height: 0;
+        opacity: 0;
+        margin-top: 0;
+        padding-top: 0;
+      }
 
-    .collapsed .expand-icon {
-      transform: rotate(-90deg);
-    }
+      .location-content.expanded {
+        max-height: 2000px;
+        opacity: 1;
+      }
 
-    /* Power BI Container for drill-down - Optimized for 4:3 Aspect Ratio */
-    .power-bi-container {
-      width: 100%; /* Reduced from 100% to make it less wide */
-      aspect-ratio: 2/1.11; /* Ensures proper 16:9 aspect ratio */
-      border: 2px dashed rgba(185, 28, 28, 0.3);
-      border-radius: 10px;
-      position: relative;
-      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
-      overflow: hidden;
-      margin: 0 auto; /* Centers the container */
-    }
-    
-    .power-bi-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-      border: none; /* Removes default iframe border */
-    }
+      .collapsed .expand-icon {
+        transform: rotate(-90deg);
+      }
 
-    /* Responsive adjustments for Power BI containers */
-    @media (max-width: 1024px) {
+      /* Power BI Container for drill-down - Optimized for 4:3 Aspect Ratio */
       .power-bi-container {
-        width: 100%; /* Slightly wider on tablets */
-        aspect-ratio: 2/1.11;
+        width: 100%; /* Reduced from 100% to make it less wide */
+        aspect-ratio: 2/1.11; /* Ensures proper 16:9 aspect ratio */
+        border: 2px dashed rgba(185, 28, 28, 0.3);
+        border-radius: 10px;
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          rgba(185, 28, 28, 0.05) 0%,
+          rgba(220, 38, 38, 0.05) 100%
+        );
+        overflow: hidden;
+        margin: 0 auto; /* Centers the container */
       }
-    }
 
-    @media (max-width: 768px) {
-      .power-bi-container {
-        width: 100%; /* Wider on mobile for better use of space */
-        aspect-ratio: 2/1.11;
+      .power-bi-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        border: none; /* Removes default iframe border */
       }
-    }
 
-    @media (max-width: 480px) {
-      .power-bi-container {
-        width: 100%; /* Full width on very small screens */
-        aspect-ratio: 2/1.11;
+      /* Responsive adjustments for Power BI containers */
+      @media (max-width: 1024px) {
+        .power-bi-container {
+          width: 100%; /* Slightly wider on tablets */
+          aspect-ratio: 2/1.11;
+        }
       }
-    }
 
-    .power-bi-placeholder {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      text-align: center;
-      color: #64748b;
-    }
+      @media (max-width: 768px) {
+        .power-bi-container {
+          width: 100%; /* Wider on mobile for better use of space */
+          aspect-ratio: 2/1.11;
+        }
+      }
 
-    .power-bi-icon {
-      font-size: 4rem;
-      color: #b91c1c;
-      margin-bottom: 20px;
-    }
+      @media (max-width: 480px) {
+        .power-bi-container {
+          width: 100%; /* Full width on very small screens */
+          aspect-ratio: 2/1.11;
+        }
+      }
 
-    .power-bi-text {
-      font-weight: 600;
-      color: #374151;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
-    }
+      .power-bi-placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        text-align: center;
+        color: #64748b;
+      }
 
-    .power-bi-subtext {
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
+      .power-bi-icon {
+        font-size: 4rem;
+        color: #b91c1c;
+        margin-bottom: 20px;
+      }
 
-    /* Back Button */
-    .back-button {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: linear-gradient(135deg, #b91c1c, #dc2626);
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
-      transition: all 0.3s ease;
-      z-index: 100;
-      text-decoration: none;
-      display: inline-block;
-      opacity: 0.8;
-    }
+      .power-bi-text {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
 
-    .back-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
-      opacity: 1;
-    }
+      .power-bi-subtext {
+        font-size: 0.9rem;
+        color: #9ca3af;
+      }
 
-    /* Integration note for placeholder */
-    .integration-note {
-      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-      border: 1px solid #f59e0b;
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 0.85rem;
-      color: #92400e;
-    }
+      /* Back Button */
+      .back-button {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        background: linear-gradient(135deg, #b91c1c, #dc2626);
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
+        transition: all 0.3s ease;
+        z-index: 100;
+        text-decoration: none;
+        display: inline-block;
+        opacity: 0.8;
+      }
 
-    .integration-note strong {
-      color: #78350f;
-    }
-  </style>
-</head>
+      .back-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
+        opacity: 1;
+      }
 
-<body>
-  <!-- Navigation Bar -->
-  <div class="topbar">
-    <div class="brand">Ren Internal</div>
-    <div class="header-right">
-      <button class="mobile-menu-toggle">
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-      </button>
+      /* Integration note for placeholder */
+      .integration-note {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 1px solid #f59e0b;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        font-size: 0.85rem;
+        color: #92400e;
+      }
+
+      .integration-note strong {
+        color: #78350f;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navigation Bar -->
+    <div class="topbar">
+      <div class="brand">Ren Internal</div>
+      <div class="header-right">
+        <button class="mobile-menu-toggle">
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+          <div class="hamburger-line"></div>
+        </button>
+      </div>
     </div>
-  </div>
 
-  <!-- Main Content -->
-  <main class="content">
-    <!-- Page Header -->
-    <div class="page-header">
-      <h1 class="page-title">Backlog Pareto Drilldown</h1>
-      <p class="page-subtitle">Detailed analysis by location</p>
-    </div>
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Page Header -->
+      <div class="page-header">
+        <h1 class="page-title">Backlog Pareto Drilldown</h1>
+        <p class="page-subtitle">Detailed analysis by location</p>
+      </div>
 
-    <!-- Location Grid -->
-    <div class="location-grid">
-      <!-- Ottawa Location -->
-      <div class="location-card">
-        <h2 class="location-title" onclick="toggleSection('ottawa-content')">
-          <span>Ottawa</span>
-          <span class="expand-icon">▼</span>
-        </h2>
-        <div id="ottawa-content" class="location-content">
-          <div class="power-bi-container">
-            <iframe 
-              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiNzBiMDZkYjUtMmIxYi00Y2I5LWFjYmEtNTdlZmViZDBkNDU4IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
-              frameborder="0" 
-              allowFullScreen="true">
-            </iframe>
+      <!-- Location Grid -->
+      <div class="location-grid">
+        <!-- Ottawa Location -->
+        <div class="location-card">
+          <h2 class="location-title" onclick="toggleSection('ottawa-content')">
+            <span>Ottawa</span>
+            <span class="expand-icon">▼</span>
+          </h2>
+          <div id="ottawa-content" class="location-content">
+            <div class="power-bi-container">
+              <iframe
+                src="https://app.fabric.microsoft.com/view?r=eyJrIjoiNzBiMDZkYjUtMmIxYi00Y2I5LWFjYmEtNTdlZmViZDBkNDU4IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+                frameborder="0"
+                allowfullscreen="true"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dallas Location -->
+        <div class="location-card">
+          <h2 class="location-title" onclick="toggleSection('dallas-content')">
+            <span>Dallas</span>
+            <span class="expand-icon">▼</span>
+          </h2>
+          <div id="dallas-content" class="location-content">
+            <div class="power-bi-container">
+              <iframe
+                src="https://app.fabric.microsoft.com/view?r=eyJrIjoiOTI2YzM5NzctZjlhOS00MzU4LWIxYWQtMTk1ZmQ1ODgyOWI5IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+                frameborder="0"
+                allowfullscreen="true"
+              >
+              </iframe>
+            </div>
           </div>
         </div>
       </div>
+    </main>
 
-      <!-- Dallas Location -->
-      <div class="location-card">
-        <h2 class="location-title" onclick="toggleSection('dallas-content')">
-          <span>Dallas</span>
-          <span class="expand-icon">▼</span>
-        </h2>
-        <div id="dallas-content" class="location-content">
-          <div class="power-bi-container">
-            <iframe 
-              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiOTI2YzM5NzctZjlhOS00MzU4LWIxYWQtMTk1ZmQ1ODgyOWI5IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
-              frameborder="0" 
-              allowFullScreen="true">
-            </iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+    <!-- Back Button -->
+    <a href="leah-dashboard.html" class="back-button">Back</a>
 
-  <!-- Back Button -->
-  <a href="leah-dashboard.html" class="back-button">Back</a>
+    <script>
+      // Collapsible functionality for location sections
+      function toggleSection(sectionId) {
+        const content = document.getElementById(sectionId);
+        const icon =
+          content.previousElementSibling.querySelector(".expand-icon");
 
-  <script>
-    // Collapsible functionality for location sections
-    function toggleSection(sectionId) {
-      const content = document.getElementById(sectionId);
-      const icon = content.previousElementSibling.querySelector('.expand-icon');
-      
-      if (content.classList.contains('collapsed')) {
-        content.classList.remove('collapsed');
-        content.classList.add('expanded');
-        icon.style.transform = 'rotate(0deg)';
-      } else {
-        content.classList.remove('expanded');
-        content.classList.add('collapsed');
-        icon.style.transform = 'rotate(-90deg)';
+        if (content.classList.contains("collapsed")) {
+          content.classList.remove("collapsed");
+          content.classList.add("expanded");
+          icon.style.transform = "rotate(0deg)";
+        } else {
+          content.classList.remove("expanded");
+          content.classList.add("collapsed");
+          icon.style.transform = "rotate(-90deg)";
+        }
       }
-    }
 
-    // Initialize sections as expanded by default
-    document.addEventListener('DOMContentLoaded', function() {
-      const contents = document.querySelectorAll('.location-content');
-      contents.forEach(content => {
-        content.classList.add('expanded');
+      // Initialize sections as expanded by default
+      document.addEventListener("DOMContentLoaded", function () {
+        const contents = document.querySelectorAll(".location-content");
+        contents.forEach((content) => {
+          content.classList.add("expanded");
+        });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

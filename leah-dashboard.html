@@ -1,1507 +1,1562 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Leah Dashboard - Ren Internal</title>
-  <link rel="stylesheet" href="style.css?v=14" />
-  <meta http-equiv="Cache-Control" content="no-store" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  
-  <!-- Backup CSS for layout -->
-  <style>
-    /* Professional Background Styling */
-    html, body {
-      background: #f1f5f9 !important;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-    /* Professional Main Header Styling */
-    .topbar {
-      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-      border-bottom: 3px solid #5a1616 !important;
-      padding: 0 20px !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-      width: 100% !important;
-      height: 70px !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      box-sizing: border-box !important;
-    }
-    
-    .topbar::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    }
-    
-    .brand {
-      font-size: 20px !important;
-      font-weight: 700 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      color: #ffffff !important;
-      padding: 16px 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1.2px !important;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
-      flex-shrink: 0 !important;
-      position: absolute !important;
-      left: 20px !important;
-    }
-    
-    /* Mobile Hamburger Menu */
-    .mobile-menu-toggle {
-      display: none !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-      width: 40px !important;
-      height: 40px !important;
-      background: rgba(255, 255, 255, 0.15) !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      border-radius: 8px !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      padding: 0 !important;
-      justify-self: end !important;
-    }
-    
-    .mobile-menu-toggle:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-    }
-    
-    .hamburger-line {
-      width: 20px !important;
-      height: 2px !important;
-      background: white !important;
-      margin: 2px 0 !important;
-      transition: 0.3s !important;
-      border-radius: 1px !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-      transform: rotate(-45deg) translate(-4px, 4px) !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
-      opacity: 0 !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-      transform: rotate(45deg) translate(-4px, -4px) !important;
-    }
-    
-    /* Side Menu Overlay */
-    .mobile-menu-overlay {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      background: rgba(0, 0, 0, 0.5) !important;
-      z-index: 1500 !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transition: all 0.3s ease !important;
-    }
-    
-    .mobile-menu-overlay.active {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    
-    /* Side Menu Panel */
-    .mobile-menu-panel {
-      position: fixed !important;
-      top: 0 !important;
-      left: -320px !important;
-      width: 320px !important;
-      height: 100% !important;
-      background: linear-gradient(180deg, #7a1b1b 0%, #b91c1c 100%) !important;
-      z-index: 1600 !important;
-      transition: left 0.3s ease !important;
-      overflow-y: auto !important;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .mobile-menu-panel.active {
-      left: 0 !important;
-    }
-    
-    .mobile-menu-header {
-      padding: 20px !important;
-      background: rgba(0, 0, 0, 0.2) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-    }
-    
-    .mobile-menu-title {
-      color: white !important;
-      font-size: 18px !important;
-      font-weight: 700 !important;
-      margin: 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1px !important;
-    }
-    
-    .mobile-menu-close {
-      background: none !important;
-      border: none !important;
-      color: white !important;
-      font-size: 24px !important;
-      cursor: pointer !important;
-      padding: 5px !important;
-      line-height: 1 !important;
-    }
-    
-    .mobile-menu-content {
-      padding: 0 !important;
-    }
-    
-    .mobile-menu-section {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    .mobile-menu-section-title {
-      padding: 15px 20px !important;
-      color: white !important;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-      margin: 0 !important;
-      background: rgba(0, 0, 0, 0.1) !important;
-      cursor: pointer !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      transition: all 0.3s ease !important;
-      position: relative !important;
-    }
-    
-    .mobile-menu-section-title:hover {
-      background: rgba(0, 0, 0, 0.2) !important;
-      color: rgba(255, 255, 255, 0.95) !important;
-    }
-    
-    .mobile-menu-section-title::after {
-      content: '▼' !important;
-      font-size: 12px !important;
-      transition: transform 0.3s ease !important;
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-    
-    .mobile-menu-section.collapsed .mobile-menu-section-title::after {
-      transform: rotate(-90deg) !important;
-    }
-    
-    .mobile-menu-items {
-      max-height: 500px !important;
-      overflow: hidden !important;
-      transition: max-height 0.3s ease !important;
-    }
-    
-    .mobile-menu-section.collapsed .mobile-menu-items {
-      max-height: 0 !important;
-    }
-    
-    .mobile-menu-item {
-      display: block !important;
-      padding: 12px 20px 12px 40px !important;
-      color: rgba(255, 255, 255, 0.9) !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 400 !important;
-      transition: all 0.2s ease !important;
-      border-left: 3px solid transparent !important;
-    }
-    
-    .mobile-menu-item:hover, .mobile-menu-item.active {
-      background: rgba(255, 255, 255, 0.1) !important;
-      color: white !important;
-      border-left-color: white !important;
-      padding-left: 44px !important;
-    }
-    
-    /* Desktop Navigation - Hidden on Mobile */
-    .bar-inner {
-      display: flex !important;
-      align-items: center !important;
-      height: 100% !important;
-      justify-content: center !important;
-    }
-    
-    .nav {
-      display: flex !important;
-      align-items: center !important;
-      gap: 20px !important;
-    }
-    
-    /* Right side container for navigation button */
-    .header-right {
-      display: flex !important;
-      align-items: center !important;
-      position: absolute !important;
-      right: 20px !important;
-    }
-    
-    /* Nav dropdown container positioning */
-    .nav-dropdown {
-      position: relative !important;
-    }
-    
-    /* Navigation Button in Header */
-    .header-nav-button {
-      background: rgba(255, 255, 255, 0.15) !important;
-      color: white !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      padding: 10px 16px !important;
-      border-radius: 8px !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      transition: all 0.3s ease !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Leah Dashboard - Ren Internal</title>
+    <link rel="stylesheet" href="style.css?v=14" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
-    .header-nav-button:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .header-nav-button.active {
-      background: rgba(255, 255, 255, 0.3) !important;
-      border-color: rgba(255, 255, 255, 0.6) !important;
-    }
-
-    .header-nav-arrow {
-      transition: transform 0.3s ease !important;
-      font-size: 10px !important;
-    }
-
-    .header-nav-button.active .header-nav-arrow {
-      transform: rotate(180deg) !important;
-    }
-
-    .header-nav-menu {
-      position: absolute !important;
-      top: calc(100% + 8px) !important;
-      right: 0 !important;
-      background: white !important;
-      min-width: 240px !important;
-      width: max-content !important;
-      border-radius: 12px !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-      border: 1px solid rgba(185, 28, 28, 0.1) !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transform: translateY(-10px) !important;
-      transition: all 0.3s ease !important;
-      z-index: 1100 !important;
-      overflow: hidden !important;
-    }
-
-    .header-nav-menu.show {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateY(0) !important;
-    }
-
-    .header-nav-item {
-      display: block !important;
-      padding: 14px 24px !important;
-      color: #7a1b1b !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 500 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      transition: all 0.2s ease !important;
-      border-bottom: 1px solid rgba(185, 28, 28, 0.08) !important;
-      border-left: 4px solid transparent !important;
-      position: relative !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      white-space: nowrap !important;
-    }
-
-    .header-nav-item:last-child {
-      border-bottom: none !important;
-    }
-
-    .header-nav-item:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffcccc) !important;
-      color: #5a1515 !important;
-      border-left-color: #b91c1c !important;
-      padding-left: 28px !important;
-      width: 100% !important;
-    }
-    
-    /* Navigation divider */
-    .nav-divider {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: 8px 0;
-    }
-    
-    /* Scroll to top styling */
-    .scroll-to-top {
-      font-weight: 600 !important;
-      color: #1e293b !important;
-      background: rgba(255, 255, 255, 0.9) !important;
-    }
-    
-    .scroll-to-top:hover {
-      color: #0f172a !important;
-      background: rgba(255, 255, 255, 1) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-    }
-    
-    .menu {
-      display: flex !important;
-      list-style: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      gap: 0 !important;
-      align-items: center !important;
-      height: 100% !important;
-    }
-    
-    .menu li {
-      position: relative !important;
-      height: 100% !important;
-      display: flex !important;
-      align-items: center !important;
-    }
-    
-    .toplink {
-      display: flex !important;
-      align-items: center !important;
-      padding: 12px 24px !important;
-      color: #ffffff !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 600 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.8px !important;
-      transition: all 0.3s ease !important;
-      border-right: 1px solid rgba(255,255,255,0.1) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      height: 100% !important;
-      box-sizing: border-box !important;
-    }
-    
-    .toplink::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .toplink:hover::before {
-      opacity: 1;
-    }
-    
-    .toplink:hover {
-      background: rgba(255,255,255,0.1) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: inset 0 -3px 0 rgba(255,255,255,0.3) !important;
-    }
-    
-    .toplink.active {
-      background: rgba(255,255,255,0.15) !important;
-      box-shadow: inset 0 -3px 0 #ffffff !important;
-      font-weight: 700 !important;
-    }
-    
-    /* Enhanced Dropdown Styling */
-    .sub {
-      position: absolute !important;
-      top: 100% !important;
-      left: 50% !important;
-      transform: translateX(-50%) translateY(-10px) !important;
-      background: #ffffff !important;
-      min-width: 220px !important;
-      width: max-content !important;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-      border-radius: 0 0 8px 8px !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transition: all 0.3s ease !important;
-      z-index: 1000 !important;
-      border: 1px solid rgba(0,0,0,0.1) !important;
-      border-top: none !important;
-      list-style: none !important;
-      padding: 8px 0 !important;
-      margin: 0 !important;
-      overflow: hidden !important;
-    }
-    
-    .has-sub:hover .sub {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateX(-50%) translateY(0) !important;
-    }
-    
-    .sub li {
-      margin: 0 !important;
-      width: 100% !important;
-    }
-    
-    .sub a {
-      display: block !important;
-      padding: 14px 24px !important;
-      color: #7a1b1b !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 500 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      text-transform: none !important;
-      letter-spacing: 0.5px !important;
-      transition: all 0.2s ease !important;
-      border-left: 4px solid transparent !important;
-      position: relative !important;
-      margin: 0 !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      white-space: nowrap !important;
-    }
-
-    .sub a:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
-      color: #5a1616 !important;
-      border-left-color: #b91c1c !important;
-      padding-left: 28px !important;
-      width: 100% !important;
-    }
-    
-    .sub a.active {
-      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
-      color: #5a1616 !important;
-      border-left-color: #b91c1c !important;
-      font-weight: 600 !important;
-      width: 100% !important;
-    }
-    
-    /* Responsive adjustments for main header */
-    @media (max-width: 1024px) {
+    <!-- Backup CSS for layout -->
+    <style>
+      /* Professional Background Styling */
+      html,
+      body {
+        background: #f1f5f9 !important;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+      }
+      /* Professional Main Header Styling */
       .topbar {
-        position: static !important;
-        height: 50px !important;
-        padding: 0 10px !important;
-      }
-      
-      .brand {
-        font-size: 16px !important;
-        padding: 12px 10px !important;
-        letter-spacing: 1px !important;
-      }
-      
-      /* Show mobile menu toggle, hide desktop navigation */
-      .mobile-menu-toggle {
+        background: linear-gradient(
+          135deg,
+          #7a1b1b 0%,
+          #b91c1c 50%,
+          #dc2626 100%
+        ) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+        border-bottom: 3px solid #5a1616 !important;
+        padding: 0 20px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
+        width: 100% !important;
+        height: 70px !important;
         display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
       }
-      
-      .bar-inner,
-      .nav,
-      .menu,
-      .header-nav-button {
-        display: none !important;
-      }
-      
-      .mobile-menu-panel {
-        width: 280px !important;
-        left: -280px !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .topbar {
-        height: 45px !important;
-        padding: 0 8px !important;
-      }
-      
-      .brand {
-        font-size: 14px !important;
-        padding: 10px 8px !important;
-        letter-spacing: 0.8px !important;
-      }
-      
-      .mobile-menu-toggle {
-        width: 35px !important;
-        height: 35px !important;
-        margin-right: 8px !important;
-      }
-      
-      .hamburger-line {
-        width: 18px !important;
-      }
-      
-      .mobile-menu-panel {
-        width: 260px !important;
-        left: -260px !important;
-      }
-    }
 
-    /* Main Content Styling - Mobile Optimized */
-    main.content {
-      padding-top: 90px !important;
-      padding-left: 20px !important;
-      padding-right: 20px !important;
-      padding-bottom: 20px !important;
-      max-width: 1400px;
-      margin: 0 auto;
-      background: transparent;
-    }
-    
-    @media (max-width: 1024px) {
-      main.content {
-        padding-top: 20px !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
-        padding-bottom: 20px !important;
+      .topbar::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
       }
-    }
-    
-    @media (max-width: 480px) {
-      main.content {
-        padding-top: 16px !important;
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-        padding-bottom: 16px !important;
-      }
-    }
 
-    /* Dashboard Header - Mobile Optimized */
-    .dashboard-header {
-      text-align: center;
-      margin-bottom: 25px;
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(185, 28, 28, 0.1);
-    }
-
-    .dashboard-header h1 {
-      color: #1f2937;
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 0 0 8px 0;
-      background: linear-gradient(135deg, #b91c1c, #dc2626);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .dashboard-subtitle {
-      color: #64748b;
-      font-size: 1rem;
-      margin: 0;
-      font-weight: 400;
-    }
-    
-    @media (max-width: 1024px) {
-      .dashboard-header {
-        margin-bottom: 0px !important;
-        padding: 12px !important;
-        border-radius: 10px !important;
-      }
-      
-      .dashboard-header h1 {
-        font-size: 1.6rem !important;
-        margin: 0 0 4px 0 !important;
-      }
-      
-      .dashboard-subtitle {
-        font-size: 0.9rem !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .dashboard-header {
-        margin-bottom: 0px !important;
-        padding: 10px !important;
-        border-radius: 8px !important;
-      }
-      
-      .dashboard-header h1 {
-        font-size: 1.4rem !important;
-        margin: 0 0 2px 0 !important;
-      }
-      
-      .dashboard-subtitle {
-        font-size: 0.8rem !important;
-      }
-    }
-
-    /* KPI Grid Layout - Mobile Optimized */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-    
-    @media (max-width: 1024px) {
-      .kpi-grid {
-        grid-template-columns: 1fr !important;
-        gap: 15px !important;
-        margin-top: 15px !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .kpi-grid {
-        gap: 12px !important;
-        margin-top: 12px !important;
-      }
-    }
-
-    /* KPI Card Styling - Mobile Optimized */
-    .kpi-card {
-      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-      border: 1px solid rgba(185, 28, 28, 0.1);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      min-height: 350px;
-    }
-
-    .kpi-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #b91c1c, #dc2626);
-    }
-
-    .kpi-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
-      border-color: rgba(185, 28, 28, 0.2);
-    }
-
-    .kpi-title {
-      color: #1f2937;
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin: 0 0 12px 0;
-      text-align: center;
-    }
-
-    .kpi-description {
-      color: #64748b;
-      font-size: 0.9rem;
-      margin: 0 0 20px 0;
-      text-align: center;
-      line-height: 1.4;
-    }
-
-    /* Power BI Container - Mobile Optimized */
-    .power-bi-container {
-      width: 100%;
-      height: 0;
-      padding-bottom: 90%; /* Taller aspect ratio for more iframe height */
-      border: 2px dashed rgba(185, 28, 28, 0.3);
-      border-radius: 10px;
-      position: relative;
-      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
-      overflow: hidden;
-    }
-
-    /* Expanded Power BI Container for Backlog Pareto */
-    .power-bi-container-expanded {
-      width: 100%;
-      height: 480px; /* Increased desktop height for better visibility */
-      border: 2px dashed rgba(185, 28, 28, 0.3);
-      border-radius: 10px;
-      position: relative;
-      background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
-      overflow: hidden;
-      margin-bottom: 15px;
-    }
-    
-    .power-bi-container iframe,
-    .power-bi-container-expanded iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-      border: none;
-    }
-
-    /* Drill Down Button Styling */
-    .drill-down-button-container {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .drill-down-button {
-      background: linear-gradient(135deg, #b91c1c, #dc2626);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 10px rgba(185, 28, 28, 0.3);
-    }
-
-    .drill-down-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.4);
-      background: linear-gradient(135deg, #dc2626, #ef4444);
-    }
-
-    .drill-down-button:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.3);
-    }
-    
-    /* Responsive scaling for iframe content */
-    @media (max-width: 1200px) {
-      .power-bi-container-expanded {
-        height: 420px; /* Slightly taller for medium screens */
-      }
-    }
-    
-    @media (max-width: 900px) {
-      .power-bi-container-expanded {
-        height: 400px; /* Taller for smaller tablets */
-      }
-    }
-    
-    @media (max-width: 1024px) {
-      .power-bi-container-expanded {
-        height: 480px; /* Much taller to eliminate internal scrolling */
-      }
-      
-      .kpi-card {
-        min-height: 620px !important; /* Accommodate much taller report */
-        padding: 15px !important;
-      }
-      
-      .kpi-title {
-        font-size: 1.2rem !important;
-      }
-    }
-    
-    @media (max-width: 600px) {
-      .power-bi-container-expanded {
-        height: 500px; /* Even taller for mobile */
-      }
-      
-      .kpi-card {
-        min-height: 620px !important; /* Taller card for mobile */
-        padding: 12px !important;
-      }
-      
-      .kpi-title {
-        font-size: 1.1rem !important;
-      }
-      
-      .drill-down-button {
-        padding: 8px 16px !important;
-        font-size: 0.8rem !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .power-bi-container-expanded {
-        height: 480px; /* Taller for small mobile */
-      }
-      
-      .kpi-card {
-        min-height: 600px !important; /* Extra tall for small mobile */
-        padding: 10px !important;
-        margin-bottom: 15px !important;
-      }
-      
-      .kpi-title {
-        font-size: 1rem !important;
-        margin-bottom: 8px !important;
-      }
-      
-      .drill-down-button {
-        padding: 6px 14px !important;
-        font-size: 0.75rem !important;
-      }
-    }
-    
-    @media (max-width: 400px) {
-      .power-bi-container-expanded {
-        height: 460px; /* Taller for very small screens */
-      }
-      
-      .kpi-card {
-        min-height: 580px !important; /* Ensure full content visibility */
-        padding: 8px !important;
-      }
-      
-      .kpi-title {
-        font-size: 0.95rem !important;
-      }
-    }
-    
-    @media (max-width: 320px) {
-      .power-bi-container-expanded {
-        height: 440px; /* Much taller for smallest screens */
-      }
-      
-      .kpi-card {
-        min-height: 560px !important; /* Very tall for all content */
-        padding: 6px !important;
-      }
-      
-      .kpi-title {
-        font-size: 0.9rem !important;
-      }
-    }
-    
-    @media (max-width: 1024px) {
-      .kpi-card {
-        padding: 16px !important;
-        border-radius: 10px !important;
-        min-height: 300px !important;
-      }
-      
-      .kpi-card:hover {
-        transform: translateY(-2px) !important;
-      }
-      
-      .kpi-title {
-        font-size: 1.2rem !important;
-        margin: 0 0 10px 0 !important;
-      }
-      
-      .kpi-description {
-        font-size: 0.85rem !important;
-        margin: 0 0 16px 0 !important;
-        line-height: 1.3 !important;
-      }
-      
-      .power-bi-container {
-        padding-bottom: 90% !important; /* Maintain taller ratio on tablet */
-        height: 0 !important;
-        border-radius: 8px !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .kpi-card {
-        padding: 12px !important;
-        border-radius: 8px !important;
-        min-height: 280px !important;
-      }
-      
-      .kpi-title {
-        font-size: 1.1rem !important;
-        margin: 0 0 8px 0 !important;
-      }
-      
-      .kpi-description {
-        font-size: 0.8rem !important;
-        margin: 0 0 14px 0 !important;
-        line-height: 1.2 !important;
-      }
-      
-      .power-bi-container {
-        padding-bottom: 90% !important; /* Maintain taller ratio on mobile */
-        height: 0 !important;
-        border-radius: 6px !important;
-      }
-    }
-
-    .power-bi-placeholder {
-      text-align: center;
-      color: #64748b;
-    }
-
-    .power-bi-icon {
-      font-size: 3rem;
-      color: #b91c1c;
-      margin-bottom: 15px;
-    }
-
-    .power-bi-text {
-      font-weight: 600;
-      color: #374151;
-      margin-bottom: 8px;
-    }
-
-    .power-bi-subtext {
-      font-size: 0.85rem;
-      color: #9ca3af;
-    }
-
-    /* Integration Instructions */
-    .integration-note {
-      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-      border: 1px solid #f59e0b;
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 20px;
-      font-size: 0.85rem;
-      color: #92400e;
-    }
-
-    .integration-note strong {
-      color: #78350f;
-    }
-
-    /* Back to Dashboards Button */
-    .back-button {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      background: linear-gradient(135deg, #b91c1c, #dc2626);
-      color: white;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 20px;
-      font-weight: 500;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
-      transition: all 0.3s ease;
-      z-index: 100;
-      text-decoration: none;
-      display: inline-block;
-      opacity: 0.8;
-    }
-
-    .back-button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
-      opacity: 1;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 1400px) {
-      main.content {
-        padding-left: 30px !important;
-        padding-right: 30px !important;
-      }
-      
-      .kpi-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
-      }
-    }
-
-    @media (max-width: 1200px) {
-      .dashboard-header h1 {
-        font-size: 2.2rem;
-      }
-      
-      .kpi-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      }
-    }
-
-    @media (max-width: 1024px) {
-      main.content {
-        padding-left: 25px !important;
-        padding-right: 25px !important;
-        padding-top: 140px !important;
-      }
-      
-      .dashboard-header {
-        padding: 25px;
-        margin-bottom: 0px;
-      }
-      
-      .dashboard-header h1 {
-        font-size: 2rem;
-      }
-      
-      .kpi-grid {
-        gap: 20px;
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 900px) {
       .brand {
         font-size: 20px !important;
+        font-weight: 700 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        color: #ffffff !important;
+        padding: 16px 0 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.2px !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+        flex-shrink: 0 !important;
+        position: absolute !important;
+        left: 20px !important;
       }
-      
-      .kpi-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      
-      .kpi-card {
-        padding: 20px;
-        min-height: 350px;
-      }
-    }
 
-    @media (max-width: 1024px) {
+      /* Mobile Hamburger Menu */
+      .mobile-menu-toggle {
+        display: none !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        padding: 0 !important;
+        justify-self: end !important;
+      }
+
+      .mobile-menu-toggle:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+      }
+
+      .hamburger-line {
+        width: 20px !important;
+        height: 2px !important;
+        background: white !important;
+        margin: 2px 0 !important;
+        transition: 0.3s !important;
+        border-radius: 1px !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: rotate(-45deg) translate(-4px, 4px) !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: rotate(45deg) translate(-4px, -4px) !important;
+      }
+
+      /* Side Menu Overlay */
+      .mobile-menu-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        z-index: 1500 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .mobile-menu-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      /* Side Menu Panel */
+      .mobile-menu-panel {
+        position: fixed !important;
+        top: 0 !important;
+        left: -320px !important;
+        width: 320px !important;
+        height: 100% !important;
+        background: linear-gradient(
+          180deg,
+          #7a1b1b 0%,
+          #b91c1c 100%
+        ) !important;
+        z-index: 1600 !important;
+        transition: left 0.3s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .mobile-menu-panel.active {
+        left: 0 !important;
+      }
+
+      .mobile-menu-header {
+        padding: 20px !important;
+        background: rgba(0, 0, 0, 0.2) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+
+      .mobile-menu-title {
+        color: white !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+      }
+
+      .mobile-menu-close {
+        background: none !important;
+        border: none !important;
+        color: white !important;
+        font-size: 24px !important;
+        cursor: pointer !important;
+        padding: 5px !important;
+        line-height: 1 !important;
+      }
+
+      .mobile-menu-content {
+        padding: 0 !important;
+      }
+
+      .mobile-menu-section {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      .mobile-menu-section-title {
+        padding: 15px 20px !important;
+        color: white !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin: 0 !important;
+        background: rgba(0, 0, 0, 0.1) !important;
+        cursor: pointer !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+      }
+
+      .mobile-menu-section-title:hover {
+        background: rgba(0, 0, 0, 0.2) !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .mobile-menu-section-title::after {
+        content: "▼" !important;
+        font-size: 12px !important;
+        transition: transform 0.3s ease !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+
+      .mobile-menu-section.collapsed .mobile-menu-section-title::after {
+        transform: rotate(-90deg) !important;
+      }
+
+      .mobile-menu-items {
+        max-height: 500px !important;
+        overflow: hidden !important;
+        transition: max-height 0.3s ease !important;
+      }
+
+      .mobile-menu-section.collapsed .mobile-menu-items {
+        max-height: 0 !important;
+      }
+
+      .mobile-menu-item {
+        display: block !important;
+        padding: 12px 20px 12px 40px !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 400 !important;
+        transition: all 0.2s ease !important;
+        border-left: 3px solid transparent !important;
+      }
+
+      .mobile-menu-item:hover,
+      .mobile-menu-item.active {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        border-left-color: white !important;
+        padding-left: 44px !important;
+      }
+
+      /* Desktop Navigation - Hidden on Mobile */
+      .bar-inner {
+        display: flex !important;
+        align-items: center !important;
+        height: 100% !important;
+        justify-content: center !important;
+      }
+
+      .nav {
+        display: flex !important;
+        align-items: center !important;
+        gap: 20px !important;
+      }
+
+      /* Right side container for navigation button */
+      .header-right {
+        display: flex !important;
+        align-items: center !important;
+        position: absolute !important;
+        right: 20px !important;
+      }
+
+      /* Nav dropdown container positioning */
+      .nav-dropdown {
+        position: relative !important;
+      }
+
+      /* Navigation Button in Header */
+      .header-nav-button {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        padding: 10px 16px !important;
+        border-radius: 8px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+      }
+
+      .header-nav-button:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+      }
+
+      .header-nav-button.active {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-color: rgba(255, 255, 255, 0.6) !important;
+      }
+
+      .header-nav-arrow {
+        transition: transform 0.3s ease !important;
+        font-size: 10px !important;
+      }
+
+      .header-nav-button.active .header-nav-arrow {
+        transform: rotate(180deg) !important;
+      }
+
+      .header-nav-menu {
+        position: absolute !important;
+        top: calc(100% + 8px) !important;
+        right: 0 !important;
+        background: white !important;
+        min-width: 240px !important;
+        width: max-content !important;
+        border-radius: 12px !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        border: 1px solid rgba(185, 28, 28, 0.1) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-10px) !important;
+        transition: all 0.3s ease !important;
+        z-index: 1100 !important;
+        overflow: hidden !important;
+      }
+
+      .header-nav-menu.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+      }
+
+      .header-nav-item {
+        display: block !important;
+        padding: 14px 24px !important;
+        color: #7a1b1b !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        transition: all 0.2s ease !important;
+        border-bottom: 1px solid rgba(185, 28, 28, 0.08) !important;
+        border-left: 4px solid transparent !important;
+        position: relative !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+      }
+
+      .header-nav-item:last-child {
+        border-bottom: none !important;
+      }
+
+      .header-nav-item:hover {
+        background: linear-gradient(135deg, #ffe5e5, #ffcccc) !important;
+        color: #5a1515 !important;
+        border-left-color: #b91c1c !important;
+        padding-left: 28px !important;
+        width: 100% !important;
+      }
+
+      /* Navigation divider */
+      .nav-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 8px 0;
+      }
+
+      /* Scroll to top styling */
+      .scroll-to-top {
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+      }
+
+      .scroll-to-top:hover {
+        color: #0f172a !important;
+        background: rgba(255, 255, 255, 1) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      .menu {
+        display: flex !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        align-items: center !important;
+        height: 100% !important;
+      }
+
+      .menu li {
+        position: relative !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      .toplink {
+        display: flex !important;
+        align-items: center !important;
+        padding: 12px 24px !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.8px !important;
+        transition: all 0.3s ease !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        height: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .toplink::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.05)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .toplink:hover::before {
+        opacity: 1;
+      }
+
+      .toplink:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.3) !important;
+      }
+
+      .toplink.active {
+        background: rgba(255, 255, 255, 0.15) !important;
+        box-shadow: inset 0 -3px 0 #ffffff !important;
+        font-weight: 700 !important;
+      }
+
+      /* Enhanced Dropdown Styling */
+      .sub {
+        position: absolute !important;
+        top: 100% !important;
+        left: 50% !important;
+        transform: translateX(-50%) translateY(-10px) !important;
+        background: #ffffff !important;
+        min-width: 220px !important;
+        width: max-content !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        border-radius: 0 0 8px 8px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+        z-index: 1000 !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-top: none !important;
+        list-style: none !important;
+        padding: 8px 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+      }
+
+      .has-sub:hover .sub {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateX(-50%) translateY(0) !important;
+      }
+
+      .sub li {
+        margin: 0 !important;
+        width: 100% !important;
+      }
+
+      .sub a {
+        display: block !important;
+        padding: 14px 24px !important;
+        color: #7a1b1b !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        text-transform: none !important;
+        letter-spacing: 0.5px !important;
+        transition: all 0.2s ease !important;
+        border-left: 4px solid transparent !important;
+        position: relative !important;
+        margin: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+      }
+
+      .sub a:hover {
+        background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+        color: #5a1616 !important;
+        border-left-color: #b91c1c !important;
+        padding-left: 28px !important;
+        width: 100% !important;
+      }
+
+      .sub a.active {
+        background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+        color: #5a1616 !important;
+        border-left-color: #b91c1c !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+      }
+
+      /* Responsive adjustments for main header */
+      @media (max-width: 1024px) {
+        .topbar {
+          position: static !important;
+          height: 50px !important;
+          padding: 0 10px !important;
+        }
+
+        .brand {
+          font-size: 16px !important;
+          padding: 12px 10px !important;
+          letter-spacing: 1px !important;
+        }
+
+        /* Show mobile menu toggle, hide desktop navigation */
+        .mobile-menu-toggle {
+          display: flex !important;
+        }
+
+        .bar-inner,
+        .nav,
+        .menu,
+        .header-nav-button {
+          display: none !important;
+        }
+
+        .mobile-menu-panel {
+          width: 280px !important;
+          left: -280px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .topbar {
+          height: 45px !important;
+          padding: 0 8px !important;
+        }
+
+        .brand {
+          font-size: 14px !important;
+          padding: 10px 8px !important;
+          letter-spacing: 0.8px !important;
+        }
+
+        .mobile-menu-toggle {
+          width: 35px !important;
+          height: 35px !important;
+          margin-right: 8px !important;
+        }
+
+        .hamburger-line {
+          width: 18px !important;
+        }
+
+        .mobile-menu-panel {
+          width: 260px !important;
+          left: -260px !important;
+        }
+      }
+
+      /* Main Content Styling - Mobile Optimized */
       main.content {
+        padding-top: 90px !important;
         padding-left: 20px !important;
         padding-right: 20px !important;
-        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+        max-width: 1400px;
+        margin: 0 auto;
+        background: transparent;
       }
-      
+
+      @media (max-width: 1024px) {
+        main.content {
+          padding-top: 20px !important;
+          padding-left: 10px !important;
+          padding-right: 10px !important;
+          padding-bottom: 20px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        main.content {
+          padding-top: 16px !important;
+          padding-left: 8px !important;
+          padding-right: 8px !important;
+          padding-bottom: 16px !important;
+        }
+      }
+
+      /* Dashboard Header - Mobile Optimized */
       .dashboard-header {
-        padding: 8px !important;
-        margin-bottom: 5px !important;
+        text-align: center;
+        margin-bottom: 25px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(185, 28, 28, 0.1);
       }
-      
+
       .dashboard-header h1 {
-        font-size: 1.6rem !important;
-        margin: 0 !important;
+        color: #1f2937;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0 0 8px 0;
+        background: linear-gradient(135deg, #b91c1c, #dc2626);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
-      
+
+      .dashboard-subtitle {
+        color: #64748b;
+        font-size: 1rem;
+        margin: 0;
+        font-weight: 400;
+      }
+
+      @media (max-width: 1024px) {
+        .dashboard-header {
+          margin-bottom: 0px !important;
+          padding: 12px !important;
+          border-radius: 10px !important;
+        }
+
+        .dashboard-header h1 {
+          font-size: 1.6rem !important;
+          margin: 0 0 4px 0 !important;
+        }
+
+        .dashboard-subtitle {
+          font-size: 0.9rem !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .dashboard-header {
+          margin-bottom: 0px !important;
+          padding: 10px !important;
+          border-radius: 8px !important;
+        }
+
+        .dashboard-header h1 {
+          font-size: 1.4rem !important;
+          margin: 0 0 2px 0 !important;
+        }
+
+        .dashboard-subtitle {
+          font-size: 0.8rem !important;
+        }
+      }
+
+      /* KPI Grid Layout - Mobile Optimized */
       .kpi-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 20px;
+        margin-top: 20px;
       }
-      
+
+      @media (max-width: 480px) {
+        .kpi-grid {
+          gap: 12px !important;
+          margin-top: 12px !important;
+        }
+      }
+
+      /* KPI Card Styling - Mobile Optimized */
+      .kpi-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(185, 28, 28, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        max-height: 550px;
+        min-width: 300px;
+      }
+
+      /* KPI Card Styling - Mobile Optimized */
+      .kpi-card-wipInTransit {
+        grid-column: span 2; /* takes up two grid tracks */
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(185, 28, 28, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        max-height: 550px;
+      }
+      @media (max-width: 900px) {
+        .kpi-card-wipInTransit {
+          grid-column: auto;
+        }
+      }
+      .kpi-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #b91c1c, #dc2626);
+      }
+
+      .kpi-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
+        border-color: rgba(185, 28, 28, 0.2);
+      }
+
+      .kpi-title {
+        color: #1f2937;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin: 0 0 12px 0;
+        text-align: center;
+      }
+
+      .kpi-description {
+        color: #64748b;
+        font-size: 0.9rem;
+        margin: 0 0 20px 0;
+        text-align: center;
+        line-height: 1.4;
+      }
+
+      /* Power BI Container - Mobile Optimized */
+      .power-bi-container {
+        width: 100%;
+        height: 0;
+        padding-bottom: 90%; /* Taller aspect ratio for more iframe height */
+        border: 2px dashed rgba(185, 28, 28, 0.3);
+        border-radius: 10px;
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          rgba(185, 28, 28, 0.05) 0%,
+          rgba(220, 38, 38, 0.05) 100%
+        );
+        overflow: hidden;
+      }
+      .power-bi-container-WIP {
+        width: 100%;
+        aspect-ratio: 2/1.2;
+        border: 2px dashed rgba(185, 28, 28, 0.3);
+        border-radius: 10px;
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          rgba(185, 28, 28, 0.05) 0%,
+          rgba(220, 38, 38, 0.05) 100%
+        );
+        overflow: hidden;
+      }
+      /* Expanded Power BI Container for Backlog Pareto */
+      .power-bi-container-expanded {
+        width: 100%;
+        aspect-ratio: 1/1.5;
+        max-height: 400px; /* Increased desktop height for better visibility */
+        border: 2px dashed rgba(185, 28, 28, 0.3);
+        border-radius: 10px;
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          rgba(185, 28, 28, 0.05) 0%,
+          rgba(220, 38, 38, 0.05) 100%
+        );
+        overflow: hidden;
+        margin-bottom: 15px;
+      }
+      .power-bi-container-WIP iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        aspect-ratio: 2/1.2;
+        border-radius: 8px;
+        border: none;
+      }
+      .power-bi-container-expanded iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        aspect-ratio: 1/1.5;
+        border-radius: 8px;
+        border: none;
+      }
+      .power-bi-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        border: none;
+      }
+
+      /* Drill Down Button Styling */
+      .drill-down-button-container {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .drill-down-button {
+        background: linear-gradient(135deg, #b91c1c, #dc2626);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(185, 28, 28, 0.3);
+      }
+
+      .drill-down-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(185, 28, 28, 0.4);
+        background: linear-gradient(135deg, #dc2626, #ef4444);
+      }
+
+      .drill-down-button:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 8px rgba(185, 28, 28, 0.3);
+      }
+
+      /* Responsive scaling for iframe content */
+      @media (max-width: 1200px) {
+        .power-bi-container-expanded {
+          height: 420px; /* Slightly taller for medium screens */
+        }
+      }
+
+      @media (max-width: 900px) {
+        .power-bi-container-expanded {
+          height: 400px; /* Taller for smaller tablets */
+        }
+      }
+
+      @media (max-width: 480px) {
+        .power-bi-container-expanded {
+          height: 480px; /* Taller for small mobile */
+        }
+
+        .kpi-card {
+          min-height: 600px !important; /* Extra tall for small mobile */
+          padding: 10px !important;
+          margin-bottom: 15px !important;
+        }
+
+        .kpi-title {
+          font-size: 1rem !important;
+          margin-bottom: 8px !important;
+        }
+
+        .drill-down-button {
+          padding: 6px 14px !important;
+          font-size: 0.75rem !important;
+        }
+      }
+
+      @media (max-width: 400px) {
+        .power-bi-container-expanded {
+          height: 460px; /* Taller for very small screens */
+        }
+
+        .kpi-card {
+          min-height: 580px !important; /* Ensure full content visibility */
+          padding: 8px !important;
+        }
+
+        .kpi-title {
+          font-size: 0.95rem !important;
+        }
+      }
+
+      @media (max-width: 320px) {
+        .power-bi-container-expanded {
+          height: 440px; /* Much taller for smallest screens */
+        }
+
+        .kpi-card {
+          min-height: 560px !important; /* Very tall for all content */
+          padding: 6px !important;
+        }
+
+        .kpi-title {
+          font-size: 0.9rem !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .kpi-card {
+          padding: 12px !important;
+          border-radius: 8px !important;
+          min-height: 280px !important;
+        }
+
+        .kpi-title {
+          font-size: 1.1rem !important;
+          margin: 0 0 8px 0 !important;
+        }
+
+        .kpi-description {
+          font-size: 0.8rem !important;
+          margin: 0 0 14px 0 !important;
+          line-height: 1.2 !important;
+        }
+
+        .power-bi-container {
+          padding-bottom: 90% !important; /* Maintain taller ratio on mobile */
+          height: 0 !important;
+          border-radius: 6px !important;
+        }
+      }
+
+      .power-bi-placeholder {
+        text-align: center;
+        color: #64748b;
+      }
+
+      .power-bi-icon {
+        font-size: 3rem;
+        color: #b91c1c;
+        margin-bottom: 15px;
+      }
+
+      .power-bi-text {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 8px;
+      }
+
+      .power-bi-subtext {
+        font-size: 0.85rem;
+        color: #9ca3af;
+      }
+
+      /* Integration Instructions */
+      .integration-note {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 1px solid #f59e0b;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        font-size: 0.85rem;
+        color: #92400e;
+      }
+
+      .integration-note strong {
+        color: #78350f;
+      }
+
+      /* Back to Dashboards Button */
       .back-button {
+        position: fixed;
         bottom: 20px;
         left: 20px;
-        padding: 10px 16px;
+        background: linear-gradient(135deg, #b91c1c, #dc2626);
+        color: white;
+        border: none;
+        padding: 12px 18px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(185, 28, 28, 0.2);
+        transition: all 0.3s ease;
+        z-index: 100;
+        text-decoration: none;
+        display: inline-block;
+        opacity: 0.8;
       }
-    }
 
-    @media (max-width: 480px) {
-      main.content {
-        padding-left: 12px !important;
-        padding-right: 12px !important;
-        padding-top: 50px !important;
+      .back-button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(185, 28, 28, 0.3);
+        opacity: 1;
       }
-      
-      .dashboard-header {
-        padding: 6px !important;
-        margin-bottom: 3px !important;
+
+      /* Responsive Design */
+      @media (max-width: 1400px) {
+        main.content {
+          padding-left: 30px !important;
+          padding-right: 30px !important;
+        }
+
+        .kpi-grid {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 25px;
+        }
       }
-      
-      .dashboard-header h1 {
-        font-size: 1.4rem !important;
-        margin: 0 !important;
+
+      @media (max-width: 1200px) {
+        .dashboard-header h1 {
+          font-size: 2.2rem;
+        }
+
+        .kpi-grid {
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
       }
-      
-      .kpi-card {
-        padding: 15px;
-        min-height: 320px;
+
+      @media (max-width: 480px) {
+        main.content {
+          padding-left: 12px !important;
+          padding-right: 12px !important;
+          padding-top: 50px !important;
+        }
+
+        .dashboard-header {
+          padding: 6px !important;
+          margin-bottom: 3px !important;
+        }
+
+        .dashboard-header h1 {
+          font-size: 1.4rem !important;
+          margin: 0 !important;
+        }
+
+        .kpi-card {
+          padding: 15px;
+          min-height: 320px;
+        }
+
+        .power-bi-container {
+          padding-bottom: 90%; /* Maintain taller ratio */
+          height: 0;
+        }
       }
-      
-      .power-bi-container {
-        padding-bottom: 90%; /* Maintain taller ratio */
-        height: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- Top Navigation Bar -->
-  <header class="topbar">
-    <div class="brand">Ren Internal</div>
-    
-    <!-- Desktop Navigation -->
-    <div class="bar-inner">
-      <nav class="nav" aria-label="Main">
-        <ul class="menu">
-          <!-- TV Reports -->
-          <li class="has-sub">
-            <a href="#" class="toplink">TV Reports</a>
-            <ul class="sub">
-              <li><a href="index.html">OTD</a></li>
-              <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
-              <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
-              <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
-              <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
-            </ul>
-          </li>
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+      <div class="brand">Ren Internal</div>
 
-          <!-- KPIs -->
-          <li class="has-sub">
-            <a href="#" class="toplink">KPIs</a>
-            <ul class="sub">
-              <li><a href="operations.html">Operations</a></li>
-              <li><a href="engineering.html">Engineering</a></li>
-              <li><a href="supplychain.html">Supply Chain</a></li>
-              <li><a href="dashboards.html">Dashboards</a></li>
-            </ul>
-          </li>
+      <!-- Desktop Navigation -->
+      <div class="bar-inner">
+        <nav class="nav" aria-label="Main">
+          <ul class="menu">
+            <!-- TV Reports -->
+            <li class="has-sub">
+              <a href="#" class="toplink">TV Reports</a>
+              <ul class="sub">
+                <li><a href="index.html">OTD</a></li>
+                <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
+                <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
+                <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
+                <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
+              </ul>
+            </li>
 
-          <!-- Applications -->
-          <li class="has-sub">
-            <a href="#" class="toplink">Applications</a>
-            <ul class="sub">
-              <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
-              <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
-              <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      
-      <!-- Header Navigation Dropdown -->
-      <div class="nav-dropdown">
-        <button class="header-nav-button" onclick="toggleHeaderNav()">
-          TABLE OF CONTENTS
-          <span class="header-nav-arrow">▼</span>
-        </button>
-        <div class="header-nav-menu" id="headerNavMenu">
-          <a href="#dashboard-overview" class="header-nav-item" onclick="closeHeaderNav()">Overview</a>
-          <a href="#backlog-pareto" class="header-nav-item" onclick="closeHeaderNav()">Backlog Pareto</a>
-          <a href="#otd" class="header-nav-item" onclick="closeHeaderNav()">OTD</a>
-          <a href="#throughput" class="header-nav-item" onclick="closeHeaderNav()">Throughput</a>
-          <a href="#recommits" class="header-nav-item" onclick="closeHeaderNav()">Recommits</a>
-          <a href="#wip-in-transit" class="header-nav-item" onclick="closeHeaderNav()">WIP + In Transit</a>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Right side with Navigation button and Mobile Menu -->
-    <div class="header-right">
-      <!-- Mobile Menu Toggle -->
-      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-    </div>
-  </header>
+            <!-- KPIs -->
+            <li class="has-sub">
+              <a href="#" class="toplink">KPIs</a>
+              <ul class="sub">
+                <li><a href="operations.html">Operations</a></li>
+                <li><a href="engineering.html">Engineering</a></li>
+                <li><a href="supplychain.html">Supply Chain</a></li>
+                <li><a href="dashboards.html">Dashboards</a></li>
+              </ul>
+            </li>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
-  
-  <!-- Mobile Menu Panel -->
-  <div class="mobile-menu-panel">
-    <div class="mobile-menu-header">
-      <h3 class="mobile-menu-title">Navigation</h3>
-      <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
-    </div>
-    <div class="mobile-menu-content">
-      <!-- Leah Dashboard KPIs Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Leah Dashboard</h4>
-        <div class="mobile-menu-items">
-          <a href="#dashboard-overview" class="mobile-menu-item active" onclick="closeMobileMenu()">Dashboard Overview</a>
-          <a href="#backlog-pareto" class="mobile-menu-item" onclick="closeMobileMenu()">Backlog Pareto</a>
-          <a href="#otd" class="mobile-menu-item" onclick="closeMobileMenu()">OTD (On-Time Delivery)</a>
-          <a href="#throughput" class="mobile-menu-item" onclick="closeMobileMenu()">Throughput</a>
-          <a href="#recommits" class="mobile-menu-item" onclick="closeMobileMenu()">Recommits</a>
-          <a href="#wip-in-transit" class="mobile-menu-item" onclick="closeMobileMenu()">WIP + In Transit</a>
-        </div>
-      </div>
-      
-      <!-- Other Dashboards -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
-        <div class="mobile-menu-items">
-          <a href="operations.html" class="mobile-menu-item">Operations KPIs</a>
-          <a href="engineering.html" class="mobile-menu-item">Engineering KPIs</a>
-          <a href="supplychain.html" class="mobile-menu-item">Supply Chain KPIs</a>
-          <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
-        </div>
-      </div>
-      
-      <!-- TV Reports -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
-        <div class="mobile-menu-items">
-          <a href="index.html" class="mobile-menu-item">OTD</a>
-          <a href="ROG-TEST-TV.html" class="mobile-menu-item">Rogue-Test</a>
-          <a href="ROG-DEBUG-TV.html" class="mobile-menu-item">Rogue-Debug</a>
-          <a href="RUN-TEST-TV.html" class="mobile-menu-item">Run-Test</a>
-          <a href="RUN-DEBUG-TV.html" class="mobile-menu-item">Run-Debug</a>
-        </div>
-      </div>
+            <!-- Applications -->
+            <li class="has-sub">
+              <a href="#" class="toplink">Applications</a>
+              <ul class="sub">
+                <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
+                <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
+                <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
 
-      <!-- Applications -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
-        <div class="mobile-menu-items">
-          <a href="palletsApp.html" class="mobile-menu-item">Pallet Receiving Tool</a>
-          <a href="skuDetailsApp.html" class="mobile-menu-item">SKU Update Tool</a>
-          <a href="customerHoldApp.html" class="mobile-menu-item">Customer Hold Tool</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <main class="content">
-    <!-- Dashboard Header -->
-    <div class="dashboard-header">
-      <h1>Leah Dashboard</h1>
-      <p class="dashboard-subtitle">Personalized KPI Dashboard with Power BI Integration</p>
-    </div>
-
-    <!-- KPI Grid -->
-    <div class="kpi-grid" id="dashboard-overview">
-      <!-- KPI 1: Backlog Pareto -->
-      <div class="kpi-card" id="backlog-pareto">
-        <h2 class="kpi-title">Backlog Pareto</h2>
-        <p class ="kpi-description">Backlog in $CAD</p>
-        <div class="power-bi-container-expanded">
-          <iframe 
-            title="Backlog Pareto Analysis" 
-            src="https://app.fabric.microsoft.com/view?r=eyJrIjoiYWM5OWE3YjItMjZmYy00MzBhLWEwYjUtOGI2MmYxNjMyMzViIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9" 
-            frameborder="0" 
-            allowFullScreen="true"
-            scrolling="no"
-            style="width: 100%; height: 100%; border: none;">
-          </iframe>
-        </div>
-        <div class="drill-down-button-container">
-          <button class="drill-down-button" onclick="window.location.href='backlog-pareto-drilldown.html'">
-            Drill Down
+        <!-- Header Navigation Dropdown -->
+        <div class="nav-dropdown">
+          <button class="header-nav-button" onclick="toggleHeaderNav()">
+            TABLE OF CONTENTS
+            <span class="header-nav-arrow">▼</span>
           </button>
+          <div class="header-nav-menu" id="headerNavMenu">
+            <a
+              href="#dashboard-overview"
+              class="header-nav-item"
+              onclick="closeHeaderNav()"
+              >Overview</a
+            >
+            <a
+              href="#backlog-pareto"
+              class="header-nav-item"
+              onclick="closeHeaderNav()"
+              >Backlog Pareto</a
+            >
+            <a href="#otd" class="header-nav-item" onclick="closeHeaderNav()"
+              >OTD</a
+            >
+            <a
+              href="#throughput"
+              class="header-nav-item"
+              onclick="closeHeaderNav()"
+              >Throughput</a
+            >
+            <a
+              href="#recommits"
+              class="header-nav-item"
+              onclick="closeHeaderNav()"
+              >Recommits</a
+            >
+            <a
+              href="#wip-in-transit"
+              class="header-nav-item"
+              onclick="closeHeaderNav()"
+              >WIP + In Transit</a
+            >
+          </div>
         </div>
       </div>
 
-      <!-- KPI 2: OTD (On-Time Delivery) -->
-      <div class="kpi-card" id="otd">
-        <h2 class="kpi-title">OTD (On-Time Delivery)</h2>
-        <p class="kpi-description">
-          Track on-time delivery performance with detailed metrics, trends, and delivery reliability indicators across all orders.
-        </p>
-        <div class="power-bi-container">
-          <div class="power-bi-placeholder">
-            <div class="power-bi-icon">🎯</div>
-            <div class="power-bi-text">Power BI Report #2</div>
-            <div class="power-bi-subtext">On-Time Delivery Dashboard</div>
-          </div>
-        </div>
-        <div class="integration-note">
-          <strong>Integration Ready:</strong> This section is prepared for your Power BI OTD report. Simply embed your Power BI report here using the embed code from Power BI Service.
-        </div>
+      <!-- Right side with Navigation button and Mobile Menu -->
+      <div class="header-right">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
       </div>
+    </header>
 
-      <!-- KPI 3: Throughput -->
-      <div class="kpi-card" id="throughput">
-        <h2 class="kpi-title">Throughput</h2>
-        <p class="kpi-description">
-          Monitor system throughput and processing capacity with real-time metrics, and performance optimization insights.
-        </p>
-        <div class="power-bi-container">
-          <div class="power-bi-placeholder">
-            <div class="power-bi-icon">⚡</div>
-            <div class="power-bi-text">Power BI Report #3</div>
-            <div class="power-bi-subtext">Throughput Analytics Dashboard</div>
-          </div>
-        </div>
-        <div class="integration-note">
-          <strong>Integration Ready:</strong> This section is prepared for your Power BI throughput report. Simply embed your Power BI report here using the embed code from Power BI Service.
-        </div>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+
+    <!-- Mobile Menu Panel -->
+    <div class="mobile-menu-panel">
+      <div class="mobile-menu-header">
+        <h3 class="mobile-menu-title">Navigation</h3>
+        <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
       </div>
-
-      <!-- KPI 4: Recommits -->
-      <div class="kpi-card" id="recommits">
-        <h2 class="kpi-title">Recommits</h2>
-        <p class="kpi-description">
-          Track recommit frequency and patterns to improve planning accuracy and reduce delivery disruptions with detailed analysis.
-        </p>
-        <div class="power-bi-container">
-          <div class="power-bi-placeholder">
-            <div class="power-bi-icon">🔄</div>
-            <div class="power-bi-text">Power BI Report #4</div>
-            <div class="power-bi-subtext">Recommits Analysis Dashboard</div>
+      <div class="mobile-menu-content">
+        <!-- Leah Dashboard KPIs Section -->
+        <div class="mobile-menu-section">
+          <h4
+            class="mobile-menu-section-title"
+            onclick="toggleMobileSection(this)"
+          >
+            Leah Dashboard
+          </h4>
+          <div class="mobile-menu-items">
+            <a
+              href="#dashboard-overview"
+              class="mobile-menu-item active"
+              onclick="closeMobileMenu()"
+              >Dashboard Overview</a
+            >
+            <a
+              href="#backlog-pareto"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Backlog Pareto</a
+            >
+            <a href="#otd" class="mobile-menu-item" onclick="closeMobileMenu()"
+              >OTD (On-Time Delivery)</a
+            >
+            <a
+              href="#throughput"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Throughput</a
+            >
+            <a
+              href="#recommits"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Recommits</a
+            >
+            <a
+              href="#wip-in-transit"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >WIP + In Transit</a
+            >
           </div>
         </div>
-        <div class="integration-note">
-          <strong>Integration Ready:</strong> This section is prepared for your Power BI recommits report. Simply embed your Power BI report here using the embed code from Power BI Service.
-        </div>
-      </div>
 
-      <!-- KPI 5: WIP + In Transit -->
-      <div class="kpi-card" id="wip-in-transit">
-        <h2 class="kpi-title">WIP + In Transit</h2>
-        <p class="kpi-description">
-          Monitor work-in-progress and in-transit inventory levels with comprehensive tracking and flow analysis for optimal resource management.
-        </p>
-        <div class="power-bi-container">
-          <div class="power-bi-placeholder">
-            <div class="power-bi-icon">�</div>
-            <div class="power-bi-text">Power BI Report #5</div>
-            <div class="power-bi-subtext">WIP + In Transit Dashboard</div>
+        <!-- Other Dashboards -->
+        <div class="mobile-menu-section">
+          <h4
+            class="mobile-menu-section-title"
+            onclick="toggleMobileSection(this)"
+          >
+            KPIs
+          </h4>
+          <div class="mobile-menu-items">
+            <a href="operations.html" class="mobile-menu-item"
+              >Operations KPIs</a
+            >
+            <a href="engineering.html" class="mobile-menu-item"
+              >Engineering KPIs</a
+            >
+            <a href="supplychain.html" class="mobile-menu-item"
+              >Supply Chain KPIs</a
+            >
+            <a href="dashboards.html" class="mobile-menu-item">Dashboards</a>
           </div>
         </div>
-        <div class="integration-note">
-          <strong>Integration Ready:</strong> This section is prepared for your Power BI WIP + In Transit report. Simply embed your Power BI report here using the embed code from Power BI Service.
+
+        <!-- TV Reports -->
+        <div class="mobile-menu-section">
+          <h4
+            class="mobile-menu-section-title"
+            onclick="toggleMobileSection(this)"
+          >
+            TV Reports
+          </h4>
+          <div class="mobile-menu-items">
+            <a href="index.html" class="mobile-menu-item">OTD</a>
+            <a href="ROG-TEST-TV.html" class="mobile-menu-item">Rogue-Test</a>
+            <a href="ROG-DEBUG-TV.html" class="mobile-menu-item">Rogue-Debug</a>
+            <a href="RUN-TEST-TV.html" class="mobile-menu-item">Run-Test</a>
+            <a href="RUN-DEBUG-TV.html" class="mobile-menu-item">Run-Debug</a>
+          </div>
+        </div>
+
+        <!-- Applications -->
+        <div class="mobile-menu-section">
+          <h4
+            class="mobile-menu-section-title"
+            onclick="toggleMobileSection(this)"
+          >
+            Applications
+          </h4>
+          <div class="mobile-menu-items">
+            <a href="palletsApp.html" class="mobile-menu-item"
+              >Pallet Receiving Tool</a
+            >
+            <a href="skuDetailsApp.html" class="mobile-menu-item"
+              >SKU Update Tool</a
+            >
+            <a href="customerHoldApp.html" class="mobile-menu-item"
+              >Customer Hold Tool</a
+            >
+          </div>
         </div>
       </div>
     </div>
-  </main>
 
-  <!-- Back to Dashboards Button -->
-  <button class="back-button" onclick="goBackToDashboards()">
-    ← Back to Dashboards
-  </button>
+    <!-- Main Content -->
+    <main class="content">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <h1>Leah Dashboard</h1>
+        <p class="dashboard-subtitle">
+          Personalized KPI Dashboard with Power BI Integration
+        </p>
+      </div>
 
-  <!-- Top of Page Button -->
-  <button class="top-of-page-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
-    ↑
-  </button>
+      <!-- KPI Grid -->
+      <div class="kpi-grid" id="dashboard-overview">
+        <!-- KPI 1: Backlog Pareto -->
+        <div class="kpi-card" id="backlog-pareto">
+          <h2 class="kpi-title">Backlog Pareto</h2>
+          <p class="kpi-description">Backlog in $CAD</p>
+          <div class="power-bi-container-expanded">
+            <iframe
+              title="Backlog Pareto Analysis"
+              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiMDY4NjM3NTUtMDk1ZC00Yjc0LWE2NGUtNmE4NzM0MzMwYjc3IiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+              frameborder="0"
+              allowfullscreen="true"
+              scrolling="no"
+              style="width: 100%; height: 100%; border: none"
+            >
+            </iframe>
+          </div>
+          <div class="drill-down-button-container">
+            <button
+              class="drill-down-button"
+              onclick="window.location.href='backlog-pareto-drilldown.html'"
+            >
+              Drill Down
+            </button>
+          </div>
+        </div>
 
-  <script src="javascript.js?v=5"></script>
-  
-  <!-- Dashboard Specific JavaScript -->
-  <script src="javascript.js?v=5"></script>
-  
-  <!-- Header Navigation JavaScript -->
-  <script>
-    // Mobile Menu Functions
-    function toggleMobileMenu() {
-      const overlay = document.querySelector('.mobile-menu-overlay');
-      const panel = document.querySelector('.mobile-menu-panel');
-      const toggle = document.querySelector('.mobile-menu-toggle');
-      
-      overlay.classList.toggle('active');
-      panel.classList.toggle('active');
-      toggle.classList.toggle('active');
-      
-      // Prevent body scroll when menu is open
-      document.body.style.overflow = overlay.classList.contains('active') ? 'hidden' : '';
-    }
-    
-    function closeMobileMenu() {
-      const overlay = document.querySelector('.mobile-menu-overlay');
-      const panel = document.querySelector('.mobile-menu-panel');
-      const toggle = document.querySelector('.mobile-menu-toggle');
-      
-      overlay.classList.remove('active');
-      panel.classList.remove('active');
-      toggle.classList.remove('active');
-      
-      // Restore body scroll
-      document.body.style.overflow = '';
-    }
-    
-    // Mobile Menu Section Toggle Function
-    function toggleMobileSection(titleElement) {
-      const section = titleElement.parentElement;
-      section.classList.toggle('collapsed');
-    }
-    
-    // Desktop Header Navigation Functions
-    function toggleHeaderNav() {
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      
-      menu.classList.toggle('show');
-      button.classList.toggle('active');
-    }
-    
-    function closeHeaderNav() {
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      
-      menu.classList.remove('show');
-      button.classList.remove('active');
-    }
-    
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-    
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', function(event) {
-      // Close desktop nav dropdown
-      const navButton = document.querySelector('.header-nav-button');
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      
-      if (navButton && !navButton.parentElement.contains(event.target)) {
-        menu.classList.remove('show');
-        button.classList.remove('active');
+        <!-- KPI 2: OTD (On-Time Delivery) -->
+        <div class="kpi-card" id="otd">
+          <h2 class="kpi-title">OTD (On-Time Delivery)</h2>
+          <p class="kpi-description">
+            Track on-time delivery performance with detailed metrics, trends,
+            and delivery reliability indicators across all orders.
+          </p>
+          <div class="power-bi-container">
+            <div class="power-bi-placeholder">
+              <div class="power-bi-icon">🎯</div>
+              <div class="power-bi-text">Power BI Report #2</div>
+              <div class="power-bi-subtext">On-Time Delivery Dashboard</div>
+            </div>
+          </div>
+          <div class="integration-note">
+            <strong>Integration Ready:</strong> This section is prepared for
+            your Power BI OTD report. Simply embed your Power BI report here
+            using the embed code from Power BI Service.
+          </div>
+        </div>
+
+        <!-- KPI 3: Throughput -->
+        <div class="kpi-card" id="throughput">
+          <h2 class="kpi-title">Throughput</h2>
+          <p class="kpi-description">
+            Monitor system throughput and processing capacity with real-time
+            metrics, and performance optimization insights.
+          </p>
+          <div class="power-bi-container">
+            <div class="power-bi-placeholder">
+              <div class="power-bi-icon">⚡</div>
+              <div class="power-bi-text">Power BI Report #3</div>
+              <div class="power-bi-subtext">Throughput Analytics Dashboard</div>
+            </div>
+          </div>
+          <div class="integration-note">
+            <strong>Integration Ready:</strong> This section is prepared for
+            your Power BI throughput report. Simply embed your Power BI report
+            here using the embed code from Power BI Service.
+          </div>
+        </div>
+
+        <!-- KPI 4: Recommits -->
+        <div class="kpi-card" id="recommits">
+          <h2 class="kpi-title">Recommits</h2>
+          <p class="kpi-description">
+            Track recommit frequency and patterns to improve planning accuracy
+            and reduce delivery disruptions with detailed analysis.
+          </p>
+          <div class="power-bi-container">
+            <div class="power-bi-placeholder">
+              <div class="power-bi-icon">🔄</div>
+              <div class="power-bi-text">Power BI Report #4</div>
+              <div class="power-bi-subtext">Recommits Analysis Dashboard</div>
+            </div>
+          </div>
+          <div class="integration-note">
+            <strong>Integration Ready:</strong> This section is prepared for
+            your Power BI recommits report. Simply embed your Power BI report
+            here using the embed code from Power BI Service.
+          </div>
+        </div>
+
+        <!-- KPI 5: WIP + In Transit -->
+        <div class="kpi-card-wipInTransit" id="wip-in-transit">
+          <h2 class="kpi-title">WIP + In Transit</h2>
+          <p class="kpi-description">
+            Monitor work-in-progress and in-transit inventory levels with
+            comprehensive tracking and flow analysis for optimal resource
+            management.
+          </p>
+          <div class="power-bi-container-WIP" id="wipInTransitContainer">
+            <iframe
+              src="https://app.fabric.microsoft.com/view?r=eyJrIjoiNTE2NjE3ZDYtM2NjNi00NTllLWJmZWQtODRjN2M3OWU3YjQzIiwidCI6ImU0YzRmNmNmLTZmZWMtNGFlMy1hN2I3LTdiMzQ3ZWMwMDcyOSJ9"
+              frameborder="0"
+              allowfullscreen="true"
+            >
+            </iframe>
+          </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Back to Dashboards Button -->
+    <button class="back-button" onclick="goBackToDashboards()">
+      ← Back to Dashboards
+    </button>
+
+    <!-- Top of Page Button -->
+    <button
+      class="top-of-page-btn"
+      onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+      title="Back to top"
+    >
+      ↑
+    </button>
+
+    <script src="javascript.js?v=5"></script>
+
+    <!-- Dashboard Specific JavaScript -->
+    <script src="javascript.js?v=5"></script>
+
+    <!-- Header Navigation JavaScript -->
+    <script>
+      // Mobile Menu Functions
+      function toggleMobileMenu() {
+        const overlay = document.querySelector(".mobile-menu-overlay");
+        const panel = document.querySelector(".mobile-menu-panel");
+        const toggle = document.querySelector(".mobile-menu-toggle");
+
+        overlay.classList.toggle("active");
+        panel.classList.toggle("active");
+        toggle.classList.toggle("active");
+
+        // Prevent body scroll when menu is open
+        document.body.style.overflow = overlay.classList.contains("active")
+          ? "hidden"
+          : "";
       }
-      
-      // Don't close mobile menu when clicking inside the panel
-      const mobilePanel = document.querySelector('.mobile-menu-panel');
-      const mobileToggle = document.querySelector('.mobile-menu-toggle');
-      
-      if (mobilePanel && !mobilePanel.contains(event.target) && !mobileToggle.contains(event.target)) {
-        // Mobile menu will be closed by overlay click handler
+
+      function closeMobileMenu() {
+        const overlay = document.querySelector(".mobile-menu-overlay");
+        const panel = document.querySelector(".mobile-menu-panel");
+        const toggle = document.querySelector(".mobile-menu-toggle");
+
+        overlay.classList.remove("active");
+        panel.classList.remove("active");
+        toggle.classList.remove("active");
+
+        // Restore body scroll
+        document.body.style.overflow = "";
       }
-    });
-    
-    // Enhanced smooth scrolling with offset for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          // Calculate offset to account for header and provide padding
-          const headerHeight = document.querySelector('.topbar').offsetHeight;
-          const additionalOffset = 20; // Extra padding so content is clearly visible
-          const targetPosition = target.offsetTop - headerHeight - additionalOffset;
-          
-          window.scrollTo({
-            top: Math.max(0, targetPosition),
-            behavior: 'smooth'
-          });
+
+      // Mobile Menu Section Toggle Function
+      function toggleMobileSection(titleElement) {
+        const section = titleElement.parentElement;
+        section.classList.toggle("collapsed");
+      }
+
+      // Desktop Header Navigation Functions
+      function toggleHeaderNav() {
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+
+        menu.classList.toggle("show");
+        button.classList.toggle("active");
+      }
+
+      function closeHeaderNav() {
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+
+        menu.classList.remove("show");
+        button.classList.remove("active");
+      }
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Close dropdowns when clicking outside
+      document.addEventListener("click", function (event) {
+        // Close desktop nav dropdown
+        const navButton = document.querySelector(".header-nav-button");
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+
+        if (navButton && !navButton.parentElement.contains(event.target)) {
+          menu.classList.remove("show");
+          button.classList.remove("active");
+        }
+
+        // Don't close mobile menu when clicking inside the panel
+        const mobilePanel = document.querySelector(".mobile-menu-panel");
+        const mobileToggle = document.querySelector(".mobile-menu-toggle");
+
+        if (
+          mobilePanel &&
+          !mobilePanel.contains(event.target) &&
+          !mobileToggle.contains(event.target)
+        ) {
+          // Mobile menu will be closed by overlay click handler
         }
       });
-    });
-    
-    // Handle window resize to close mobile menu and reset styles
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
-        closeMobileMenu();
+
+      // Enhanced smooth scrolling with offset for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            // Calculate offset to account for header and provide padding
+            const headerHeight = document.querySelector(".topbar").offsetHeight;
+            const additionalOffset = 20; // Extra padding so content is clearly visible
+            const targetPosition =
+              target.offsetTop - headerHeight - additionalOffset;
+
+            window.scrollTo({
+              top: Math.max(0, targetPosition),
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Handle window resize to close mobile menu and reset styles
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 768) {
+          closeMobileMenu();
+        }
+      });
+    </script>
+
+    <!-- Power BI Integration Script -->
+    <script>
+      function goBackToDashboards() {
+        window.location.href = "dashboards.html";
       }
-    });
-  </script>
 
-  <!-- Power BI Integration Script -->
-  <script>
-    function goBackToDashboards() {
-      window.location.href = 'dashboards.html';
-    }
-
-    // Function to embed Power BI reports (call this when integrating actual Power BI reports)
-    function embedPowerBIReport(containerId, reportEmbedUrl, accessToken) {
-      const container = document.getElementById(containerId);
-      if (container) {
-        container.innerHTML = `
+      // Function to embed Power BI reports (call this when integrating actual Power BI reports)
+      function embedPowerBIReport(containerId, reportEmbedUrl, accessToken) {
+        const container = document.getElementById(containerId);
+        if (container) {
+          container.innerHTML = `
           <iframe 
             src="${reportEmbedUrl}" 
             width="100%" 
@@ -1511,87 +1566,90 @@
             allowFullScreen="true">
           </iframe>
         `;
-      }
-    }
-
-    // Alternative method using Power BI JavaScript API for more advanced integration
-    function embedPowerBIWithAPI(containerId, embedConfig) {
-      // This requires Power BI JavaScript API to be loaded
-      // Example configuration:
-      // const embedConfig = {
-      //   type: 'report',
-      //   id: 'your-report-id',
-      //   embedUrl: 'your-embed-url',
-      //   accessToken: 'your-access-token',
-      //   tokenType: models.TokenType.Embed,
-      //   settings: {
-      //     panes: {
-      //       filters: { expanded: false, visible: false },
-      //       pageNavigation: { visible: false }
-      //     }
-      //   }
-      // };
-      
-      console.log('Power BI API integration ready for:', containerId);
-      // powerbi.embed(container, embedConfig);
-    }
-
-    // Function to refresh Power BI iframe by reloading its src
-    function refreshPowerBIReport(iframeSelector) {
-      const iframe = document.querySelector(iframeSelector);
-      if (iframe) {
-        const originalSrc = iframe.src;
-        iframe.src = '';
-        setTimeout(() => {
-          iframe.src = originalSrc;
-          console.log(`Power BI report refreshed: ${iframeSelector}`);
-        }, 100);
-      }
-    }
-
-    // Refresh Backlog Pareto report every 30 minutes
-    function startBacklogParetoRefresh() {
-      // Initial refresh after 30 minutes
-      setTimeout(() => {
-        refreshPowerBIReport('.power-bi-container-expanded iframe');
-        
-        // Set up recurring refresh every 30 minutes
-        setInterval(() => {
-          refreshPowerBIReport('.power-bi-container-expanded iframe');
-        }, 30 * 60 * 1000); // 30 minutes in milliseconds
-        
-      }, 30 * 60 * 1000); // 30 minutes initial delay
-    }
-
-    // Example usage (uncomment and modify when Power BI reports are available):
-    // embedPowerBIReport('kpi-1-container', 'https://your-power-bi-embed-url-backlog-pareto', 'your-access-token');
-    // embedPowerBIReport('kpi-2-container', 'https://your-power-bi-embed-url-otd', 'your-access-token');
-    // embedPowerBIReport('kpi-3-container', 'https://your-power-bi-embed-url-throughput', 'your-access-token');
-    // embedPowerBIReport('kpi-4-container', 'https://your-power-bi-embed-url-recommits', 'your-access-token');
-    // embedPowerBIReport('kpi-5-container', 'https://your-power-bi-embed-url-wip-in-transit', 'your-access-token');
-
-    // Add smooth scrolling for better UX
-    document.addEventListener('DOMContentLoaded', function() {
-      // Initialize mobile menu sections - start with all collapsed except current page section
-      const sections = document.querySelectorAll('.mobile-menu-section');
-      sections.forEach(section => {
-        // Collapse all sections initially
-        section.classList.add('collapsed');
-        
-        // Keep the section open if it contains the active page
-        const activeItem = section.querySelector('.mobile-menu-item.active');
-        if (activeItem) {
-          section.classList.remove('collapsed');
         }
+      }
+
+      // Alternative method using Power BI JavaScript API for more advanced integration
+      function embedPowerBIWithAPI(containerId, embedConfig) {
+        // This requires Power BI JavaScript API to be loaded
+        // Example configuration:
+        // const embedConfig = {
+        //   type: 'report',
+        //   id: 'your-report-id',
+        //   embedUrl: 'your-embed-url',
+        //   accessToken: 'your-access-token',
+        //   tokenType: models.TokenType.Embed,
+        //   settings: {
+        //     panes: {
+        //       filters: { expanded: false, visible: false },
+        //       pageNavigation: { visible: false }
+        //     }
+        //   }
+        // };
+
+        console.log("Power BI API integration ready for:", containerId);
+        // powerbi.embed(container, embedConfig);
+      }
+
+      // Function to refresh Power BI iframe by reloading its src
+      function refreshPowerBIReport(iframeSelector) {
+        const iframe = document.querySelector(iframeSelector);
+        if (iframe) {
+          const originalSrc = iframe.src;
+          iframe.src = "";
+          setTimeout(() => {
+            iframe.src = originalSrc;
+            console.log(`Power BI report refreshed: ${iframeSelector}`);
+          }, 100);
+        }
+      }
+
+      // Refresh Backlog Pareto report every 30 minutes
+      function startBacklogParetoRefresh() {
+        // Initial refresh after 30 minutes
+        setTimeout(() => {
+          refreshPowerBIReport(".power-bi-container-expanded iframe");
+
+          // Set up recurring refresh every 30 minutes
+          setInterval(() => {
+            refreshPowerBIReport(".power-bi-container-expanded iframe");
+          }, 30 * 60 * 1000); // 30 minutes in milliseconds
+        }, 30 * 60 * 1000); // 30 minutes initial delay
+      }
+
+      // Example usage (uncomment and modify when Power BI reports are available):
+      // embedPowerBIReport('kpi-1-container', 'https://your-power-bi-embed-url-backlog-pareto', 'your-access-token');
+      // embedPowerBIReport('kpi-2-container', 'https://your-power-bi-embed-url-otd', 'your-access-token');
+      // embedPowerBIReport('kpi-3-container', 'https://your-power-bi-embed-url-throughput', 'your-access-token');
+      // embedPowerBIReport('kpi-4-container', 'https://your-power-bi-embed-url-recommits', 'your-access-token');
+      // embedPowerBIReport('kpi-5-container', 'https://your-power-bi-embed-url-wip-in-transit', 'your-access-token');
+
+      // Add smooth scrolling for better UX
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize mobile menu sections - start with all collapsed except current page section
+        const sections = document.querySelectorAll(".mobile-menu-section");
+        sections.forEach((section) => {
+          // Collapse all sections initially
+          section.classList.add("collapsed");
+
+          // Keep the section open if it contains the active page
+          const activeItem = section.querySelector(".mobile-menu-item.active");
+          if (activeItem) {
+            section.classList.remove("collapsed");
+          }
+        });
+
+        // Start the Backlog Pareto auto-refresh (30-minute intervals)
+        startBacklogParetoRefresh();
+        console.log(
+          "Backlog Pareto auto-refresh started (30-minute intervals)"
+        );
+
+        // Add any additional initialization here
+        console.log(
+          "Leah Dashboard loaded successfully - Ready for Power BI integration"
+        );
       });
-      
-      // Start the Backlog Pareto auto-refresh (30-minute intervals)
-      startBacklogParetoRefresh();
-      console.log('Backlog Pareto auto-refresh started (30-minute intervals)');
-      
-      // Add any additional initialization here
-      console.log('Leah Dashboard loaded successfully - Ready for Power BI integration');
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
