@@ -1602,16 +1602,26 @@
           }, 100);
         }
       }
-
-      // Refresh Backlog Pareto report every 30 minutes
       function startBacklogParetoRefresh() {
-        // Initial refresh after 30 minutes
         setTimeout(() => {
           refreshPowerBIReport(".power-bi-container-expanded iframe");
 
           // Set up recurring refresh every 30 minutes
           setInterval(() => {
             refreshPowerBIReport(".power-bi-container-expanded iframe");
+          }, 30 * 60 * 1000); // 30 minutes in milliseconds
+        }, 30 * 60 * 1000); // 30 minutes initial delay
+      }
+
+      // Refresh WIP + In Transit report every 30 minutes
+      function startWIPRefresh() {
+        // Initial refresh after 30 minutes
+        setTimeout(() => {
+          refreshPowerBIReport(".power-bi-container-WIP iframe");
+
+          // Set up recurring refresh every 30 minutes
+          setInterval(() => {
+            refreshPowerBIReport(".power-bi-container-WIP iframe");
           }, 30 * 60 * 1000); // 30 minutes in milliseconds
         }, 30 * 60 * 1000); // 30 minutes initial delay
       }
@@ -1642,6 +1652,12 @@
         startBacklogParetoRefresh();
         console.log(
           "Backlog Pareto auto-refresh started (30-minute intervals)"
+        );
+
+        // Start the WIP + In Transit auto-refresh (30-minute intervals)
+        startWIPRefresh();
+        console.log(
+          "WIP + In Transit auto-refresh started (30-minute intervals)"
         );
 
         // Add any additional initialization here
