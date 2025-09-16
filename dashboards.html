@@ -1,1081 +1,1230 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ren Internal - Dashboards</title>
-  <link rel="stylesheet" href="style.css?v=15" />
-  <meta http-equiv="Cache-Control" content="no-store" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  
-  <!-- Backup CSS for layout -->
-  <style>
-    /* Professional Background Styling */
-    html, body {
-      background: #f1f5f9 !important;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-    /* Professional Main Header Styling */
-    .topbar {
-      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-      border-bottom: 3px solid #5a1616 !important;
-      padding: 0 20px !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-      width: 100% !important;
-      height: 70px !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      box-sizing: border-box !important;
-    }
-    
-    .topbar::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    }
-    
-    .brand {
-      font-size: 20px !important;
-      font-weight: 700 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      color: #ffffff !important;
-      padding: 16px 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1.2px !important;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
-      flex-shrink: 0 !important;
-      position: absolute !important;
-      left: 20px !important;
-    }
-    
-    /* Mobile Hamburger Menu */
-    .mobile-menu-toggle {
-      display: none !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-      width: 40px !important;
-      height: 40px !important;
-      background: rgba(255, 255, 255, 0.15) !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      border-radius: 8px !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      padding: 0 !important;
-      justify-self: end !important;
-    }
-    
-    .mobile-menu-toggle:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-    }
-    
-    .hamburger-line {
-      width: 20px !important;
-      height: 2px !important;
-      background: white !important;
-      margin: 2px 0 !important;
-      transition: 0.3s !important;
-      border-radius: 1px !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-      transform: rotate(-45deg) translate(-4px, 4px) !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
-      opacity: 0 !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-      transform: rotate(45deg) translate(-4px, -4px) !important;
-    }
-    
-    /* Side Menu Overlay */
-    .mobile-menu-overlay {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      background: rgba(0, 0, 0, 0.5) !important;
-      z-index: 1500 !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transition: all 0.3s ease !important;
-    }
-    
-    .mobile-menu-overlay.active {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    
-    /* Side Menu Panel */
-    .mobile-menu-panel {
-      position: fixed !important;
-      top: 0 !important;
-      left: -320px !important;
-      width: 320px !important;
-      height: 100% !important;
-      background: linear-gradient(180deg, #7a1b1b 0%, #b91c1c 100%) !important;
-      z-index: 1600 !important;
-      transition: left 0.3s ease !important;
-      overflow-y: auto !important;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .mobile-menu-panel.active {
-      left: 0 !important;
-    }
-    
-    /* Mobile menu activation via body class */
-    body.mobile-menu-open .mobile-menu-overlay {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-panel {
-      left: 0 !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px) !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(2) {
-      opacity: 0 !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px) !important;
-    }
-    
-    .mobile-menu-header {
-      padding: 20px !important;
-      background: rgba(0, 0, 0, 0.2) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-    }
-    
-    .mobile-menu-title {
-      color: white !important;
-      font-size: 18px !important;
-      font-weight: 700 !important;
-      margin: 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1px !important;
-    }
-    
-    .mobile-menu-close {
-      background: none !important;
-      border: none !important;
-      color: white !important;
-      font-size: 24px !important;
-      cursor: pointer !important;
-      padding: 5px !important;
-      line-height: 1 !important;
-    }
-    
-    .mobile-menu-content {
-      padding: 0 !important;
-    }
-    
-    .mobile-menu-section {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    .mobile-menu-section-title {
-      padding: 15px 20px !important;
-      color: white !important;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-      margin: 0 !important;
-      background: rgba(0, 0, 0, 0.1) !important;
-      cursor: pointer !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      transition: all 0.3s ease !important;
-      position: relative !important;
-    }
-    
-    .mobile-menu-section-title:hover {
-      background: rgba(0, 0, 0, 0.2) !important;
-      color: rgba(255, 255, 255, 0.95) !important;
-    }
-    
-    .mobile-menu-section-title::after {
-      content: '▼' !important;
-      font-size: 12px !important;
-      transition: transform 0.3s ease !important;
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-    
-    .mobile-menu-section.collapsed .mobile-menu-section-title::after {
-      transform: rotate(-90deg) !important;
-    }
-    
-    .mobile-menu-items {
-      max-height: 500px !important;
-      overflow: hidden !important;
-      transition: max-height 0.3s ease !important;
-    }
-    
-    .mobile-menu-section.collapsed .mobile-menu-items {
-      max-height: 0 !important;
-    }
-    
-    .mobile-menu-item {
-      display: block !important;
-      padding: 12px 20px 12px 40px !important;
-      color: rgba(255, 255, 255, 0.9) !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 400 !important;
-      transition: all 0.2s ease !important;
-      border-left: 3px solid transparent !important;
-    }
-    
-    .mobile-menu-item:hover, .mobile-menu-item.active {
-      background: rgba(255, 255, 255, 0.1) !important;
-      color: white !important;
-      border-left-color: white !important;
-      padding-left: 44px !important;
-    }
-    
-    /* Desktop Navigation - Hidden on Mobile */
-    .bar-inner {
-      display: flex !important;
-      align-items: center !important;
-      height: 100% !important;
-      justify-content: center !important;
-    }
-    
-    .nav {
-      display: flex !important;
-      align-items: center !important;
-      gap: 20px !important;
-      margin: 0 auto !important;
-    }
-    
-    /* Right side container for navigation button */
-    .header-right {
-      display: flex !important;
-      align-items: center !important;
-      position: absolute !important;
-      right: 20px !important;
-    }
-    
-    /* Nav dropdown container positioning */
-    .nav-dropdown {
-      position: relative !important;
-    }
-    
-    /* Navigation Button in Header */
-    .header-nav-button {
-      background: rgba(255, 255, 255, 0.15) !important;
-      color: white !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      padding: 10px 16px !important;
-      border-radius: 8px !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      transition: all 0.3s ease !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ren Internal - Dashboards</title>
+    <link rel="stylesheet" href="style.css?v=15" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
-    .header-nav-button:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .header-nav-button.active {
-      background: rgba(255, 255, 255, 0.3) !important;
-      border-color: rgba(255, 255, 255, 0.6) !important;
-    }
-
-    .header-nav-arrow {
-      transition: transform 0.3s ease !important;
-      font-size: 10px !important;
-    }
-
-    .header-nav-button.active .header-nav-arrow {
-      transform: rotate(180deg) !important;
-    }
-
-    .header-nav-menu {
-      position: absolute !important;
-      top: calc(100% + 8px) !important;
-      right: 0 !important;
-      background: white !important;
-      min-width: 220px !important;
-      border-radius: 12px !important;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-      border: 1px solid rgba(185, 28, 28, 0.1) !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transform: translateY(-10px) !important;
-      transition: all 0.3s ease !important;
-      z-index: 1100 !important;
-      overflow: hidden !important;
-    }
-
-    .header-nav-menu.show {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateY(0) !important;
-    }
-
-    .header-nav-item {
-      display: block !important;
-      padding: 12px 20px !important;
-      color: #7a1b1b !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 500 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      transition: all 0.2s ease !important;
-      border-bottom: 1px solid rgba(185, 28, 28, 0.1) !important;
-    }
-
-    .header-nav-item:last-child {
-      border-bottom: none !important;
-    }
-
-    .header-nav-item:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffcccc) !important;
-      color: #5a1515 !important;
-      padding-left: 24px !important;
-    }
-    
-    /* Force container constraints with better responsive scaling */
-    main.content {
-      max-width: 1400px !important;
-      margin: 0 auto !important;
-      padding: 90px 20px 24px !important;
-      overflow-x: hidden !important;
-      background: transparent !important;
-    }
-    
-    /* Professional Header Styling */
-    .page-header {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
-      border: 2px solid rgba(185, 28, 28, 0.2);
-      border-radius: 16px;
-      padding: 24px 32px;
-      margin-bottom: 32px;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: visible;
-    }
-    
-    .header-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-    }
-    
-    .title-section {
-      text-align: center;
-    }
-    
-    .page-title {
-      font-size: 38px;
-      font-weight: 700;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      color: #b91c1c;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin: 0 0 8px 0;
-      text-shadow: 0 2px 4px rgba(185, 28, 28, 0.2);
-    }
-    
-    .page-subtitle {
-      font-size: 16px;
-      font-weight: 500;
-      color: #64748b;
-      margin: 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-
-    /* Dashboard Grid Styling */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 24px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .dashboard-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 247, 247, 0.95) 100%);
-      border: 2px solid rgba(185, 28, 28, 0.15);
-      border-radius: 12px;
-      padding: 20px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .dashboard-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%);
-    }
-
-    .dashboard-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-      border-color: rgba(185, 28, 28, 0.3);
-    }
-
-    .dashboard-card:hover::before {
-      height: 6px;
-    }
-
-    .dashboard-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #b91c1c;
-      margin: 0 0 8px 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-
-    .dashboard-description {
-      font-size: 14px;
-      color: #64748b;
-      margin: 0 0 16px 0;
-      line-height: 1.4;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-
-    .dashboard-button {
-      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%);
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-top: auto;
-      width: 100%;
-    }
-
-    .dashboard-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4);
-    }
-
-    /* Responsive adjustments for main header */
-    @media (max-width: 1024px) {
+    <!-- Backup CSS for layout -->
+    <style>
+      /* Professional Background Styling */
+      html,
+      body {
+        background: #f1f5f9 !important;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+      }
+      /* Professional Main Header Styling */
       .topbar {
-        position: static !important;
-        height: 50px !important;
-        padding: 0 10px !important;
-      }
-      
-      .brand {
-        font-size: 16px !important;
-        padding: 12px 10px !important;
-        letter-spacing: 1px !important;
-      }
-      
-      /* Show mobile menu toggle, hide desktop navigation */
-      .mobile-menu-toggle {
+        background: linear-gradient(
+          135deg,
+          #7a1b1b 0%,
+          #b91c1c 50%,
+          #dc2626 100%
+        ) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+        border-bottom: 3px solid #5a1616 !important;
+        padding: 0 20px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
+        width: 100% !important;
+        height: 70px !important;
         display: flex !important;
-      }
-      
-      .bar-inner,
-      .nav,
-      .menu,
-      .header-nav-button {
-        display: none !important;
-      }
-      
-      .mobile-menu-panel {
-        width: 280px !important;
-        left: -280px !important;
-      }
-      
-      /* Mobile and tablet portrait - force all dashboards to stack */
-      main.content {
-        max-width: 100% !important;
-        padding: 20px 16px 20px !important;
-      }
-      
-      .dashboard-grid {
-        grid-template-columns: 1fr !important;
-        gap: 12px !important;
-        max-width: 100% !important;
+        justify-content: center !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
       }
 
-      .dashboard-card {
-        padding: 16px !important;
-        min-height: 100px !important;
+      .topbar::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
       }
 
-      .page-header {
-        padding: 10px 16px !important;
-        margin-bottom: 10px !important;
-      }
-
-      .page-title {
-        font-size: 1.6rem !important;
-        letter-spacing: 1.2px !important;
-      }
-
-      .page-subtitle {
-        font-size: 0.9rem !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .topbar {
-        height: 45px !important;
-        padding: 0 8px !important;
-      }
-      
       .brand {
-        font-size: 14px !important;
-        padding: 10px 8px !important;
-        letter-spacing: 0.8px !important;
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        color: #ffffff !important;
+        padding: 16px 0 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.2px !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+        flex-shrink: 0 !important;
+        position: absolute !important;
+        left: 20px !important;
       }
-      
+
+      /* Mobile Hamburger Menu */
       .mobile-menu-toggle {
-        width: 35px !important;
-        height: 35px !important;
-        margin-right: 8px !important;
+        display: none !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        padding: 0 !important;
+        justify-self: end !important;
       }
-      
+
+      .mobile-menu-toggle:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+      }
+
       .hamburger-line {
-        width: 18px !important;
+        width: 20px !important;
+        height: 2px !important;
+        background: white !important;
+        margin: 2px 0 !important;
+        transition: 0.3s !important;
+        border-radius: 1px !important;
       }
-      
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: rotate(-45deg) translate(-4px, 4px) !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: rotate(45deg) translate(-4px, -4px) !important;
+      }
+
+      /* Side Menu Overlay */
+      .mobile-menu-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        z-index: 1500 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .mobile-menu-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      /* Side Menu Panel */
       .mobile-menu-panel {
-        width: 260px !important;
-        left: -260px !important;
-      }
-      
-      main.content {
-        padding: 50px 12px 16px !important;
-      }
-      
-      .dashboard-grid {
-        gap: 12px !important;
-      }
-
-      .dashboard-card {
-        padding: 14px !important;
-        min-height: 90px !important;
-      }
-
-      .page-header {
-        padding: 8px 12px !important;
-        margin-bottom: 8px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: -320px !important;
+        width: 320px !important;
+        height: 100% !important;
+        background: linear-gradient(
+          180deg,
+          #7a1b1b 0%,
+          #b91c1c 100%
+        ) !important;
+        z-index: 1600 !important;
+        transition: left 0.3s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
       }
 
-      .page-title {
-        font-size: 1.4rem !important;
+      .mobile-menu-panel.active {
+        left: 0 !important;
+      }
+
+      /* Mobile menu activation via body class */
+      body.mobile-menu-open .mobile-menu-overlay {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-panel {
+        left: 0 !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px) !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px) !important;
+      }
+
+      .mobile-menu-header {
+        padding: 20px !important;
+        background: rgba(0, 0, 0, 0.2) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+
+      .mobile-menu-title {
+        color: white !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+        text-transform: uppercase !important;
         letter-spacing: 1px !important;
       }
 
-      .page-subtitle {
-        font-size: 0.8rem !important;
+      .mobile-menu-close {
+        background: none !important;
+        border: none !important;
+        color: white !important;
+        font-size: 24px !important;
+        cursor: pointer !important;
+        padding: 5px !important;
+        line-height: 1 !important;
       }
-      
-      .dashboard-title {
-        font-size: 1.1rem !important;
+
+      .mobile-menu-content {
+        padding: 0 !important;
       }
-      
-      .dashboard-button {
-        padding: 8px 12px !important;
+
+      .mobile-menu-section {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      .mobile-menu-section-title {
+        padding: 15px 20px !important;
+        color: white !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin: 0 !important;
+        background: rgba(0, 0, 0, 0.1) !important;
+        cursor: pointer !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
+      }
+
+      .mobile-menu-section-title:hover {
+        background: rgba(0, 0, 0, 0.2) !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .mobile-menu-section-title::after {
+        content: "▼" !important;
         font-size: 12px !important;
-      }
-    }
-
-    @media (max-width: 480px) {
-      /* Small mobile phones - ensure vertical stacking */
-      main.content {
-        padding: 50px 12px 16px !important;
-      }
-      
-      .dashboard-grid {
-        gap: 12px !important;
+        transition: transform 0.3s ease !important;
+        color: rgba(255, 255, 255, 0.8) !important;
       }
 
-      .dashboard-card {
-        padding: 16px;
+      .mobile-menu-section.collapsed .mobile-menu-section-title::after {
+        transform: rotate(-90deg) !important;
       }
 
-      .page-header {
-        padding: 8px 12px !important;
-        margin-bottom: 6px !important;
+      .mobile-menu-items {
+        max-height: 500px !important;
+        overflow: hidden !important;
+        transition: max-height 0.3s ease !important;
       }
 
-      .page-title {
-        font-size: 24px;
-        letter-spacing: 1px;
+      .mobile-menu-section.collapsed .mobile-menu-items {
+        max-height: 0 !important;
       }
 
-      .page-subtitle {
-        font-size: 13px;
+      .mobile-menu-item {
+        display: block !important;
+        padding: 12px 20px 12px 40px !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 400 !important;
+        transition: all 0.2s ease !important;
+        border-left: 3px solid transparent !important;
+      }
+
+      .mobile-menu-item:hover,
+      .mobile-menu-item.active {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        border-left-color: white !important;
+        padding-left: 44px !important;
+      }
+
+      /* Desktop Navigation - Hidden on Mobile */
+      .bar-inner {
+        display: flex !important;
+        align-items: center !important;
+        height: 100% !important;
+        justify-content: center !important;
+      }
+
+      .nav {
+        display: flex !important;
+        align-items: center !important;
+        gap: 20px !important;
+        margin: 0 auto !important;
+      }
+
+      /* Right side container for navigation button */
+      .header-right {
+        display: flex !important;
+        align-items: center !important;
+        position: absolute !important;
+        right: 20px !important;
+      }
+
+      /* Nav dropdown container positioning */
+      .nav-dropdown {
+        position: relative !important;
+      }
+
+      /* Navigation Button in Header */
+      .header-nav-button {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        padding: 10px 16px !important;
+        border-radius: 8px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+      }
+
+      .header-nav-button:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+      }
+
+      .header-nav-button.active {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-color: rgba(255, 255, 255, 0.6) !important;
+      }
+
+      .header-nav-arrow {
+        transition: transform 0.3s ease !important;
+        font-size: 10px !important;
+      }
+
+      .header-nav-button.active .header-nav-arrow {
+        transform: rotate(180deg) !important;
       }
 
       .header-nav-menu {
-        min-width: 180px !important;
+        position: absolute !important;
+        top: calc(100% + 8px) !important;
+        right: 0 !important;
+        background: white !important;
+        min-width: 220px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+        border: 1px solid rgba(185, 28, 28, 0.1) !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-10px) !important;
+        transition: all 0.3s ease !important;
+        z-index: 1100 !important;
+        overflow: hidden !important;
       }
-    }
 
-    .menu {
-      display: flex !important;
-      list-style: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      gap: 0 !important;
-      align-items: center !important;
-      height: 100% !important;
-    }
-    
-    .menu li {
-      position: relative !important;
-      height: 100% !important;
-      display: flex !important;
-      align-items: center !important;
-    }
-    
-    .toplink {
-      display: block !important;
-      padding: 18px 28px !important;
-      color: #ffffff !important;
-      text-decoration: none !important;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1px !important;
-      transition: all 0.3s ease !important;
-      border-right: 1px solid rgba(255,255,255,0.1) !important;
-      position: relative !important;
-      overflow: hidden !important;
-      height: 100% !important;
-      box-sizing: border-box !important;
-    }
-    
-    .toplink::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .toplink:hover::before {
-      opacity: 1;
-    }
-    
-    .toplink:hover {
-      background: rgba(255,255,255,0.1) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: inset 0 -3px 0 rgba(255,255,255,0.3) !important;
-    }
-    
-    .sub {
-      position: absolute !important;
-      top: 100% !important;
-      left: 0 !important;
-      transform: translateY(-10px) !important;
-      background: #ffffff !important;
-      min-width: 200px !important;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-      border-radius: 0 0 8px 8px !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transition: all 0.3s ease !important;
-      z-index: 1000 !important;
-      border: 1px solid rgba(0,0,0,0.1) !important;
-      border-top: none !important;
-      list-style: none !important;
-      padding: 8px 0 !important;
-      margin: 0 !important;
-      overflow: hidden !important;
-    }
-    
-    .has-sub:hover .sub {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateY(0) !important;
-    }
-    
-    .menu .sub li {
-      margin: 0 !important;
-      width: 100% !important;
-    }
-    
-    .menu .sub a {
-      display: block !important;
-      padding: 14px 24px !important;
-      color: #7a1b1b !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 500 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      text-transform: none !important;
-      letter-spacing: 0.5px !important;
-      transition: all 0.2s ease !important;
-      border-left: 4px solid transparent !important;
-      position: relative !important;
-      margin: 0 !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      white-space: nowrap !important;
-    }
+      .header-nav-menu.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+      }
 
-    .menu .sub a:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
-      color: #5a1616 !important;
-      border-left-color: #b91c1c !important;
-      padding-left: 28px !important;
-      width: 100% !important;
-    }
-    
-    .menu .sub a.active {
-      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
-      color: #5a1616 !important;
-      border-left-color: #b91c1c !important;
-      font-weight: 600 !important;
-      width: 100% !important;
-    }
+      .header-nav-item {
+        display: block !important;
+        padding: 12px 20px !important;
+        color: #7a1b1b !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        transition: all 0.2s ease !important;
+        border-bottom: 1px solid rgba(185, 28, 28, 0.1) !important;
+      }
 
-    /* Top of page button styling */
-    .top-of-page-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 4px 20px rgba(185, 28, 28, 0.4);
-      transition: all 0.3s ease;
-      z-index: 999;
-    }
+      .header-nav-item:last-child {
+        border-bottom: none !important;
+      }
 
-    .top-of-page-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 25px rgba(185, 28, 28, 0.5);
-    }
-  </style>
-</head>
-<body>
+      .header-nav-item:hover {
+        background: linear-gradient(135deg, #ffe5e5, #ffcccc) !important;
+        color: #5a1515 !important;
+        padding-left: 24px !important;
+      }
 
-  <!-- Top Navigation Bar -->
-  <header class="topbar">
-    <div class="brand">Ren Internal</div>
-    
-    <!-- Desktop Navigation -->
-    <div class="bar-inner">
-      <nav class="nav" aria-label="Main">
-        <ul class="menu">
-          <!-- TV Reports -->
-          <li class="has-sub">
-            <a href="#" class="toplink">TV Reports</a>
-            <ul class="sub">
-              <li><a href="index.html">OTD</a></li>
-              <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
-              <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
-              <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
-              <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
-            </ul>
-          </li>
+      /* Force container constraints with better responsive scaling */
+      main.content {
+        max-width: 1400px !important;
+        margin: 0 auto !important;
+        padding: 90px 20px 24px !important;
+        overflow-x: hidden !important;
+        background: transparent !important;
+      }
 
-          <!-- KPIs -->
-          <li class="has-sub">
-            <a href="#" class="toplink">KPIs</a>
-            <ul class="sub">
-              <li><a href="operations.html">Operations</a></li>
-              <li><a href="engineering.html">Engineering</a></li>
-              <li><a href="supplychain.html">Supply Chain</a></li>
-              <li><a href="dashboards.html" class="active">Dashboards</a></li>
-            </ul>
-          </li>
+      /* Professional Header Styling */
+      .page-header {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.95) 0%,
+          rgba(255, 229, 229, 0.9) 100%
+        );
+        border: 2px solid rgba(185, 28, 28, 0.2);
+        border-radius: 16px;
+        padding: 24px 32px;
+        margin-bottom: 32px;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: visible;
+      }
 
-          <!-- Applications -->
-          <li class="has-sub">
-            <a href="#" class="toplink">Applications</a>
-            <ul class="sub">
-              <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
-              <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
-              <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      
-      <!-- Header Navigation Dropdown -->
-      <div class="nav-dropdown">
-        <button class="header-nav-button" onclick="toggleHeaderNav()">
-          TABLE OF CONTENTS
-          <span class="header-nav-arrow">▼</span>
+      .header-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .title-section {
+        text-align: center;
+      }
+
+      .page-title {
+        font-size: 38px;
+        font-weight: 700;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+        color: #b91c1c;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0 0 8px 0;
+        text-shadow: 0 2px 4px rgba(185, 28, 28, 0.2);
+      }
+
+      .page-subtitle {
+        font-size: 16px;
+        font-weight: 500;
+        color: #64748b;
+        margin: 0;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+      }
+
+      /* Dashboard Grid Styling */
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 24px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .dashboard-card {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.98) 0%,
+          rgba(255, 247, 247, 0.95) 100%
+        );
+        border: 2px solid rgba(185, 28, 28, 0.15);
+        border-radius: 12px;
+        padding: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        min-height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .dashboard-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(
+          135deg,
+          #7a1b1b 0%,
+          #b91c1c 50%,
+          #dc2626 100%
+        );
+      }
+
+      .dashboard-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        border-color: rgba(185, 28, 28, 0.3);
+      }
+
+      .dashboard-card:hover::before {
+        height: 6px;
+      }
+
+      .dashboard-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #b91c1c;
+        margin: 0 0 8px 0;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+      }
+
+      .dashboard-description {
+        font-size: 14px;
+        color: #64748b;
+        margin: 0 0 16px 0;
+        line-height: 1.4;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+      }
+
+      .dashboard-button {
+        background: linear-gradient(
+          135deg,
+          #7a1b1b 0%,
+          #b91c1c 50%,
+          #dc2626 100%
+        );
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: auto;
+        width: 100%;
+      }
+
+      .dashboard-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4);
+      }
+
+      /* Responsive adjustments for main header */
+      @media (max-width: 1024px) {
+        .topbar {
+          position: static !important;
+          height: 50px !important;
+          padding: 0 10px !important;
+        }
+
+        .brand {
+          font-size: 16px !important;
+          padding: 12px 10px !important;
+          letter-spacing: 1px !important;
+        }
+
+        /* Show mobile menu toggle, hide desktop navigation */
+        .mobile-menu-toggle {
+          display: flex !important;
+        }
+
+        .bar-inner,
+        .nav,
+        .menu,
+        .header-nav-button {
+          display: none !important;
+        }
+
+        .mobile-menu-panel {
+          width: 280px !important;
+          left: -280px !important;
+        }
+
+        /* Mobile and tablet portrait - force all dashboards to stack */
+        main.content {
+          max-width: 100% !important;
+          padding: 20px 16px 20px !important;
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr !important;
+          gap: 12px !important;
+          max-width: 100% !important;
+        }
+
+        .dashboard-card {
+          padding: 16px !important;
+          min-height: 100px !important;
+        }
+
+        .page-header {
+          padding: 10px 16px !important;
+          margin-bottom: 10px !important;
+        }
+
+        .page-title {
+          font-size: 1.6rem !important;
+          letter-spacing: 1.2px !important;
+        }
+
+        .page-subtitle {
+          font-size: 0.9rem !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .topbar {
+          height: 45px !important;
+          padding: 0 8px !important;
+        }
+
+        .brand {
+          font-size: 14px !important;
+          padding: 10px 8px !important;
+          letter-spacing: 0.8px !important;
+        }
+
+        .mobile-menu-toggle {
+          width: 35px !important;
+          height: 35px !important;
+          margin-right: 8px !important;
+        }
+
+        .hamburger-line {
+          width: 18px !important;
+        }
+
+        .mobile-menu-panel {
+          width: 260px !important;
+          left: -260px !important;
+        }
+
+        main.content {
+          padding: 50px 12px 16px !important;
+        }
+
+        .dashboard-grid {
+          gap: 12px !important;
+        }
+
+        .dashboard-card {
+          padding: 14px !important;
+          min-height: 90px !important;
+        }
+
+        .page-header {
+          padding: 8px 12px !important;
+          margin-bottom: 8px !important;
+        }
+
+        .page-title {
+          font-size: 1.4rem !important;
+          letter-spacing: 1px !important;
+        }
+
+        .page-subtitle {
+          font-size: 0.8rem !important;
+        }
+
+        .dashboard-title {
+          font-size: 1.1rem !important;
+        }
+
+        .dashboard-button {
+          padding: 8px 12px !important;
+          font-size: 12px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* Small mobile phones - ensure vertical stacking */
+        main.content {
+          padding: 50px 12px 16px !important;
+        }
+
+        .dashboard-grid {
+          gap: 12px !important;
+        }
+
+        .dashboard-card {
+          padding: 16px;
+        }
+
+        .page-header {
+          padding: 8px 12px !important;
+          margin-bottom: 6px !important;
+        }
+
+        .page-title {
+          font-size: 24px;
+          letter-spacing: 1px;
+        }
+
+        .page-subtitle {
+          font-size: 13px;
+        }
+
+        .header-nav-menu {
+          min-width: 180px !important;
+        }
+      }
+
+      .menu {
+        display: flex !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        align-items: center !important;
+        height: 100% !important;
+      }
+
+      .menu li {
+        position: relative !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      .toplink {
+        display: block !important;
+        padding: 18px 28px !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        transition: all 0.3s ease !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        height: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .toplink::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.05)
+        );
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .toplink:hover::before {
+        opacity: 1;
+      }
+
+      .toplink:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.3) !important;
+      }
+
+      .sub {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        transform: translateY(-10px) !important;
+        background: #ffffff !important;
+        min-width: 200px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        border-radius: 0 0 8px 8px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+        z-index: 1000 !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-top: none !important;
+        list-style: none !important;
+        padding: 8px 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+      }
+
+      .has-sub:hover .sub {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+      }
+
+      .menu .sub li {
+        margin: 0 !important;
+        width: 100% !important;
+      }
+
+      .menu .sub a {
+        display: block !important;
+        padding: 14px 24px !important;
+        color: #7a1b1b !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
+          sans-serif !important;
+        text-transform: none !important;
+        letter-spacing: 0.5px !important;
+        transition: all 0.2s ease !important;
+        border-left: 4px solid transparent !important;
+        position: relative !important;
+        margin: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+      }
+
+      .menu .sub a:hover {
+        background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+        color: #5a1616 !important;
+        border-left-color: #b91c1c !important;
+        padding-left: 28px !important;
+        width: 100% !important;
+      }
+
+      .menu .sub a.active {
+        background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+        color: #5a1616 !important;
+        border-left-color: #b91c1c !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+      }
+
+      /* Top of page button styling */
+      .top-of-page-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(
+          135deg,
+          #7a1b1b 0%,
+          #b91c1c 50%,
+          #dc2626 100%
+        );
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(185, 28, 28, 0.4);
+        transition: all 0.3s ease;
+        z-index: 999;
+      }
+
+      .top-of-page-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(185, 28, 28, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+      <div class="brand">Ren Internal</div>
+
+      <!-- Desktop Navigation -->
+      <div class="bar-inner">
+        <nav class="nav" aria-label="Main">
+          <ul class="menu">
+            <!-- TV Reports -->
+            <li class="has-sub">
+              <a href="#" class="toplink">TV Reports</a>
+              <ul class="sub">
+                <li><a href="index.html">OTD</a></li>
+                <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
+                <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
+                <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
+                <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
+              </ul>
+            </li>
+
+            <!-- KPIs -->
+            <li class="has-sub">
+              <a href="#" class="toplink">KPIs</a>
+              <ul class="sub">
+                <li><a href="operations.html">Operations</a></li>
+                <li><a href="engineering.html">Engineering</a></li>
+                <li><a href="supplychain.html">Supply Chain</a></li>
+                <li><a href="dashboards.html" class="active">Dashboards</a></li>
+              </ul>
+            </li>
+
+            <!-- Applications -->
+            <li class="has-sub">
+              <a href="#" class="toplink">Applications</a>
+              <ul class="sub">
+                <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
+                <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
+                <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Header Navigation Dropdown -->
+        <div class="nav-dropdown">
+          <button class="header-nav-button" onclick="toggleHeaderNav()">
+            TABLE OF CONTENTS
+            <span class="header-nav-arrow">▼</span>
+          </button>
+          <div class="header-nav-menu" id="headerNavMenu">
+            <a href="#dashboards-section" class="header-nav-item"
+              >Dashboards Overview</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side with Mobile Menu -->
+      <div class="header-right">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
         </button>
-        <div class="header-nav-menu" id="headerNavMenu">
-          <a href="#dashboards-section" class="header-nav-item">Dashboards Overview</a>
-        </div>
       </div>
-    </div>
-    
-    <!-- Right side with Mobile Menu -->
-    <div class="header-right">
-      <!-- Mobile Menu Toggle -->
-      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-    </div>
-  </header>
+    </header>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
-  
-  <!-- Mobile Menu Panel -->
-  <div class="mobile-menu-panel">
-    <div class="mobile-menu-header">
-      <h3 class="mobile-menu-title">Navigation</h3>
-      <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
-    </div>
-    <div class="mobile-menu-content">
-      <!-- TV Reports Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
-        <div class="mobile-menu-items">
-          <a href="index.html" class="mobile-menu-item" onclick="closeMobileMenu()">OTD</a>
-          <a href="ROG-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Test</a>
-          <a href="ROG-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Debug</a>
-          <a href="RUN-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Test</a>
-          <a href="RUN-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Debug</a>
-        </div>
-      </div>
-      
-      <!-- KPIs Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
-        <div class="mobile-menu-items">
-          <a href="operations.html" class="mobile-menu-item" onclick="closeMobileMenu()">Operations</a>
-          <a href="engineering.html" class="mobile-menu-item" onclick="closeMobileMenu()">Engineering</a>
-          <a href="supplychain.html" class="mobile-menu-item" onclick="closeMobileMenu()">Supply Chain</a>
-          <a href="dashboards.html" class="mobile-menu-item active" onclick="closeMobileMenu()">Dashboards</a>
-        </div>
-      </div>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
 
-      <!-- Applications Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
-        <div class="mobile-menu-items">
-          <a href="palletsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Pallet Receiving Tool</a>
-          <a href="skuDetailsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">SKU Update Tool</a>
-          <a href="customerHoldApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Customer Hold Tool</a>
-        </div>
+    <!-- Mobile Menu Panel -->
+    <div class="mobile-menu-panel">
+      <div class="mobile-menu-header">
+        <h3 class="mobile-menu-title">Navigation</h3>
+        <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
       </div>
-    </div>
-  </div>
-
-  <!-- Page -->
-  <main class="content">
-    <!-- Professional Header Card -->
-    <div class="page-header">
-      <div class="header-content">
-        <div class="title-section">
-          <h1 class="page-title">DASHBOARDS</h1>
-          <p class="page-subtitle">Personalized Analytics & Performance Dashboards</p>
-        </div>
-      </div>
-    </div>
-    
-    <div id="dashboards-section">
-      <!-- Dashboard Grid -->
-      <div class="dashboard-grid">
-        <!-- Leah Dashboard -->
-        <div class="dashboard-card" onclick="openDashboard('leah')">
-          <h3 class="dashboard-title">Leah's Dashboard</h3>
-          <button class="dashboard-button">Open Dashboard</button>
+      <div class="mobile-menu-content">
+        <!-- TV Reports Section -->
+        <div class="mobile-menu-section">
+          <h4
+            class="mobile-menu-section-title"
+            onclick="toggleMobileSection(this)"
+          >
+            TV Reports
+          </h4>
+          <div class="mobile-menu-items">
+            <a
+              href="index.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >OTD</a
+            >
+            <a
+              href="ROG-TEST-TV.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Rogue-Test</a
+            >
+            <a
+              href="ROG-DEBUG-TV.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Rogue-Debug</a
+            >
+            <a
+              href="RUN-TEST-TV.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Run-Test</a
+            >
+            <a
+              href="RUN-DEBUG-TV.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Run-Debug</a
+            >
+          </div>
         </div>
 
-        <!-- Add more dashboard cards here as needed -->
-        <div class="dashboard-card" onclick="openDashboard('template')" style="opacity: 0.7; cursor: not-allowed;">
-          <h3 class="dashboard-title">New Dashboard</h3>
-          <button class="dashboard-button" style="background: #64748b;">Coming Soon</button>
+        <!-- KPIs Section -->
+        <div class="mobile-menu-section">
+          <h4
+            class="mobile-menu-section-title"
+            onclick="toggleMobileSection(this)"
+          >
+            KPIs
+          </h4>
+          <div class="mobile-menu-items">
+            <a
+              href="operations.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Operations</a
+            >
+            <a
+              href="engineering.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Engineering</a
+            >
+            <a
+              href="supplychain.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Supply Chain</a
+            >
+            <a
+              href="dashboards.html"
+              class="mobile-menu-item active"
+              onclick="closeMobileMenu()"
+              >Dashboards</a
+            >
+          </div>
+        </div>
+
+        <!-- Applications Section -->
+        <div class="mobile-menu-section">
+          <h4
+            class="mobile-menu-section-title"
+            onclick="toggleMobileSection(this)"
+          >
+            Applications
+          </h4>
+          <div class="mobile-menu-items">
+            <a
+              href="palletsApp.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Pallet Receiving Tool</a
+            >
+            <a
+              href="skuDetailsApp.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >SKU Update Tool</a
+            >
+            <a
+              href="customerHoldApp.html"
+              class="mobile-menu-item"
+              onclick="closeMobileMenu()"
+              >Customer Hold Tool</a
+            >
+          </div>
         </div>
       </div>
     </div>
-  </main>
-  
-  <!-- Top of Page Button -->
-  <button class="top-of-page-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
-    ↑
-  </button>
 
-  <script src="javascript.js?v=5"></script>
-  
-  <!-- Dashboard Navigation JavaScript -->
-  <script>
-    function openDashboard(dashboardType) {
-      switch(dashboardType) {
-        case 'leah':
-          // Navigate to Leah's personalized dashboard page
-          window.location.href = 'leah-dashboard.html';
-          break;
-        case 'template':
-          alert('This dashboard template is coming soon!\n\nContact IT to set up your personalized dashboard.');
-          break;
-        default:
-          alert('Dashboard not found.');
+    <!-- Page -->
+    <main class="content">
+      <!-- Professional Header Card -->
+      <div class="page-header">
+        <div class="header-content">
+          <div class="title-section">
+            <h1 class="page-title">DASHBOARDS</h1>
+            <p class="page-subtitle">
+              Personalized Analytics & Performance Dashboards
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="dashboards-section">
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+          <!-- Leah Dashboard -->
+          <div class="dashboard-card" onclick="openDashboard('morning')">
+            <h3 class="dashboard-title">Morning Dashboard</h3>
+            <button class="dashboard-button">Open Dashboard</button>
+          </div>
+
+          <!-- Add more dashboard cards here as needed -->
+          <div
+            class="dashboard-card"
+            onclick="openDashboard('template')"
+            style="opacity: 0.7; cursor: not-allowed"
+          >
+            <h3 class="dashboard-title">New Dashboard</h3>
+            <button class="dashboard-button" style="background: #64748b">
+              Coming Soon
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Top of Page Button -->
+    <button
+      class="top-of-page-btn"
+      onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+      title="Back to top"
+    >
+      ↑
+    </button>
+
+    <script src="javascript.js?v=5"></script>
+
+    <!-- Dashboard Navigation JavaScript -->
+    <script>
+      function openDashboard(dashboardType) {
+        switch (dashboardType) {
+          case "morning":
+            // Navigate to Leah's personalized dashboard page
+            window.location.href = "morning-dashboard.html";
+            break;
+          case "template":
+            alert(
+              "This dashboard template is coming soon!\n\nContact IT to set up your personalized dashboard."
+            );
+            break;
+          default:
+            alert("Dashboard not found.");
+        }
       }
-    }
 
-    // Mobile Menu Functions
-    function toggleMobileMenu() {
-      document.body.classList.toggle('mobile-menu-open');
-    }
-    
-    function closeMobileMenu() {
-      document.body.classList.remove('mobile-menu-open');
-    }
-    
-    // Mobile Menu Section Toggle Function
-    function toggleMobileSection(titleElement) {
-      const section = titleElement.parentElement;
-      section.classList.toggle('collapsed');
-    }
-    
-    // Header Navigation Functions
-    function toggleHeaderNav() {
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      menu.classList.toggle('show');
-      button.classList.toggle('active');
-    }
+      // Mobile Menu Functions
+      function toggleMobileMenu() {
+        document.body.classList.toggle("mobile-menu-open");
+      }
 
-    function closeHeaderNav() {
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      menu.classList.remove('show');
-      button.classList.remove('active');
-    }
-    
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-      const navDropdown = document.querySelector('.nav');
-      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-      const mobileMenuPanel = document.querySelector('.mobile-menu-panel');
-      
-      // Close mobile menu if clicking outside
-      if (mobileMenuToggle && !mobileMenuToggle.contains(event.target) && 
-          mobileMenuPanel && !mobileMenuPanel.contains(event.target)) {
-        document.body.classList.remove('mobile-menu-open');
+      function closeMobileMenu() {
+        document.body.classList.remove("mobile-menu-open");
       }
-    });
-    
-    // Close mobile menu on window resize if screen becomes large
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 768) {
-        document.body.classList.remove('mobile-menu-open');
+
+      // Mobile Menu Section Toggle Function
+      function toggleMobileSection(titleElement) {
+        const section = titleElement.parentElement;
+        section.classList.toggle("collapsed");
       }
-    });
-    
-    // Enhanced smooth scrolling with offset for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          // Calculate offset to account for header and provide padding
-          const headerHeight = document.querySelector('.topbar').offsetHeight;
-          const additionalOffset = 30; // Extra padding so title is clearly visible
-          const targetPosition = target.offsetTop - headerHeight - additionalOffset;
-          
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
+
+      // Header Navigation Functions
+      function toggleHeaderNav() {
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+        menu.classList.toggle("show");
+        button.classList.toggle("active");
+      }
+
+      function closeHeaderNav() {
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+        menu.classList.remove("show");
+        button.classList.remove("active");
+      }
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const navDropdown = document.querySelector(".nav");
+        const mobileMenuToggle = document.querySelector(".mobile-menu-toggle");
+        const mobileMenuPanel = document.querySelector(".mobile-menu-panel");
+
+        // Close mobile menu if clicking outside
+        if (
+          mobileMenuToggle &&
+          !mobileMenuToggle.contains(event.target) &&
+          mobileMenuPanel &&
+          !mobileMenuPanel.contains(event.target)
+        ) {
+          document.body.classList.remove("mobile-menu-open");
         }
       });
-    });
-    
-    // Initialize mobile menu sections - start with all collapsed except current page section
-    document.addEventListener('DOMContentLoaded', function() {
-      const sections = document.querySelectorAll('.mobile-menu-section');
-      sections.forEach(section => {
-        // Collapse all sections initially
-        section.classList.add('collapsed');
-        
-        // Keep the section open if it contains the active page
-        const activeItem = section.querySelector('.mobile-menu-item.active');
-        if (activeItem) {
-          section.classList.remove('collapsed');
+
+      // Close mobile menu on window resize if screen becomes large
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 768) {
+          document.body.classList.remove("mobile-menu-open");
         }
       });
-    });
-  </script>
-</body>
+
+      // Enhanced smooth scrolling with offset for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            // Calculate offset to account for header and provide padding
+            const headerHeight = document.querySelector(".topbar").offsetHeight;
+            const additionalOffset = 30; // Extra padding so title is clearly visible
+            const targetPosition =
+              target.offsetTop - headerHeight - additionalOffset;
+
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Initialize mobile menu sections - start with all collapsed except current page section
+      document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll(".mobile-menu-section");
+        sections.forEach((section) => {
+          // Collapse all sections initially
+          section.classList.add("collapsed");
+
+          // Keep the section open if it contains the active page
+          const activeItem = section.querySelector(".mobile-menu-item.active");
+          if (activeItem) {
+            section.classList.remove("collapsed");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>

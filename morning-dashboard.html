@@ -701,7 +701,7 @@
 
       @media (max-width: 480px) {
         .kpi-grid {
-          gap: 12px !important;
+          gap: 20px;
           margin-top: 12px !important;
         }
       }
@@ -725,6 +725,7 @@
         grid-column: span 2; /* takes up two grid tracks */
         background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
         border-radius: 12px;
+        gap: 20px;
         padding: 20px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
         border: 1px solid rgba(185, 28, 28, 0.1);
@@ -735,6 +736,7 @@
       }
       @media (max-width: 900px) {
         .kpi-card-wipInTransit {
+          gap: 20px;
           grid-column: auto;
         }
       }
@@ -1192,7 +1194,7 @@
             class="mobile-menu-section-title"
             onclick="toggleMobileSection(this)"
           >
-            Leah Dashboard
+            Morning Dashboard
           </h4>
           <div class="mobile-menu-items">
             <a
@@ -1297,7 +1299,7 @@
     <main class="content">
       <!-- Dashboard Header -->
       <div class="dashboard-header">
-        <h1>Leah Dashboard</h1>
+        <h1>Morning Dashboard</h1>
         <p class="dashboard-subtitle">
           Personalized KPI Dashboard with Power BI Integration
         </p>
@@ -1308,7 +1310,7 @@
         <!-- KPI 1: Backlog Pareto -->
         <div class="kpi-card" id="backlog-pareto">
           <h2 class="kpi-title">Backlog Pareto</h2>
-          <p class="kpi-description">Backlog in $CAD</p>
+          <p class="kpi-description">Backlog in $CAD. The Value of Units aged 20+ days is included in this report</p>
           <div class="power-bi-container-expanded">
             <iframe
               title="Backlog Pareto Analysis"
@@ -1551,45 +1553,6 @@
         window.location.href = "dashboards.html";
       }
 
-      // Function to embed Power BI reports (call this when integrating actual Power BI reports)
-      function embedPowerBIReport(containerId, reportEmbedUrl, accessToken) {
-        const container = document.getElementById(containerId);
-        if (container) {
-          container.innerHTML = `
-          <iframe 
-            src="${reportEmbedUrl}" 
-            width="100%" 
-            height="300px" 
-            frameborder="0"
-            style="border-radius: 8px;"
-            allowFullScreen="true">
-          </iframe>
-        `;
-        }
-      }
-
-      // Alternative method using Power BI JavaScript API for more advanced integration
-      function embedPowerBIWithAPI(containerId, embedConfig) {
-        // This requires Power BI JavaScript API to be loaded
-        // Example configuration:
-        // const embedConfig = {
-        //   type: 'report',
-        //   id: 'your-report-id',
-        //   embedUrl: 'your-embed-url',
-        //   accessToken: 'your-access-token',
-        //   tokenType: models.TokenType.Embed,
-        //   settings: {
-        //     panes: {
-        //       filters: { expanded: false, visible: false },
-        //       pageNavigation: { visible: false }
-        //     }
-        //   }
-        // };
-
-        console.log("Power BI API integration ready for:", containerId);
-        // powerbi.embed(container, embedConfig);
-      }
-
       // Function to refresh Power BI iframe by reloading its src
       function refreshPowerBIReport(iframeSelector) {
         const iframe = document.querySelector(iframeSelector);
@@ -1625,13 +1588,6 @@
           }, 30 * 60 * 1000); // 30 minutes in milliseconds
         }, 30 * 60 * 1000); // 30 minutes initial delay
       }
-
-      // Example usage (uncomment and modify when Power BI reports are available):
-      // embedPowerBIReport('kpi-1-container', 'https://your-power-bi-embed-url-backlog-pareto', 'your-access-token');
-      // embedPowerBIReport('kpi-2-container', 'https://your-power-bi-embed-url-otd', 'your-access-token');
-      // embedPowerBIReport('kpi-3-container', 'https://your-power-bi-embed-url-throughput', 'your-access-token');
-      // embedPowerBIReport('kpi-4-container', 'https://your-power-bi-embed-url-recommits', 'your-access-token');
-      // embedPowerBIReport('kpi-5-container', 'https://your-power-bi-embed-url-wip-in-transit', 'your-access-token');
 
       // Add smooth scrolling for better UX
       document.addEventListener("DOMContentLoaded", function () {
