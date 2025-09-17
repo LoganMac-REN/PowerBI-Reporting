@@ -1,1547 +1,1549 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ren Internal - Engineering</title>
-  <link rel="stylesheet" href="style.css?v=15" />
-  <meta http-equiv="Cache-Control" content="no-store" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
-  
-  <!-- CSS for coming soon pages -->
-  <style>
-    /* Professional Background Styling */
-    html, body {
-      background: #f1f5f9 !important;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    }
-    /* Professional Main Header Styling */
-    .topbar {
-      background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-      border-bottom: 3px solid #5a1616 !important;
-      padding: 0 20px !important;
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      z-index: 1000 !important;
-      width: 100% !important;
-      height: 70px !important;
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      box-sizing: border-box !important;
-    }
-    
-    .topbar::before {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    }
-    
-    .brand {
-      font-size: 20px !important;
-      font-weight: 700 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      color: #ffffff !important;
-      padding: 16px 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1.2px !important;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
-      flex-shrink: 0 !important;
-      position: absolute !important;
-      left: 20px !important;
-    }
-    
-    /* Mobile Hamburger Menu */
-    .mobile-menu-toggle {
-      display: none !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-      width: 40px !important;
-      height: 40px !important;
-      background: rgba(255, 255, 255, 0.15) !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      border-radius: 8px !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-      padding: 0 !important;
-      justify-self: end !important;
-    }
-    
-    .mobile-menu-toggle:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-    }
-    
-    .hamburger-line {
-      width: 20px !important;
-      height: 2px !important;
-      background: white !important;
-      margin: 2px 0 !important;
-      transition: 0.3s !important;
-      border-radius: 1px !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
-      transform: rotate(-45deg) translate(-4px, 4px) !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
-      opacity: 0 !important;
-    }
-    
-    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
-      transform: rotate(45deg) translate(-4px, -4px) !important;
-    }
-    
-    /* Side Menu Overlay */
-    .mobile-menu-overlay {
-      position: fixed !important;
-      top: 0 !important;
-      left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      background: rgba(0, 0, 0, 0.5) !important;
-      z-index: 1500 !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transition: all 0.3s ease !important;
-    }
-    
-    .mobile-menu-overlay.active {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    
-    /* Side Menu Panel */
-    .mobile-menu-panel {
-      position: fixed !important;
-      top: 0 !important;
-      left: -320px !important;
-      width: 320px !important;
-      height: 100% !important;
-      background: linear-gradient(180deg, #7a1b1b 0%, #b91c1c 100%) !important;
-      z-index: 1600 !important;
-      transition: left 0.3s ease !important;
-      overflow-y: auto !important;
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    .mobile-menu-panel.active {
-      left: 0 !important;
-    }
-    
-    /* Mobile menu activation via body class */
-    body.mobile-menu-open .mobile-menu-overlay {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-panel {
-      left: 0 !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px) !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(2) {
-      opacity: 0 !important;
-    }
-    
-    body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(3) {
-      transform: rotate(-45deg) translate(7px, -6px) !important;
-    }
-    
-    .mobile-menu-header {
-      padding: 20px !important;
-      background: rgba(0, 0, 0, 0.2) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-    }
-    
-    .mobile-menu-title {
-      color: white !important;
-      font-size: 18px !important;
-      font-weight: 700 !important;
-      margin: 0 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1px !important;
-    }
-    
-    .mobile-menu-close {
-      background: none !important;
-      border: none !important;
-      color: white !important;
-      font-size: 24px !important;
-      cursor: pointer !important;
-      padding: 5px !important;
-      line-height: 1 !important;
-    }
-    
-    .mobile-menu-content {
-      padding: 0 !important;
-    }
-    
-    .mobile-menu-section {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    .mobile-menu-section-title {
-      padding: 15px 20px !important;
-      color: white !important;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-      margin: 0 !important;
-      background: rgba(0, 0, 0, 0.1) !important;
-      cursor: pointer !important;
-      display: flex !important;
-      justify-content: space-between !important;
-      align-items: center !important;
-      transition: all 0.3s ease !important;
-      position: relative !important;
-    }
-    
-    .mobile-menu-section-title:hover {
-      background: rgba(0, 0, 0, 0.2) !important;
-      color: rgba(255, 255, 255, 0.95) !important;
-    }
-    
-    .mobile-menu-section-title::after {
-      content: '▼' !important;
-      font-size: 12px !important;
-      transition: transform 0.3s ease !important;
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-    
-    .mobile-menu-section.collapsed .mobile-menu-section-title::after {
-      transform: rotate(-90deg) !important;
-    }
-    
-    .mobile-menu-items {
-      max-height: 500px !important;
-      overflow: hidden !important;
-      transition: max-height 0.3s ease !important;
-    }
-    
-    .mobile-menu-section.collapsed .mobile-menu-items {
-      max-height: 0 !important;
-    }
-    
-    .mobile-menu-item {
-      display: block !important;
-      padding: 12px 20px 12px 40px !important;
-      color: rgba(255, 255, 255, 0.9) !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 400 !important;
-      transition: all 0.2s ease !important;
-      border-left: 3px solid transparent !important;
-    }
-    
-    .mobile-menu-item:hover, .mobile-menu-item.active {
-      background: rgba(255, 255, 255, 0.1) !important;
-      color: white !important;
-      border-left-color: white !important;
-      padding-left: 44px !important;
-    }
-    
-    /* Desktop Navigation - Hidden on Mobile */
-    .bar-inner {
-      display: flex !important;
-      align-items: center !important;
-      height: 100% !important;
-      justify-content: center !important;
-    }
-    
-    .nav {
-      display: flex !important;
-      align-items: center !important;
-      gap: 20px !important;
-      margin: 0 auto !important;
-    }
-    
-    /* Right side container for navigation button */
-    .header-right {
-      display: flex !important;
-      align-items: center !important;
-      position: absolute !important;
-      right: 20px !important;
-    }
-    
-    /* Navigation Button in Header */
-    .header-nav-button {
-      background: rgba(255, 255, 255, 0.15) !important;
-      color: white !important;
-      border: 2px solid rgba(255, 255, 255, 0.3) !important;
-      padding: 10px 16px !important;
-      border-radius: 8px !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      cursor: pointer !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 8px !important;
-      transition: all 0.3s ease !important;
-      text-transform: uppercase !important;
-      letter-spacing: 0.5px !important;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ren Internal - Engineering</title>
+    <link rel="stylesheet" href="style.css?v=15" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
-    .header-nav-button:hover {
-      background: rgba(255, 255, 255, 0.25) !important;
-      border-color: rgba(255, 255, 255, 0.5) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .header-nav-button.active {
-      background: rgba(255, 255, 255, 0.3) !important;
-      border-color: rgba(255, 255, 255, 0.6) !important;
-    }
-
-    .header-nav-arrow {
-      transition: transform 0.3s ease !important;
-      font-size: 10px !important;
-    }
-
-    .header-nav-button.active .header-nav-arrow {
-      transform: rotate(180deg) !important;
-    }
-
-    .header-nav-menu {
-      position: absolute !important;
-      top: 100% !important;
-      left: 0 !important;
-      background: linear-gradient(145deg, #7a1b1b, #b91c1c) !important;
-      border: 1px solid rgba(255, 255, 255, 0.2) !important;
-      border-radius: 8px !important;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
-      min-width: 200px !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transform: translateY(-10px) !important;
-      transition: all 0.3s ease !important;
-      z-index: 1100 !important;
-      margin-top: 8px !important;
-    }
-
-    .header-nav-menu.active {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateY(0) !important;
-    }
-
-    .header-nav-item {
-      display: block !important;
-      padding: 12px 16px !important;
-      color: rgba(255, 255, 255, 0.9) !important;
-      text-decoration: none !important;
-      font-size: 14px !important;
-      font-weight: 500 !important;
-      transition: all 0.2s ease !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-    }
-
-    .header-nav-item:last-child {
-      border-bottom: none !important;
-    }
-
-    .header-nav-item:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
-      color: white !important;
-      padding-left: 20px !important;
-    }
-    
-    /* Navigation divider */
-    .nav-divider {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.2);
-      margin: 8px 0;
-    }
-    
-    /* Scroll to top styling */
-    .scroll-to-top {
-      font-weight: 600 !important;
-      color: #1e293b !important;
-      background: rgba(255, 255, 255, 0.9) !important;
-    }
-    
-    .scroll-to-top:hover {
-      color: #0f172a !important;
-      background: rgba(255, 255, 255, 1) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
-    }
-    
-    /* Force container constraints with better responsive scaling */
-    main.content {
-      max-width: 1400px !important;
-      margin: 0 auto !important;
-      padding: 90px 20px 24px !important;
-      overflow-x: hidden !important;
-      background: transparent !important;
-    }
-    
-    .reports-container {
-      display: flex !important;
-      gap: 24px !important;
-      margin-top: 32px !important;
-    }
-    
-    .report-card {
-      flex: 1 !important;
-      min-width: 300px !important;
-      max-width: calc(50% - 12px) !important;
-      margin-bottom: 24px !important;
-    }
-    
-    /* Prevent iframe overflow */
-    .framecard {
-      overflow: hidden !important;
-      box-sizing: border-box !important;
-      background: transparent !important;
-      border: none !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      padding: 0 !important;
-    }
-    
-    /* Force proper iframe sizing - fill entire container */
-    iframe {
-      max-width: 100% !important;
-      box-sizing: border-box !important;
-      position: absolute !important;
-      top: 0 !important;
-      left: 0 !important;
-      right: 0 !important;
-      bottom: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      border: none !important;
-      border-radius: 0 !important;
-    }
-    
-    /* Ensure reports don't extend past their containers */
-    .top-report, .report-card {
-      box-sizing: border-box !important;
-      overflow: hidden !important;
-      background: transparent !important;
-    }
-
-    /* Much more aggressive responsive breakpoints */
-    @media (max-width: 1400px) {
-      main.content {
-        max-width: 1000px !important;
-        padding: 90px 10px 18px !important;
+    <!-- CSS for coming soon pages -->
+    <style>
+      /* Professional Background Styling */
+      html,
+      body {
+        background: #f1f5f9 !important;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       }
-      
-      .reports-container {
-        gap: 15px !important;
-        margin-top: 20px !important;
-      }
-    }
-
-    @media (max-width: 1200px) {
-      main.content {
-        max-width: 750px !important;
-        padding: 90px 8px 16px !important;
-      }
-      
-      .reports-container {
-        gap: 12px !important;
-        margin-top: 16px !important;
-      }
-      
-      .report-card {
-        min-width: 200px !important;
-      }
-    }
-
-    /* Responsive adjustments for main header */
-    @media (max-width: 1024px) {
+      /* Professional Main Header Styling */
       .topbar {
-        position: static !important;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      main.content {
-        max-width: 650px !important;
-        padding: 20px 6px 14px !important;
-      }
-      
-      .reports-container {
-        gap: 10px !important;
-        margin-top: 14px !important;
-      }
-      
-      .report-card {
-        min-width: 180px !important;
-      }
-    }
-
-    @media (max-width: 900px) {
-      main.content {
-        max-width: 600px !important;
-        padding: 90px 6px 12px !important;
-      }
-      
-      .reports-container {
-        gap: 10px !important;
-        margin-top: 12px !important;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      /* Mobile and tablet portrait - force all reports to stack */
-      main.content {
-        max-width: 100% !important;
-        padding: 20px 10px 14px !important;
-      }
-      
-      .reports-container {
-        flex-direction: column !important;
-        gap: 12px !important;
-        margin-top: 14px !important;
+        background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+        border-bottom: 3px solid #5a1616 !important;
+        padding: 0 20px !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 1000 !important;
         width: 100% !important;
-      }
-      
-      .report-card {
-        max-width: 100% !important;
-        min-width: auto !important;
-        width: 100% !important;
-        flex: none !important;
-        margin-bottom: 12px !important;
-      }
-      
-      /* Ensure top report also stacks properly */
-      .top-report {
-        width: 100% !important;
-        margin-bottom: 12px !important;
-      }
-      
-      .toc-container {
-        margin: 10px 0 14px 0;
-      }
-      
-      .toc-button {
-        min-width: 180px;
-        padding: 8px 12px;
-        font-size: 14px;
-      }
-      
-      .toc-menu {
-        min-width: 200px;
-      }
-      
-      .toc-item {
-        font-size: 14px;
-        padding: 6px 10px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      /* Small mobile phones - ensure vertical stacking */
-      main.content {
-        padding: 50px 8px 10px !important;
-      }
-      
-      .reports-container {
-        gap: 10px !important;
-        margin-top: 10px !important;
-        flex-direction: column !important;
+        height: 70px !important;
         display: flex !important;
-      }
-      
-      .report-card {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: auto !important;
-        flex: none !important;
-        display: block !important;
-      }
-      
-      .top-report {
-        width: 100% !important;
-        display: block !important;
-        margin-bottom: 10px !important;
-      }
-    }
-    
-    /* Professional header responsive adjustments */
-    @media (max-width: 768px) {
-      .page-header {
-        padding: 18px 20px !important;
-        margin-bottom: 24px !important;
-        border-radius: 12px !important;
-      }
-      
-      .header-content {
-        gap: 16px !important;
-      }
-      
-      .page-title {
-        font-size: 26px !important;
-        letter-spacing: 1.2px !important;
-        line-height: 1.2 !important;
-      }
-      
-      .page-subtitle {
-        font-size: 14px !important;
-        line-height: 1.3 !important;
-      }
-      
-      .header-nav-button {
-        padding: 8px 12px !important;
-        font-size: 12px !important;
-      }
-      
-      .header-nav-menu {
-        right: 50% !important;
-        transform: translateX(50%) translateY(-10px) !important;
-        min-width: 200px !important;
+        justify-content: center !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
       }
 
-      .header-nav-menu.show {
-        transform: translateX(50%) translateY(0) !important;
+      .topbar::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
       }
-      
-      .content {
-        padding: 50px 12px 20px !important;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .page-header {
-        padding: 16px 16px !important;
-        margin-bottom: 20px !important;
-        border-radius: 8px !important;
-      }
-      
-      .page-title {
-        font-size: 22px !important;
-        letter-spacing: 1px !important;
-        line-height: 1.1 !important;
-      }
-      
-      .page-subtitle {
-        font-size: 13px !important;
-        line-height: 1.3 !important;
-      }
-      
-      .content {
-        padding: 50px 8px 16px !important;
-      }
-      
-      .header-nav-menu {
-        min-width: 180px !important;
-      }
-    }
-    
-    @media (max-width: 360px) {
-      .page-header {
-        padding: 14px 12px !important;
-        margin-bottom: 16px !important;
-      }
-      
-      .page-title {
-        font-size: 20px !important;
-        letter-spacing: 0.8px !important;
-      }
-      
-      .page-subtitle {
-        font-size: 12px !important;
-      }
-      
-      .content {
-        padding: 50px 6px 14px !important;
-      }
-    }
-    
-    .menu {
-      display: flex !important;
-      list-style: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      gap: 0 !important;
-      align-items: center !important;
-      height: 100% !important;
-    }
-    
-    .menu li {
-      position: relative !important;
-      height: 100% !important;
-      display: flex !important;
-      align-items: center !important;
-    }
-    
-    .toplink {
-      display: block !important;
-      padding: 18px 28px !important;
-      color: #ffffff !important;
-      text-decoration: none !important;
-      font-size: 16px !important;
-      font-weight: 600 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      text-transform: uppercase !important;
-      letter-spacing: 1px !important;
-      transition: all 0.3s ease !important;
-      border-right: 1px solid rgba(255,255,255,0.1) !important;
-      position: relative !important;
-      overflow: hidden !important;
-    }
-    
-    .toplink::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    
-    .toplink:hover::before {
-      opacity: 1;
-    }
-    
-    .toplink:hover {
-      background: rgba(255,255,255,0.1) !important;
-      transform: translateY(-1px) !important;
-      box-shadow: inset 0 -3px 0 rgba(255,255,255,0.3) !important;
-    }
-    
-    .toplink.active {
-      background: rgba(255,255,255,0.15) !important;
-      box-shadow: inset 0 -3px 0 #ffffff !important;
-      font-weight: 700 !important;
-    }
-    
-    /* Enhanced Dropdown Styling */
-    .sub {
-      position: absolute !important;
-      top: 100% !important;
-      left: 0 !important;
-      transform: translateY(-10px) !important;
-      background: #ffffff !important;
-      min-width: 200px !important;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-      border-radius: 0 0 8px 8px !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-      transition: all 0.3s ease !important;
-      z-index: 1000 !important;
-      border: 1px solid rgba(0,0,0,0.1) !important;
-      border-top: none !important;
-      list-style: none !important;
-      padding: 8px 0 !important;
-      margin: 0 !important;
-      overflow: hidden !important;
-    }
-    
-    .has-sub {
-      position: relative !important;
-    }
-    
-    .has-sub:hover .sub {
-      opacity: 1 !important;
-      visibility: visible !important;
-      transform: translateY(0) !important;
-    }
-    
-    .sub li {
-      margin: 0 !important;
-      width: 100% !important;
-    }
-    
-    .sub a {
-      display: block !important;
-      padding: 14px 24px !important;
-      color: #7a1b1b !important;
-      text-decoration: none !important;
-      font-size: 15px !important;
-      font-weight: 500 !important;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
-      text-transform: none !important;
-      letter-spacing: 0.5px !important;
-      transition: all 0.2s ease !important;
-      border-left: 4px solid transparent !important;
-      position: relative !important;
-      margin: 0 !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      white-space: nowrap !important;
-    }
-    
-    .sub a:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
-      color: #5a1616 !important;
-      border-left-color: #b91c1c !important;
-      padding-left: 28px !important;
-      width: 100% !important;
-    }
-    
-    .sub a.active {
-      background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
-      color: #5a1616 !important;
-      border-left-color: #b91c1c !important;
-      font-weight: 600 !important;
-      width: 100% !important;
-    }
-    
-    /* Responsive adjustments for main header */
-    @media (max-width: 1024px) {
-      .topbar {
-        position: static !important;
-        height: 50px !important;
-        padding: 0 10px !important;
-      }
-      
+
       .brand {
-        font-size: 16px !important;
-        padding: 12px 10px !important;
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+        color: #ffffff !important;
+        padding: 16px 0 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.2px !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+        flex-shrink: 0 !important;
+        position: absolute !important;
+        left: 20px !important;
+      }
+
+      /* Mobile Hamburger Menu */
+      .mobile-menu-toggle {
+        display: none !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        padding: 0 !important;
+        justify-self: end !important;
+      }
+
+      .mobile-menu-toggle:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+      }
+
+      .hamburger-line {
+        width: 20px !important;
+        height: 2px !important;
+        background: white !important;
+        margin: 2px 0 !important;
+        transition: 0.3s !important;
+        border-radius: 1px !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: rotate(-45deg) translate(-4px, 4px) !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+      }
+
+      .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: rotate(45deg) translate(-4px, -4px) !important;
+      }
+
+      /* Side Menu Overlay */
+      .mobile-menu-overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: rgba(0, 0, 0, 0.5) !important;
+        z-index: 1500 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+      }
+
+      .mobile-menu-overlay.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      /* Side Menu Panel */
+      .mobile-menu-panel {
+        position: fixed !important;
+        top: 0 !important;
+        left: -320px !important;
+        width: 320px !important;
+        height: 100% !important;
+        background: linear-gradient(180deg, #7a1b1b 0%, #b91c1c 100%) !important;
+        z-index: 1600 !important;
+        transition: left 0.3s ease !important;
+        overflow-y: auto !important;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3) !important;
+      }
+
+      .mobile-menu-panel.active {
+        left: 0 !important;
+      }
+
+      /* Mobile menu activation via body class */
+      body.mobile-menu-open .mobile-menu-overlay {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-panel {
+        left: 0 !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px) !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(2) {
+        opacity: 0 !important;
+      }
+
+      body.mobile-menu-open .mobile-menu-toggle .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px) !important;
+      }
+
+      .mobile-menu-header {
+        padding: 20px !important;
+        background: rgba(0, 0, 0, 0.2) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+      }
+
+      .mobile-menu-title {
+        color: white !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+        text-transform: uppercase !important;
         letter-spacing: 1px !important;
       }
-      
-      /* Show mobile menu toggle on mobile */
-      .mobile-menu-toggle {
+
+      .mobile-menu-close {
+        background: none !important;
+        border: none !important;
+        color: white !important;
+        font-size: 24px !important;
+        cursor: pointer !important;
+        padding: 5px !important;
+        line-height: 1 !important;
+      }
+
+      .mobile-menu-content {
+        padding: 0 !important;
+      }
+
+      .mobile-menu-section {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      .mobile-menu-section-title {
+        padding: 15px 20px !important;
+        color: white !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        margin: 0 !important;
+        background: rgba(0, 0, 0, 0.1) !important;
+        cursor: pointer !important;
         display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        transition: all 0.3s ease !important;
+        position: relative !important;
       }
-      
-      /* Hide desktop navigation on mobile */
+
+      .mobile-menu-section-title:hover {
+        background: rgba(0, 0, 0, 0.2) !important;
+        color: rgba(255, 255, 255, 0.95) !important;
+      }
+
+      .mobile-menu-section-title::after {
+        content: "▼" !important;
+        font-size: 12px !important;
+        transition: transform 0.3s ease !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+      }
+
+      .mobile-menu-section.collapsed .mobile-menu-section-title::after {
+        transform: rotate(-90deg) !important;
+      }
+
+      .mobile-menu-items {
+        max-height: 500px !important;
+        overflow: hidden !important;
+        transition: max-height 0.3s ease !important;
+      }
+
+      .mobile-menu-section.collapsed .mobile-menu-items {
+        max-height: 0 !important;
+      }
+
+      .mobile-menu-item {
+        display: block !important;
+        padding: 12px 20px 12px 40px !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 400 !important;
+        transition: all 0.2s ease !important;
+        border-left: 3px solid transparent !important;
+      }
+
+      .mobile-menu-item:hover,
+      .mobile-menu-item.active {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        border-left-color: white !important;
+        padding-left: 44px !important;
+      }
+
+      /* Desktop Navigation - Hidden on Mobile */
+      .bar-inner {
+        display: flex !important;
+        align-items: center !important;
+        height: 100% !important;
+        justify-content: center !important;
+      }
+
       .nav {
-        display: none !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 20px !important;
+        margin: 0 auto !important;
       }
-      
-      /* Hide table of contents dropdown on mobile */
-      .nav-dropdown {
-        display: none !important;
+
+      /* Right side container for navigation button */
+      .header-right {
+        display: flex !important;
+        align-items: center !important;
+        position: absolute !important;
+        right: 20px !important;
       }
-      
-      .toplink {
-        padding: 14px 16px !important;
+
+      /* Navigation Button in Header */
+      .header-nav-button {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: white !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        padding: 10px 16px !important;
+        border-radius: 8px !important;
         font-size: 14px !important;
+        font-weight: 600 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.3s ease !important;
+        text-transform: uppercase !important;
         letter-spacing: 0.5px !important;
       }
-      
-      .sub {
-        min-width: 160px !important;
+
+      .header-nav-button:hover {
+        background: rgba(255, 255, 255, 0.25) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
       }
-      
-      .sub a {
-        padding: 10px 16px !important;
+
+      .header-nav-button.active {
+        background: rgba(255, 255, 255, 0.3) !important;
+        border-color: rgba(255, 255, 255, 0.6) !important;
+      }
+
+      .header-nav-arrow {
+        transition: transform 0.3s ease !important;
+        font-size: 10px !important;
+      }
+
+      .header-nav-button.active .header-nav-arrow {
+        transform: rotate(180deg) !important;
+      }
+
+      .header-nav-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        background: linear-gradient(145deg, #7a1b1b, #b91c1c) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        min-width: 200px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transform: translateY(-10px) !important;
+        transition: all 0.3s ease !important;
+        z-index: 1100 !important;
+        margin-top: 8px !important;
+      }
+
+      .header-nav-menu.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+      }
+
+      .header-nav-item {
+        display: block !important;
+        padding: 12px 16px !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        text-decoration: none !important;
         font-size: 14px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
       }
-    }
-    
-    @media (max-width: 480px) {
-      .brand {
-        font-size: 16px !important;
-        padding: 10px 12px !important;
-      }
-      
-      .toplink {
-        padding: 12px 12px !important;
-        font-size: 13px !important;
-      }
-      
-      .sub a {
-        padding: 8px 12px !important;
-        font-size: 13px !important;
-      }
-    }
 
-    /* Override any iframe-related styling for coming soon pages */
-    /* Removed conflicting .content rule - using responsive styles from above */
-    
-    /* Ensure coming soon section is immediately visible */
-    #coming-soon-section {
-      margin-top: 20px !important;
-      margin-bottom: 20px !important;
-    }
-    
-    /* Reset any potential height issues */
-    .framecard.coming-soon {
-      min-height: auto !important;
-      height: auto !important;
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-      position: static !important;
-    }
-    
-    /* Remove the 16:9 aspect ratio for coming soon cards */
-    .framecard.coming-soon::before {
-      display: none !important;
-      padding-top: 0 !important;
-    }
-    
-    /* Table of Contents Dropdown Styles */
-    .toc-container {
-      margin: 16px 0 20px 0;
-      position: relative;
-      display: inline-block;
-    }
-    
-    .toc-dropdown {
-      position: relative;
-    }
-    
-    .toc-button {
-      background: var(--card);
-      color: var(--link);
-      border: 1px solid var(--border);
-      padding: 10px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,.08);
-      transition: all 0.2s ease;
-      min-width: 200px;
-      justify-content: space-between;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    .toc-button:hover {
-      background: #ffe5e5;
-      box-shadow: 0 4px 12px rgba(0,0,0,.12);
-    }
-    
-    .toc-arrow {
-      transition: transform 0.2s ease;
-      font-size: 12px;
-      color: var(--link);
-    }
-    
-    .toc-button.active .toc-arrow {
-      transform: rotate(180deg);
-    }
-    
-    .toc-menu {
-      position: absolute;
-      top: calc(100% + 2px);
-      left: 0;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,.12);
-      min-width: 220px;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-4px);
-      transition: all 0.2s ease;
-      padding: 8px 0;
-    }
-    
-    .toc-menu.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    
-    .toc-item {
-      display: block;
-      padding: 8px 12px;
-      color: var(--link);
-      text-decoration: none;
-      transition: background 0.2s ease;
-      font-size: 16px;
-      font-weight: 600;
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    
-    .toc-item:hover {
-      background: #ffe5e5;
-    }
-    
-    /* Enhanced placeholder styling */
-    .coming-soon {
-      background: linear-gradient(135deg, #fff 0%, #ffe5e5 100%);
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 60px 40px;
-      text-align: center;
-      margin: 20px 0;
-      box-shadow: 0 4px 15px rgba(185, 28, 28, 0.1);
-    }
-    
-    .coming-soon h3 {
-      color: #7a1b1b;
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .coming-soon p {
-      color: #7a1b1b;
-      font-size: 18px;
-      line-height: 1.6;
-      margin: 0;
-    }
-    
-    @media (max-width: 768px) {
+      .header-nav-item:last-child {
+        border-bottom: none !important;
+      }
+
+      .header-nav-item:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        padding-left: 20px !important;
+      }
+
+      /* Navigation divider */
+      .nav-divider {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.2);
+        margin: 8px 0;
+      }
+
+      /* Scroll to top styling */
+      .scroll-to-top {
+        font-weight: 600 !important;
+        color: #1e293b !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+      }
+
+      .scroll-to-top:hover {
+        color: #0f172a !important;
+        background: rgba(255, 255, 255, 1) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Force container constraints with better responsive scaling */
+      main.content {
+        max-width: 1400px !important;
+        margin: 0 auto !important;
+        padding: 90px 20px 24px !important;
+        overflow-x: hidden !important;
+        background: transparent !important;
+      }
+
       .reports-container {
-        flex-direction: column !important;
-        gap: 20px !important;
+        display: flex !important;
+        gap: 24px !important;
+        margin-top: 32px !important;
       }
+
       .report-card {
+        flex: 1 !important;
+        min-width: 300px !important;
+        max-width: calc(50% - 12px) !important;
+        margin-bottom: 24px !important;
+      }
+
+      /* Prevent iframe overflow */
+      .framecard {
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+
+      /* Force proper iframe sizing - fill entire container */
+      iframe {
         max-width: 100% !important;
-        min-width: auto !important;
+        box-sizing: border-box !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        border-radius: 0 !important;
       }
-      .coming-soon {
-        padding: 40px 20px;
+
+      /* Ensure reports don't extend past their containers */
+      .top-report,
+      .report-card {
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        background: transparent !important;
       }
-      .coming-soon h3 {
-        font-size: 24px;
+
+      /* Much more aggressive responsive breakpoints */
+      @media (max-width: 1400px) {
+        main.content {
+          max-width: 1000px !important;
+          padding: 90px 10px 18px !important;
+        }
+
+        .reports-container {
+          gap: 15px !important;
+          margin-top: 20px !important;
+        }
       }
-      .coming-soon p {
+
+      @media (max-width: 1200px) {
+        main.content {
+          max-width: 750px !important;
+          padding: 90px 8px 16px !important;
+        }
+
+        .reports-container {
+          gap: 12px !important;
+          margin-top: 16px !important;
+        }
+
+        .report-card {
+          min-width: 200px !important;
+        }
+      }
+
+      /* Responsive adjustments for main header */
+      @media (max-width: 1024px) {
+        .topbar {
+          position: static !important;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        main.content {
+          max-width: 650px !important;
+          padding: 20px 6px 14px !important;
+        }
+
+        .reports-container {
+          gap: 10px !important;
+          margin-top: 14px !important;
+        }
+
+        .report-card {
+          min-width: 180px !important;
+        }
+      }
+
+      @media (max-width: 900px) {
+        main.content {
+          max-width: 600px !important;
+          padding: 90px 6px 12px !important;
+        }
+
+        .reports-container {
+          gap: 10px !important;
+          margin-top: 12px !important;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        /* Mobile and tablet portrait - force all reports to stack */
+        main.content {
+          max-width: 100% !important;
+          padding: 20px 10px 14px !important;
+        }
+
+        .reports-container {
+          flex-direction: column !important;
+          gap: 12px !important;
+          margin-top: 14px !important;
+          width: 100% !important;
+        }
+
+        .report-card {
+          max-width: 100% !important;
+          min-width: auto !important;
+          width: 100% !important;
+          flex: none !important;
+          margin-bottom: 12px !important;
+        }
+
+        /* Ensure top report also stacks properly */
+        .top-report {
+          width: 100% !important;
+          margin-bottom: 12px !important;
+        }
+
+        .toc-container {
+          margin: 10px 0 14px 0;
+        }
+
+        .toc-button {
+          min-width: 180px;
+          padding: 8px 12px;
+          font-size: 14px;
+        }
+
+        .toc-menu {
+          min-width: 200px;
+        }
+
+        .toc-item {
+          font-size: 14px;
+          padding: 6px 10px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        /* Small mobile phones - ensure vertical stacking */
+        main.content {
+          padding: 50px 8px 10px !important;
+        }
+
+        .reports-container {
+          gap: 10px !important;
+          margin-top: 10px !important;
+          flex-direction: column !important;
+          display: flex !important;
+        }
+
+        .report-card {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-width: auto !important;
+          flex: none !important;
+          display: block !important;
+        }
+
+        .top-report {
+          width: 100% !important;
+          display: block !important;
+          margin-bottom: 10px !important;
+        }
+      }
+
+      /* Professional header responsive adjustments */
+      @media (max-width: 768px) {
+        .page-header {
+          padding: 18px 20px !important;
+          margin-bottom: 24px !important;
+          border-radius: 12px !important;
+        }
+
+        .header-content {
+          gap: 16px !important;
+        }
+
+        .page-title {
+          font-size: 26px !important;
+          letter-spacing: 1.2px !important;
+          line-height: 1.2 !important;
+        }
+
+        .page-subtitle {
+          font-size: 14px !important;
+          line-height: 1.3 !important;
+        }
+
+        .header-nav-button {
+          padding: 8px 12px !important;
+          font-size: 12px !important;
+        }
+
+        .header-nav-menu {
+          right: 50% !important;
+          transform: translateX(50%) translateY(-10px) !important;
+          min-width: 200px !important;
+        }
+
+        .header-nav-menu.show {
+          transform: translateX(50%) translateY(0) !important;
+        }
+
+        .content {
+          padding: 50px 12px 20px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-header {
+          padding: 16px 16px !important;
+          margin-bottom: 20px !important;
+          border-radius: 8px !important;
+        }
+
+        .page-title {
+          font-size: 22px !important;
+          letter-spacing: 1px !important;
+          line-height: 1.1 !important;
+        }
+
+        .page-subtitle {
+          font-size: 13px !important;
+          line-height: 1.3 !important;
+        }
+
+        .content {
+          padding: 50px 8px 16px !important;
+        }
+
+        .header-nav-menu {
+          min-width: 180px !important;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .page-header {
+          padding: 14px 12px !important;
+          margin-bottom: 16px !important;
+        }
+
+        .page-title {
+          font-size: 20px !important;
+          letter-spacing: 0.8px !important;
+        }
+
+        .page-subtitle {
+          font-size: 12px !important;
+        }
+
+        .content {
+          padding: 50px 6px 14px !important;
+        }
+      }
+
+      .menu {
+        display: flex !important;
+        list-style: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        align-items: center !important;
+        height: 100% !important;
+      }
+
+      .menu li {
+        position: relative !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      .toplink {
+        display: block !important;
+        padding: 18px 28px !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1px !important;
+        transition: all 0.3s ease !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+      }
+
+      .toplink::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .toplink:hover::before {
+        opacity: 1;
+      }
+
+      .toplink:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: inset 0 -3px 0 rgba(255, 255, 255, 0.3) !important;
+      }
+
+      .toplink.active {
+        background: rgba(255, 255, 255, 0.15) !important;
+        box-shadow: inset 0 -3px 0 #ffffff !important;
+        font-weight: 700 !important;
+      }
+
+      /* Enhanced Dropdown Styling */
+      .sub {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        transform: translateY(-10px) !important;
+        background: #ffffff !important;
+        min-width: 200px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        border-radius: 0 0 8px 8px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        transition: all 0.3s ease !important;
+        z-index: 1000 !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        border-top: none !important;
+        list-style: none !important;
+        padding: 8px 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+      }
+
+      .has-sub {
+        position: relative !important;
+      }
+
+      .has-sub:hover .sub {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+      }
+
+      .sub li {
+        margin: 0 !important;
+        width: 100% !important;
+      }
+
+      .sub a {
+        display: block !important;
+        padding: 14px 24px !important;
+        color: #7a1b1b !important;
+        text-decoration: none !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
+        text-transform: none !important;
+        letter-spacing: 0.5px !important;
+        transition: all 0.2s ease !important;
+        border-left: 4px solid transparent !important;
+        position: relative !important;
+        margin: 0 !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        white-space: nowrap !important;
+      }
+
+      .sub a:hover {
+        background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+        color: #5a1616 !important;
+        border-left-color: #b91c1c !important;
+        padding-left: 28px !important;
+        width: 100% !important;
+      }
+
+      .sub a.active {
+        background: linear-gradient(135deg, #ffe5e5, #ffd6d6) !important;
+        color: #5a1616 !important;
+        border-left-color: #b91c1c !important;
+        font-weight: 600 !important;
+        width: 100% !important;
+      }
+
+      /* Responsive adjustments for main header */
+      @media (max-width: 1024px) {
+        .topbar {
+          position: static !important;
+          height: 50px !important;
+          padding: 0 10px !important;
+        }
+
+        .brand {
+          font-size: 16px !important;
+          padding: 12px 10px !important;
+          letter-spacing: 1px !important;
+        }
+
+        /* Show mobile menu toggle on mobile */
+        .mobile-menu-toggle {
+          display: flex !important;
+        }
+
+        /* Hide desktop navigation on mobile */
+        .nav {
+          display: none !important;
+        }
+
+        /* Hide table of contents dropdown on mobile */
+        .nav-dropdown {
+          display: none !important;
+        }
+
+        .toplink {
+          padding: 14px 16px !important;
+          font-size: 14px !important;
+          letter-spacing: 0.5px !important;
+        }
+
+        .sub {
+          min-width: 160px !important;
+        }
+
+        .sub a {
+          padding: 10px 16px !important;
+          font-size: 14px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .brand {
+          font-size: 16px !important;
+          padding: 10px 12px !important;
+        }
+
+        .toplink {
+          padding: 12px 12px !important;
+          font-size: 13px !important;
+        }
+
+        .sub a {
+          padding: 8px 12px !important;
+          font-size: 13px !important;
+        }
+      }
+
+      /* Override any iframe-related styling for coming soon pages */
+      /* Removed conflicting .content rule - using responsive styles from above */
+
+      /* Ensure coming soon section is immediately visible */
+      #coming-soon-section {
+        margin-top: 20px !important;
+        margin-bottom: 20px !important;
+      }
+
+      /* Reset any potential height issues */
+      .framecard.coming-soon {
+        min-height: auto !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        position: static !important;
+      }
+
+      /* Remove the 16:9 aspect ratio for coming soon cards */
+      .framecard.coming-soon::before {
+        display: none !important;
+        padding-top: 0 !important;
+      }
+
+      /* Table of Contents Dropdown Styles */
+      .toc-container {
+        margin: 16px 0 20px 0;
+        position: relative;
+        display: inline-block;
+      }
+
+      .toc-dropdown {
+        position: relative;
+      }
+
+      .toc-button {
+        background: var(--card);
+        color: var(--link);
+        border: 1px solid var(--border);
+        padding: 10px 16px;
+        border-radius: 10px;
+        cursor: pointer;
         font-size: 16px;
-      }
-    }
-
-    /* Professional Header Styling */
-    .page-header {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
-      border: 2px solid rgba(185, 28, 28, 0.2);
-      border-radius: 16px;
-      padding: 24px 32px;
-      margin-bottom: 16px;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: visible;
-    }
-    
-    .header-content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-    }
-    
-    .title-section {
-      text-align: center;
-    }
-    
-    .page-title {
-      font-size: 38px;
-      font-weight: 700;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      color: #7a1b1b;
-      margin: 0 0 8px 0;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1.1;
-    }
-    
-    .page-subtitle {
-      font-size: 17px;
-      color: #9f2121;
-      margin: 0;
-      font-weight: 500;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      opacity: 0.85;
-      letter-spacing: 0.5px;
-      line-height: 1.4;
-    }
-
-    /* Header Navigation Styling */
-    .header-nav {
-      position: relative;
-    }
-
-    .nav-dropdown {
-      position: relative;
-    }
-
-    .nav-button {
-      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(122, 27, 27, 0.2);
-    }
-
-    .nav-button:hover {
-      background: linear-gradient(135deg, #8b2020, #c22424);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(122, 27, 27, 0.3);
-    }
-
-    .nav-button.active {
-      background: linear-gradient(135deg, #8b2020, #c22424);
-    }
-
-    .nav-arrow {
-      transition: transform 0.3s ease;
-      font-size: 12px;
-    }
-
-    .nav-button.active .nav-arrow {
-      transform: rotate(180deg);
-    }
-
-    .nav-menu {
-      position: absolute;
-      top: calc(100% + 8px);
-      right: 0;
-      background: white;
-      min-width: 220px;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      border: 1px solid rgba(185, 28, 28, 0.1);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      overflow: hidden;
-    }
-
-    .nav-menu.show {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .nav-item {
-      display: block;
-      padding: 12px 20px;
-      color: #7a1b1b;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      transition: all 0.2s ease;
-      border-bottom: 1px solid rgba(185, 28, 28, 0.1);
-    }
-
-    .nav-item:last-child {
-      border-bottom: none;
-    }
-
-    .nav-item:hover {
-      background: linear-gradient(135deg, #ffe5e5, #ffcccc);
-      color: #5a1515;
-      padding-left: 24px;
-    }
-
-    /* Coming Soon Card Styling */
-    .coming-soon-card {
-      background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
-      border: 2px solid var(--accent);
-      border-radius: 16px;
-      padding: 40px 32px;
-      margin: 32px 0;
-      box-shadow: 0 8px 24px rgba(185, 28, 28, 0.08);
-      text-align: center;
-      min-height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .coming-soon-content h3 {
-      font-size: 32px;
-      font-weight: 700;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      color: #7a1b1b;
-      margin: 0 0 16px 0;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .coming-soon-content p {
-      font-size: 18px;
-      color: #9f2121;
-      margin: 0;
-      font-weight: 500;
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      line-height: 1.6;
-      max-width: 600px;
-    }
-    
-    /* Professional header responsive adjustments */
-    @media (max-width: 768px) {
-      .page-header {
-        padding: 20px 16px;
-        margin-bottom: 24px;
-      }
-      
-      .header-content {
-        flex-direction: column;
+        font-weight: 600;
+        display: flex;
         align-items: center;
-        gap: 16px;
-        text-align: center;
-      }
-      
-      .page-title {
-        font-size: 28px;
-        letter-spacing: 1.5px;
-      }
-      
-      .page-subtitle {
-        font-size: 15px;
-        margin-bottom: 16px;
+        gap: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        transition: all 0.2s ease;
+        min-width: 200px;
+        justify-content: space-between;
+        font-family: Arial, Helvetica, sans-serif;
       }
 
-      .nav-menu {
-        right: 50%;
-        transform: translateX(50%) translateY(-10px);
+      .toc-button:hover {
+        background: #ffe5e5;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
       }
 
-      .nav-menu.show {
-        transform: translateX(50%) translateY(0);
+      .toc-arrow {
+        transition: transform 0.2s ease;
+        font-size: 12px;
+        color: var(--link);
       }
 
-      .coming-soon-card {
-        padding: 32px 20px;
-        margin: 24px 0;
+      .toc-button.active .toc-arrow {
+        transform: rotate(180deg);
       }
 
-      .coming-soon-content h3 {
-        font-size: 24px;
+      .toc-menu {
+        position: absolute;
+        top: calc(100% + 2px);
+        left: 0;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        min-width: 220px;
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4px);
+        transition: all 0.2s ease;
+        padding: 8px 0;
       }
 
-      .coming-soon-content p {
+      .toc-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .toc-item {
+        display: block;
+        padding: 8px 12px;
+        color: var(--link);
+        text-decoration: none;
+        transition: background 0.2s ease;
         font-size: 16px;
+        font-weight: 600;
+        font-family: Arial, Helvetica, sans-serif;
       }
-    }
-    
-    @media (max-width: 480px) {
-      .page-header {
-        padding: 16px 12px;
+
+      .toc-item:hover {
+        background: #ffe5e5;
       }
-      
-      .page-title {
-        font-size: 24px;
+
+      /* Enhanced placeholder styling */
+      .coming-soon {
+        background: linear-gradient(135deg, #fff 0%, #ffe5e5 100%);
+        border: 2px solid var(--accent);
+        border-radius: 12px;
+        padding: 60px 40px;
+        text-align: center;
+        margin: 20px 0;
+        box-shadow: 0 4px 15px rgba(185, 28, 28, 0.1);
+      }
+
+      .coming-soon h3 {
+        color: #7a1b1b;
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
         letter-spacing: 1px;
       }
-      
+
+      .coming-soon p {
+        color: #7a1b1b;
+        font-size: 18px;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      @media (max-width: 768px) {
+        .reports-container {
+          flex-direction: column !important;
+          gap: 20px !important;
+        }
+        .report-card {
+          max-width: 100% !important;
+          min-width: auto !important;
+        }
+        .coming-soon {
+          padding: 40px 20px;
+        }
+        .coming-soon h3 {
+          font-size: 24px;
+        }
+        .coming-soon p {
+          font-size: 16px;
+        }
+      }
+
+      /* Professional Header Styling */
+      .page-header {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 229, 229, 0.9) 100%);
+        border: 2px solid rgba(185, 28, 28, 0.2);
+        border-radius: 16px;
+        padding: 24px 32px;
+        margin-bottom: 16px;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: visible;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .title-section {
+        text-align: center;
+      }
+
+      .page-title {
+        font-size: 38px;
+        font-weight: 700;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        color: #7a1b1b;
+        margin: 0 0 8px 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.1;
+      }
+
       .page-subtitle {
-        font-size: 14px;
+        font-size: 17px;
+        color: #9f2121;
+        margin: 0;
+        font-weight: 500;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        opacity: 0.85;
+        letter-spacing: 0.5px;
+        line-height: 1.4;
+      }
+
+      /* Header Navigation Styling */
+      .header-nav {
+        position: relative;
+      }
+
+      .nav-dropdown {
+        position: relative;
       }
 
       .nav-button {
-        padding: 10px 16px;
-        font-size: 14px;
+        background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(122, 27, 27, 0.2);
       }
 
+      .nav-button:hover {
+        background: linear-gradient(135deg, #8b2020, #c22424);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(122, 27, 27, 0.3);
+      }
+
+      .nav-button.active {
+        background: linear-gradient(135deg, #8b2020, #c22424);
+      }
+
+      .nav-arrow {
+        transition: transform 0.3s ease;
+        font-size: 12px;
+      }
+
+      .nav-button.active .nav-arrow {
+        transform: rotate(180deg);
+      }
+
+      .nav-menu {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        background: white;
+        min-width: 220px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        border: 1px solid rgba(185, 28, 28, 0.1);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        overflow: hidden;
+      }
+
+      .nav-menu.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .nav-item {
+        display: block;
+        padding: 12px 20px;
+        color: #7a1b1b;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        transition: all 0.2s ease;
+        border-bottom: 1px solid rgba(185, 28, 28, 0.1);
+      }
+
+      .nav-item:last-child {
+        border-bottom: none;
+      }
+
+      .nav-item:hover {
+        background: linear-gradient(135deg, #ffe5e5, #ffcccc);
+        color: #5a1515;
+        padding-left: 24px;
+      }
+
+      /* Coming Soon Card Styling */
       .coming-soon-card {
-        padding: 24px 16px;
+        background: linear-gradient(135deg, #ffffff 0%, #ffe5e5 100%);
+        border: 2px solid var(--accent);
+        border-radius: 16px;
+        padding: 40px 32px;
+        margin: 32px 0;
+        box-shadow: 0 8px 24px rgba(185, 28, 28, 0.08);
+        text-align: center;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .coming-soon-content h3 {
-        font-size: 20px;
+        font-size: 32px;
+        font-weight: 700;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        color: #7a1b1b;
+        margin: 0 0 16px 0;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
       .coming-soon-content p {
-        font-size: 14px;
+        font-size: 18px;
+        color: #9f2121;
+        margin: 0;
+        font-weight: 500;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        line-height: 1.6;
+        max-width: 600px;
       }
-    }
-    
-    /* Top of Page Button */
-    .top-of-page-btn {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      background: linear-gradient(135deg, #7a1b1b, #b91c1c);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(122, 27, 27, 0.3);
-      transition: all 0.3s ease;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .top-of-page-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(122, 27, 27, 0.4);
-    }
-  </style>
-</head>
-<body>
 
-  <!-- Top Navigation Bar -->
-  <header class="topbar">
-    <div class="brand">Ren Internal</div>
-    
-    <!-- Desktop Navigation -->
-    <div class="bar-inner">
-      <nav class="nav" aria-label="Main">
-        <ul class="menu">
-          <!-- TV Reports -->
-          <li class="has-sub">
-            <a href="#" class="toplink">TV Reports</a>
-            <ul class="sub">
-              <li><a href="index.html">OTD</a></li>
-              <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
-              <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
-              <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
-              <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
-            </ul>
-          </li>
+      /* Professional header responsive adjustments */
+      @media (max-width: 768px) {
+        .page-header {
+          padding: 20px 16px;
+          margin-bottom: 24px;
+        }
 
-          <!-- KPIs -->
-          <li class="has-sub">
-            <a href="#" class="toplink">KPIs</a>
-            <ul class="sub">
-              <li><a href="operations.html">Operations</a></li>
-              <li><a href="engineering.html" class="active">Engineering</a></li>
-              <li><a href="supplychain.html">Supply Chain</a></li>
-              <li><a href="dashboards.html">Dashboards</a></li>
-            </ul>
-          </li>
+        .header-content {
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+          text-align: center;
+        }
 
-          <!-- Applications -->
-          <li class="has-sub">
-            <a href="#" class="toplink">Applications</a>
-            <ul class="sub">
-              <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
-              <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
-              <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-      
-      <!-- Header Navigation Dropdown -->
-      <div class="nav-dropdown">
-        <button class="header-nav-button" onclick="toggleHeaderNav()">
-          TABLE OF CONTENTS
-          <span class="header-nav-arrow">▼</span>
+        .page-title {
+          font-size: 28px;
+          letter-spacing: 1.5px;
+        }
+
+        .page-subtitle {
+          font-size: 15px;
+          margin-bottom: 16px;
+        }
+
+        .nav-menu {
+          right: 50%;
+          transform: translateX(50%) translateY(-10px);
+        }
+
+        .nav-menu.show {
+          transform: translateX(50%) translateY(0);
+        }
+
+        .coming-soon-card {
+          padding: 32px 20px;
+          margin: 24px 0;
+        }
+
+        .coming-soon-content h3 {
+          font-size: 24px;
+        }
+
+        .coming-soon-content p {
+          font-size: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-header {
+          padding: 16px 12px;
+        }
+
+        .page-title {
+          font-size: 24px;
+          letter-spacing: 1px;
+        }
+
+        .page-subtitle {
+          font-size: 14px;
+        }
+
+        .nav-button {
+          padding: 10px 16px;
+          font-size: 14px;
+        }
+
+        .coming-soon-card {
+          padding: 24px 16px;
+        }
+
+        .coming-soon-content h3 {
+          font-size: 20px;
+        }
+
+        .coming-soon-content p {
+          font-size: 14px;
+        }
+      }
+
+      /* Top of Page Button */
+      .top-of-page-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, #7a1b1b, #b91c1c);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(122, 27, 27, 0.3);
+        transition: all 0.3s ease;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .top-of-page-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(122, 27, 27, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+      <div class="brand">Ren Internal</div>
+
+      <!-- Desktop Navigation -->
+      <div class="bar-inner">
+        <nav class="nav" aria-label="Main">
+          <ul class="menu">
+            <!-- TV Reports -->
+            <li class="has-sub">
+              <a href="#" class="toplink">TV Reports</a>
+              <ul class="sub">
+                <li><a href="index.html">OTD</a></li>
+                <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
+                <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
+                <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
+                <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
+              </ul>
+            </li>
+
+            <!-- KPIs -->
+            <li class="has-sub">
+              <a href="#" class="toplink">KPIs</a>
+              <ul class="sub">
+                <li><a href="operations.html">Operations</a></li>
+                <li><a href="engineering.html" class="active">Engineering</a></li>
+                <li><a href="supplychain.html">Supply Chain</a></li>
+                <li><a href="dashboards.html">Dashboards</a></li>
+              </ul>
+            </li>
+
+            <!-- Applications -->
+            <li class="has-sub">
+              <a href="#" class="toplink">Applications</a>
+              <ul class="sub">
+                <li><a href="palletsApp.html">Pallet Receiving Tool</a></li>
+                <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
+                <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
+                <li><a href="unpi-tool.html">UNPI WO Update Tool</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Header Navigation Dropdown -->
+        <div class="nav-dropdown">
+          <button class="header-nav-button" onclick="toggleHeaderNav()">
+            TABLE OF CONTENTS
+            <span class="header-nav-arrow">▼</span>
+          </button>
+          <div class="header-nav-menu" id="headerNavMenu">
+            <a href="#engineering-section" class="header-nav-item">Engineering KPIs</a>
+            <a href="#coming-soon-section" class="header-nav-item">Coming Soon</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side with Mobile Menu -->
+      <div class="header-right">
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
         </button>
-        <div class="header-nav-menu" id="headerNavMenu">
-          <a href="#engineering-section" class="header-nav-item">Engineering KPIs</a>
-          <a href="#coming-soon-section" class="header-nav-item">Coming Soon</a>
-        </div>
       </div>
-    </div>
-    
-    <!-- Right side with Mobile Menu -->
-    <div class="header-right">
-      <!-- Mobile Menu Toggle -->
-      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-        <span class="hamburger-line"></span>
-      </button>
-    </div>
-  </header>
+    </header>
 
-  <!-- Mobile Menu Overlay -->
-  <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
-  
-  <!-- Mobile Menu Panel -->
-  <div class="mobile-menu-panel">
-    <div class="mobile-menu-header">
-      <h3 class="mobile-menu-title">Navigation</h3>
-      <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
-    </div>
-    <div class="mobile-menu-content">
-      <!-- TV Reports Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
-        <div class="mobile-menu-items">
-          <a href="index.html" class="mobile-menu-item" onclick="closeMobileMenu()">OTD</a>
-          <a href="ROG-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Test</a>
-          <a href="ROG-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Debug</a>
-          <a href="RUN-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Test</a>
-          <a href="RUN-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Debug</a>
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+
+    <!-- Mobile Menu Panel -->
+    <div class="mobile-menu-panel">
+      <div class="mobile-menu-header">
+        <h3 class="mobile-menu-title">Navigation</h3>
+        <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
+      </div>
+      <div class="mobile-menu-content">
+        <!-- TV Reports Section -->
+        <div class="mobile-menu-section">
+          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
+          <div class="mobile-menu-items">
+            <a href="index.html" class="mobile-menu-item" onclick="closeMobileMenu()">OTD</a>
+            <a href="ROG-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Test</a>
+            <a href="ROG-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Debug</a>
+            <a href="RUN-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Test</a>
+            <a href="RUN-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Debug</a>
+          </div>
+        </div>
+
+        <!-- KPIs Section -->
+        <div class="mobile-menu-section">
+          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
+          <div class="mobile-menu-items">
+            <a href="operations.html" class="mobile-menu-item" onclick="closeMobileMenu()">Operations</a>
+            <a href="engineering.html" class="mobile-menu-item active" onclick="closeMobileMenu()">Engineering</a>
+            <a href="supplychain.html" class="mobile-menu-item" onclick="closeMobileMenu()">Supply Chain</a>
+            <a href="dashboards.html" class="mobile-menu-item" onclick="closeMobileMenu()">Dashboards</a>
+          </div>
+        </div>
+
+        <!-- Applications Section -->
+        <div class="mobile-menu-section">
+          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
+          <div class="mobile-menu-items">
+            <a href="palletsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Pallet Receiving Tool</a>
+            <a href="skuDetailsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">SKU Update Tool</a>
+            <a href="customerHoldApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Customer Hold Tool</a>
+            <a href="unpi-tool.html" class="mobile-menu-item" onclick="closeMobileMenu()">UNPI WO Update Tool</a>
+          </div>
         </div>
       </div>
-      
-      <!-- KPIs Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
-        <div class="mobile-menu-items">
-          <a href="operations.html" class="mobile-menu-item" onclick="closeMobileMenu()">Operations</a>
-          <a href="engineering.html" class="mobile-menu-item active" onclick="closeMobileMenu()">Engineering</a>
-          <a href="supplychain.html" class="mobile-menu-item" onclick="closeMobileMenu()">Supply Chain</a>
-          <a href="dashboards.html" class="mobile-menu-item" onclick="closeMobileMenu()">Dashboards</a>
+    </div>
+
+    <!-- Page -->
+    <main class="content">
+      <!-- Professional Header Card -->
+      <div class="page-header">
+        <div class="header-content">
+          <div class="title-section">
+            <h1 class="page-title">ENGINEERING KPIS</h1>
+            <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
+          </div>
         </div>
       </div>
 
-      <!-- Applications Section -->
-      <div class="mobile-menu-section">
-        <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
-        <div class="mobile-menu-items">
-          <a href="palletsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Pallet Receiving Tool</a>
-          <a href="skuDetailsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">SKU Update Tool</a>
-          <a href="customerHoldApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Customer Hold Tool</a>
+      <div id="coming-soon-section">
+        <div class="coming-soon-card">
+          <div class="coming-soon-content">
+            <h3>Engineering KPIs Coming Soon</h3>
+            <p>This page will contain Engineering-related Key Performance Indicators and dashboards.</p>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </main>
 
-  <!-- Page -->
-  <main class="content">
-    <!-- Professional Header Card -->
-    <div class="page-header">
-      <div class="header-content">
-        <div class="title-section">
-          <h1 class="page-title">ENGINEERING KPIS</h1>
-          <p class="page-subtitle">Key Performance Indicators & Analytics Dashboard</p>
-        </div>
-      </div>
-    </div>
-    
-    <div id="coming-soon-section">
-      <div class="coming-soon-card">
-        <div class="coming-soon-content">
-          <h3>Engineering KPIs Coming Soon</h3>
-          <p>This page will contain Engineering-related Key Performance Indicators and dashboards.</p>
-        </div>
-      </div>
-    </div>
-  </main>
-  
-  <!-- Top of Page Button -->
-  <button class="top-of-page-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">
-    ↑
-  </button>
+    <!-- Top of Page Button -->
+    <button class="top-of-page-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Back to top">↑</button>
 
-  <script src="javascript.js?v=5"></script>
-  
-  <!-- Header Navigation JavaScript -->
-  <script>
-    function toggleHeaderNav() {
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      
-      menu.classList.toggle('active');
-      button.classList.toggle('active');
-    }
-    
-    function closeHeaderNav() {
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      
-      menu.classList.remove('active');
-      button.classList.remove('active');
-    }
-    
-    // Mobile Menu Functions
-    function toggleMobileMenu() {
-      document.body.classList.toggle('mobile-menu-open');
-    }
-    
-    function closeMobileMenu() {
-      document.body.classList.remove('mobile-menu-open');
-    }
-    
-    // Mobile Menu Section Toggle Function
-    function toggleMobileSection(titleElement) {
-      const section = titleElement.parentElement;
-      section.classList.toggle('collapsed');
-    }
-    
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(event) {
-      const navDropdown = document.querySelector('.header-right');
-      const menu = document.getElementById('headerNavMenu');
-      const button = document.querySelector('.header-nav-button');
-      
-      if (navDropdown && !navDropdown.contains(event.target)) {
-        menu.classList.remove('active');
-        button.classList.remove('active');
+    <script src="javascript.js?v=5"></script>
+
+    <!-- Header Navigation JavaScript -->
+    <script>
+      function toggleHeaderNav() {
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+
+        menu.classList.toggle("active");
+        button.classList.toggle("active");
       }
-    });
-    
-    // Close mobile menu on window resize if screen becomes large
-    window.addEventListener('resize', function() {
-      if (window.innerWidth > 1024) {
-        closeMobileMenu();
+
+      function closeHeaderNav() {
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+
+        menu.classList.remove("active");
+        button.classList.remove("active");
       }
-    });
-    
-    // Enhanced smooth scrolling with offset for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          // Calculate offset to account for header and provide padding
-          const headerHeight = document.querySelector('.topbar').offsetHeight;
-          const additionalOffset = 30; // Extra padding so title is clearly visible
-          const targetPosition = target.offsetTop - headerHeight - additionalOffset;
-          
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
+
+      // Mobile Menu Functions
+      function toggleMobileMenu() {
+        document.body.classList.toggle("mobile-menu-open");
+      }
+
+      function closeMobileMenu() {
+        document.body.classList.remove("mobile-menu-open");
+      }
+
+      // Mobile Menu Section Toggle Function
+      function toggleMobileSection(titleElement) {
+        const section = titleElement.parentElement;
+        section.classList.toggle("collapsed");
+      }
+
+      function scrollToTop() {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (event) {
+        const navDropdown = document.querySelector(".header-right");
+        const menu = document.getElementById("headerNavMenu");
+        const button = document.querySelector(".header-nav-button");
+
+        if (navDropdown && !navDropdown.contains(event.target)) {
+          menu.classList.remove("active");
+          button.classList.remove("active");
         }
       });
-    });
-    
-    // Initialize mobile menu sections - start with all collapsed except current page section
-    document.addEventListener('DOMContentLoaded', function() {
-      const sections = document.querySelectorAll('.mobile-menu-section');
-      sections.forEach(section => {
-        // Find if this section contains the active menu item (current page)
-        const activeItem = section.querySelector('.mobile-menu-item.active');
-        if (!activeItem) {
-          // Collapse sections that don't contain the active item
-          section.classList.add('collapsed');
+
+      // Close mobile menu on window resize if screen becomes large
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 1024) {
+          closeMobileMenu();
         }
       });
-    });
-  </script>
-</body>
+
+      // Enhanced smooth scrolling with offset for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            // Calculate offset to account for header and provide padding
+            const headerHeight = document.querySelector(".topbar").offsetHeight;
+            const additionalOffset = 30; // Extra padding so title is clearly visible
+            const targetPosition = target.offsetTop - headerHeight - additionalOffset;
+
+            window.scrollTo({
+              top: targetPosition,
+              behavior: "smooth",
+            });
+          }
+        });
+      });
+
+      // Initialize mobile menu sections - start with all collapsed except current page section
+      document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll(".mobile-menu-section");
+        sections.forEach((section) => {
+          // Find if this section contains the active menu item (current page)
+          const activeItem = section.querySelector(".mobile-menu-item.active");
+          if (!activeItem) {
+            // Collapse sections that don't contain the active item
+            section.classList.add("collapsed");
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
