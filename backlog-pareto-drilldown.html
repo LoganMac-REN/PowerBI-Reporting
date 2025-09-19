@@ -17,17 +17,11 @@
         min-height: 100vh;
         margin: 0;
         padding: 0;
-        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
-          sans-serif;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       }
       /* Professional Main Header Styling */
       .topbar {
-        background: linear-gradient(
-          135deg,
-          #7a1b1b 0%,
-          #b91c1c 50%,
-          #dc2626 100%
-        ) !important;
+        background: linear-gradient(135deg, #7a1b1b 0%, #b91c1c 50%, #dc2626 100%) !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
         border-bottom: 3px solid #5a1616 !important;
         padding: 0 20px !important;
@@ -51,19 +45,13 @@
         left: 0;
         right: 0;
         height: 1px;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
-        );
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
       }
 
       .brand {
         font-size: 20px !important;
         font-weight: 700 !important;
-        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
-          sans-serif !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
         color: #ffffff !important;
         padding: 16px 0 !important;
         text-transform: uppercase !important;
@@ -122,8 +110,7 @@
         border-radius: 8px !important;
         font-size: 14px !important;
         font-weight: 600 !important;
-        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui,
-          sans-serif !important;
+        font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
@@ -270,12 +257,6 @@
         background: linear-gradient(90deg, #b91c1c, #dc2626);
       }
 
-      .location-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
-        border-color: rgba(185, 28, 28, 0.2);
-      }
-
       .location-title {
         color: #1f2937;
         font-size: 1.5rem;
@@ -330,11 +311,7 @@
         border: 2px dashed rgba(185, 28, 28, 0.3);
         border-radius: 10px;
         position: relative;
-        background: linear-gradient(
-          135deg,
-          rgba(185, 28, 28, 0.05) 0%,
-          rgba(220, 38, 38, 0.05) 100%
-        );
+        background: linear-gradient(135deg, rgba(185, 28, 28, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
         overflow: hidden;
         margin: 0 auto; /* Centers the container */
       }
@@ -513,8 +490,7 @@
       // Collapsible functionality for location sections
       function toggleSection(sectionId) {
         const content = document.getElementById(sectionId);
-        const icon =
-          content.previousElementSibling.querySelector(".expand-icon");
+        const icon = content.previousElementSibling.querySelector(".expand-icon");
 
         if (content.classList.contains("collapsed")) {
           content.classList.remove("collapsed");
