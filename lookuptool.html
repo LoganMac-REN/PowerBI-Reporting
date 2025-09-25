@@ -64,6 +64,13 @@
         left: 20px !important;
       }
 
+      .brand-logo {
+        height: 150px !important;
+        width: auto !important;
+        max-width: 200px !important;
+        object-fit: contain !important;
+      }
+
       /* Mobile Hamburger Menu */
       .mobile-menu-toggle {
         display: none !important;
@@ -402,16 +409,15 @@
 
       .toplink {
         display: block !important;
-        padding: 18px 28px !important;
+        padding: 18px 20px !important;
         color: #ffffff !important;
         text-decoration: none !important;
-        font-size: 16px !important;
+        font-size: 12px !important;
         font-weight: 600 !important;
         font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif !important;
         text-transform: uppercase !important;
         letter-spacing: 1px !important;
         transition: all 0.3s ease !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
         position: relative !important;
         overflow: hidden !important;
       }
@@ -513,7 +519,7 @@
       }
 
       /* Responsive adjustments for main header */
-      @media (max-width: 1024px) {
+      @media (max-width: 1200px) {
         .topbar {
           position: static !important;
           height: 50px !important;
@@ -675,9 +681,9 @@
 
       /* Force container constraints with better responsive scaling */
       .content {
-        max-width: 1366px !important;
+        max-width: 1400px !important;
         margin: 0 auto !important;
-        padding: 90px 20px 20px 20px !important;
+        padding: 90px 16px 24px !important;
         overflow-x: hidden !important;
         background: transparent !important;
       }
@@ -747,6 +753,63 @@
         box-sizing: border-box !important;
         overflow: hidden !important;
         background: transparent !important;
+      }
+
+      /* Much more aggressive responsive breakpoints */
+      @media (max-width: 1400px) {
+        .content {
+          max-width: 1000px !important;
+          padding: 90px 10px 18px !important;
+        }
+
+        .reports-container {
+          gap: 15px !important;
+          margin-top: 20px !important;
+        }
+      }
+
+      @media (max-width: 1200px) {
+        .content {
+          max-width: 750px !important;
+          padding: 90px 8px 16px !important;
+        }
+
+        .reports-container {
+          gap: 12px !important;
+          margin-top: 16px !important;
+        }
+
+        .report-card {
+          min-width: 200px !important;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .content {
+          max-width: 650px !important;
+          padding: 90px 6px 14px !important;
+        }
+
+        .reports-container {
+          gap: 10px !important;
+          margin-top: 14px !important;
+        }
+
+        .report-card {
+          min-width: 180px !important;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .content {
+          max-width: 600px !important;
+          padding: 90px 6px 12px !important;
+        }
+
+        .reports-container {
+          gap: 10px !important;
+          margin-top: 12px !important;
+        }
       }
 
       /* Professional header responsive adjustments */
@@ -952,27 +1015,24 @@
   </head>
   <body>
     <header class="topbar">
-      <div class="brand">Ren Internal</div>
+      <div class="brand">
+        <img src="renaissance-logo-full-color-rgb.svg" alt="Renaissance Repair & Supply" class="brand-logo" />
+      </div>
 
       <!-- Desktop Navigation -->
       <div class="bar-inner">
         <nav class="nav" aria-label="Main">
           <ul class="menu">
-            <!-- TV Reports -->
             <li class="has-sub">
-              <a href="#" class="toplink">TV Reports</a>
+              <a href="#" class="toplink">OTD Dashboards</a>
               <ul class="sub">
-                <li><a href="index.html" class="active">OTD</a></li>
-                <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
-                <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
-                <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
-                <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
+                <li><a href="index.html">Combined OTD Report</a></li>
               </ul>
             </li>
 
             <!-- KPIs -->
             <li class="has-sub">
-              <a href="#" class="toplink">KPIs</a>
+              <a href="#" class="toplink">Departments</a>
               <ul class="sub">
                 <li><a href="operations.html">Operations</a></li>
                 <li><a href="engineering.html">Engineering</a></li>
@@ -989,7 +1049,23 @@
                 <li><a href="skuDetailsApp.html">SKU Update Tool</a></li>
                 <li><a href="customerHoldApp.html">Customer Hold Tool</a></li>
                 <li><a href="npi-tool.html">NPI Update Tool</a></li>
-                <li><a href="lookuptool.html">Look-Up Tool</a></li>
+              </ul>
+            </li>
+            <!-- TV Reports -->
+            <li class="has-sub">
+              <a href="#" class="toplink">TV Reports</a>
+              <ul class="sub">
+                <li><a href="ROG-TEST-TV.html">Rogue-Test</a></li>
+                <li><a href="ROG-DEBUG-TV.html">Rogue-Debug</a></li>
+                <li><a href="RUN-TEST-TV.html">Run-Test</a></li>
+                <li><a href="RUN-DEBUG-TV.html">Run-Debug</a></li>
+              </ul>
+            </li>
+            <!-- Floor Tools -->
+            <li class="has-sub">
+              <a href="#" class="toplink">Floor Tools</a>
+              <ul class="sub">
+                <li><a href="lookuptool.html" class="active">Look-Up Tool</a></li>
               </ul>
             </li>
           </ul>
@@ -1017,11 +1093,18 @@
         <button class="mobile-menu-close" onclick="closeMobileMenu()">×</button>
       </div>
       <div class="mobile-menu-content">
+        <!-- OTD Dashboards Section -->
+        <div class="mobile-menu-section collapsed">
+          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">OTD Dashboards</h4>
+          <div class="mobile-menu-items">
+            <a href="index.html" class="mobile-menu-item" onclick="closeMobileMenu()">Combined OTD Report</a>
+          </div>
+        </div>
+
         <!-- TV Reports Section -->
-        <div class="mobile-menu-section">
+        <div class="mobile-menu-section collapsed">
           <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
           <div class="mobile-menu-items">
-            <a href="index.html" class="mobile-menu-item active" onclick="closeMobileMenu()">OTD</a>
             <a href="ROG-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Test</a>
             <a href="ROG-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Debug</a>
             <a href="RUN-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Test</a>
@@ -1030,7 +1113,7 @@
         </div>
 
         <!-- KPIs Section -->
-        <div class="mobile-menu-section">
+        <div class="mobile-menu-section collapsed">
           <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
           <div class="mobile-menu-items">
             <a href="operations.html" class="mobile-menu-item" onclick="closeMobileMenu()">Operations</a>
@@ -1041,13 +1124,21 @@
         </div>
 
         <!-- Applications Section -->
-        <div class="mobile-menu-section">
+        <div class="mobile-menu-section collapsed">
           <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Applications</h4>
           <div class="mobile-menu-items">
             <a href="palletsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Pallet Receiving Tool</a>
             <a href="skuDetailsApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">SKU Update Tool</a>
             <a href="customerHoldApp.html" class="mobile-menu-item" onclick="closeMobileMenu()">Customer Hold Tool</a>
             <a href="npi-tool.html" class="mobile-menu-item" onclick="closeMobileMenu()">NPI Update Tool</a>
+          </div>
+        </div>
+
+        <!-- Floor Tools Section -->
+        <div class="mobile-menu-section collapsed">
+          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Floor Tools</h4>
+          <div class="mobile-menu-items">
+            <a href="lookuptool.html" class="mobile-menu-item active" onclick="closeMobileMenu()">Look-Up Tool</a>
           </div>
         </div>
       </div>
@@ -1059,24 +1150,23 @@
       <div class="page-header">
         <div class="header-content">
           <div class="title-section">
-            <h1 class="page-title">LookUp Tool</h1>
-            <p class="page-subtitle">To update the expected date and stage of units that should be NPI</p>
+            <h1 class="page-title">Look-Up Tool</h1>
+            <p class="page-subtitle">Used to see the history of a work order</p>
           </div>
         </div>
       </div>
 
       <!-- OTD Section -->
       <div id="otd-section">
-        <div class="framecard">
-          <iframe
-            id="powerapp-frame"
-            src="https://apps.powerapps.com/play/dd65fdc1-b28f-41ed-9e26-ede7dbadb451?source=iframe"
-            width="1366"
-            height="768"
-            frameborder="0"
-            allowfullscreen
-          >
-          </iframe>
+        <div class="top-report">
+          <div class="framecard">
+            <iframe
+              id="powerapp-frame"
+              src="https://apps.powerapps.com/play/dd65fdc1-b28f-41ed-9e26-ede7dbadb451?source=iframe"
+              allowfullscreen="true"
+            >
+            </iframe>
+          </div>
         </div>
       </div>
     </main>
@@ -1123,7 +1213,7 @@
 
       // Close mobile menu on window resize if screen becomes large
       window.addEventListener("resize", function () {
-        if (window.innerWidth > 768) {
+        if (window.innerWidth > 1200) {
           closeMobileMenu();
         }
       });
