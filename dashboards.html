@@ -156,6 +156,10 @@
         border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
       }
 
+      body.mobile-menu-open .mobile-menu-panel {
+        left: 0 !important;
+      }
+
       .mobile-menu-header {
         padding: 24px !important;
         background: rgba(0, 0, 0, 0.3) !important;
@@ -990,11 +994,22 @@
 
       // Mobile Menu Functions
       function toggleMobileMenu() {
-        document.body.classList.toggle("mobile-menu-open");
+        const body = document.body;
+        if (body.classList.contains("mobile-menu-open")) {
+          body.classList.remove("mobile-menu-open");
+          // Restore body scroll
+          document.body.style.overflow = "";
+        } else {
+          body.classList.add("mobile-menu-open");
+          // Prevent body scroll when menu is open
+          document.body.style.overflow = "hidden";
+        }
       }
 
       function closeMobileMenu() {
         document.body.classList.remove("mobile-menu-open");
+        // Restore body scroll
+        document.body.style.overflow = "";
       }
 
       // Mobile Menu Section Toggle Function
