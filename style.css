@@ -9,6 +9,13 @@
   --border: #e5e7eb;
 }
 
+.brand-logo {
+  height: 150px !important;
+  width: auto !important;
+  max-width: 200px !important;
+  object-fit: contain !important;
+}
+
 /* Base */
 html,
 body {
