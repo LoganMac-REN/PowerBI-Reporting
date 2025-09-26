@@ -933,7 +933,6 @@
       <div class="brand">
         <img src="renaissance-logo-full-color-rgb.svg" alt="Renaissance Repair & Supply" class="brand-logo" />
       </div>
-
       <!-- Desktop Navigation -->
       <div class="bar-inner">
         <nav class="nav" aria-label="Main">
@@ -941,7 +940,7 @@
             <li class="has-sub">
               <a href="#" class="toplink">OTD Dashboards</a>
               <ul class="sub">
-                <li><a href="index.html">Combined OTD Report</a></li>
+                <li><a href="index.html" class="active">All Departments</a></li>
               </ul>
             </li>
 
@@ -952,6 +951,7 @@
                 <li><a href="operations.html">Operations</a></li>
                 <li><a href="engineering.html">Engineering</a></li>
                 <li><a href="supplychain.html">Supply Chain</a></li>
+                <li><a href="quality.html">Quality</a></li>
                 <li><a href="dashboards.html">Dashboards</a></li>
               </ul>
             </li>
@@ -980,7 +980,7 @@
             <li class="has-sub">
               <a href="#" class="toplink">Floor Tools</a>
               <ul class="sub">
-                <li><a href="lookuptool.html" class="active">Look-Up Tool</a></li>
+                <li><a href="lookuptool.html">Look-Up Tool</a></li>
               </ul>
             </li>
           </ul>
@@ -1012,28 +1012,18 @@
         <div class="mobile-menu-section collapsed">
           <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">OTD Dashboards</h4>
           <div class="mobile-menu-items">
-            <a href="index.html" class="mobile-menu-item" onclick="closeMobileMenu()">Combined OTD Report</a>
-          </div>
-        </div>
-
-        <!-- TV Reports Section -->
-        <div class="mobile-menu-section collapsed">
-          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
-          <div class="mobile-menu-items">
-            <a href="ROG-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Test</a>
-            <a href="ROG-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Debug</a>
-            <a href="RUN-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Test</a>
-            <a href="RUN-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Debug</a>
+            <a href="index.html" class="mobile-menu-item active" onclick="closeMobileMenu()">Combined OTD Report</a>
           </div>
         </div>
 
         <!-- KPIs Section -->
         <div class="mobile-menu-section collapsed">
-          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">KPIs</h4>
+          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Departments</h4>
           <div class="mobile-menu-items">
             <a href="operations.html" class="mobile-menu-item" onclick="closeMobileMenu()">Operations</a>
             <a href="engineering.html" class="mobile-menu-item" onclick="closeMobileMenu()">Engineering</a>
             <a href="supplychain.html" class="mobile-menu-item" onclick="closeMobileMenu()">Supply Chain</a>
+            <a href="quality.html" class="mobile-menu-item" onclick="closeMobileMenu()">Quality</a>
             <a href="dashboards.html" class="mobile-menu-item" onclick="closeMobileMenu()">Dashboards</a>
           </div>
         </div>
@@ -1049,11 +1039,22 @@
           </div>
         </div>
 
+        <!-- TV Reports Section -->
+        <div class="mobile-menu-section collapsed">
+          <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">TV Reports</h4>
+          <div class="mobile-menu-items">
+            <a href="ROG-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Test</a>
+            <a href="ROG-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Rogue-Debug</a>
+            <a href="RUN-TEST-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Test</a>
+            <a href="RUN-DEBUG-TV.html" class="mobile-menu-item" onclick="closeMobileMenu()">Run-Debug</a>
+          </div>
+        </div>
+
         <!-- Floor Tools Section -->
         <div class="mobile-menu-section collapsed">
           <h4 class="mobile-menu-section-title" onclick="toggleMobileSection(this)">Floor Tools</h4>
           <div class="mobile-menu-items">
-            <a href="lookuptool.html" class="mobile-menu-item active" onclick="closeMobileMenu()">Look-Up Tool</a>
+            <a href="lookuptool.html" class="mobile-menu-item" onclick="closeMobileMenu()">Look-Up Tool</a>
           </div>
         </div>
       </div>
